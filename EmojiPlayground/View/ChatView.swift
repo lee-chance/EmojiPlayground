@@ -15,6 +15,7 @@ struct ChatView: View {
     @State private var showsPhotoLibrary = false
     @State private var showsEmojiLibrary = false
     @State private var selectedUIImage: UIImage?
+    @State private var selectedImageURL: URL?
     
     private var chatMessages: [Message] {
         var chattings = chatting.messages
@@ -31,11 +32,16 @@ struct ChatView: View {
     }
     
     private func sendImage() {
-        guard let selectedUIImage = selectedUIImage else { return }
-        let image = Image(uiImage: selectedUIImage)
-        let message = Message(content: image, sender: .me, type: .image)
-        chatting.messages.append(message)
-        self.selectedUIImage = nil
+        if let url = selectedImageURL {
+            let message = Message(content: url, sender: .me, type: .emoji)
+            chatting.messages.append(message)
+            self.selectedImageURL = nil
+        } else if let uiImage = selectedUIImage {
+            let image = Image(uiImage: uiImage)
+            let message = Message(content: image, sender: .me, type: .image)
+            chatting.messages.append(message)
+            self.selectedUIImage = nil
+        }
     }
     
     var body: some View {
@@ -50,7 +56,7 @@ struct ChatView: View {
         .navigationTitle(showingMode == .me ? "보낼 때" : "받을 때")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showsPhotoLibrary, onDismiss: sendImage) {
-            ImagePicker(image: $selectedUIImage)
+            ImagePicker(image: $selectedUIImage, imageURL: $selectedImageURL)
         }
     }
     

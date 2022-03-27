@@ -14,8 +14,6 @@ struct ChatView: View {
     @State private var text = ""
     @State private var showsPhotoLibrary = false
     @State private var showsEmojiLibrary = false
-    @State private var selectedUIImage: UIImage?
-    @State private var selectedImageURL: URL?
     
     private var chatMessages: [Message] {
         var chattings = chatting.messages
@@ -31,19 +29,6 @@ struct ChatView: View {
         }
     }
     
-    private func sendImage() {
-        if let url = selectedImageURL {
-            let message = Message(content: url, sender: .me, type: .emoji)
-            chatting.messages.append(message)
-            self.selectedImageURL = nil
-        } else if let uiImage = selectedUIImage {
-            let image = Image(uiImage: uiImage)
-            let message = Message(content: image, sender: .me, type: .image)
-            chatting.messages.append(message)
-            self.selectedUIImage = nil
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 0) {
             chatListView
@@ -55,8 +40,11 @@ struct ChatView: View {
         .background(Color.background)
         .navigationTitle(showingMode == .me ? "보낼 때" : "받을 때")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showsPhotoLibrary, onDismiss: sendImage) {
-            ImagePicker(image: $selectedUIImage, imageURL: $selectedImageURL)
+        .sheet(isPresented: $showsPhotoLibrary) {
+            ImagePicker { res in
+                let message = Message(content: res.url, sender: .me, type: res.ext == "gif" ? .emoji : .image)
+                chatting.messages.append(message)
+            }
         }
     }
     
@@ -65,7 +53,7 @@ struct ChatView: View {
             ScrollViewReader { proxy in
                 VStack {
                     ForEach(chatMessages, id: \.id) { chat in
-                        MessageView(content: chat.content, sender: chat.sender)
+                        MessageView(content: chat.content, sender: chat.sender, type: chat.type)
                     }
                     .padding(.horizontal)
                     

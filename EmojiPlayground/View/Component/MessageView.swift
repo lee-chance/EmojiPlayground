@@ -11,6 +11,7 @@ import SDWebImageSwiftUI
 struct MessageView: View {
     let content: Any
     let sender: Sender
+    let type: MessageType
     
     var body: some View {
         HStack {
@@ -26,19 +27,27 @@ struct MessageView: View {
                     .padding(.vertical, 8)
                     .background(sender.messageBackgroundColor)
                     .cornerRadius(4)
-            case is Image:
-                (content as! Image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 200, maxHeight: 200, alignment: sender.messageAlignment)
-                    .frame(maxWidth: .infinity, alignment: sender.messageAlignment)
             case is URL:
-                let data = try! Data(contentsOf: content as! URL)
-                AnimatedImage(data: data)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 200, maxHeight: 200, alignment: sender.messageAlignment)
-                    .frame(maxWidth: .infinity, alignment: sender.messageAlignment)
+                ZStack {
+                    let data = try! Data(contentsOf: content as! URL)
+                    switch type {
+                    case .image:
+                        if let uiImage = UIImage(data: data) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 200, maxHeight: 200, alignment: sender.messageAlignment)
+                                .frame(maxWidth: .infinity, alignment: sender.messageAlignment)
+                        }
+                    case .emoji:
+                        AnimatedImage(data: data)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 200, maxHeight: 200, alignment: sender.messageAlignment)
+                            .frame(maxWidth: .infinity, alignment: sender.messageAlignment)
+                    default: EmptyView()
+                    }
+                }
             default: emptySpacer
             }
             
@@ -57,6 +66,6 @@ struct MessageView: View {
 
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageView(content: "ㅎㅎ", sender: .me)
+        MessageView(content: "ㅎㅎ", sender: .me, type: .text)
     }
 }

@@ -42,23 +42,23 @@ struct ChatView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showsPhotoLibrary) {
             ImagePicker { res in
-                let message = Message(content: res.url, sender: .me, type: res.ext == "gif" ? .emoji : .image)
+                let message = Message(content: .url(content: res.url), sender: .me, type: res.ext == "gif" ? .emoji : .image)
                 chatting.messages.append(message)
             }
         }
     }
     
     private var chatListView: some View {
-        ScrollView {
-            ScrollViewReader { proxy in
+        ScrollViewReader { proxy in
+            ScrollView {
                 VStack {
-                    ForEach(chatMessages, id: \.id) { chat in
-                        MessageView(content: chat.content, sender: chat.sender, type: chat.type)
+                    ForEach(chatMessages, id: \.id) { msg in
+                        MessageView(chatting: chatting, message: msg)
                     }
                     .padding(.horizontal)
                     
                     HStack { Spacer() }
-                    .id(emptyScrollToString)
+                        .id(emptyScrollToString)
                 }
                 .onChange(of: chatMessages.count) { _ in
                     moveToBottom(of: proxy)
@@ -106,7 +106,7 @@ struct ChatView: View {
             
             if text.count > 0 {
                 Button(action: {
-                    let message = Message(content: text, sender: .me, type: .text)
+                    let message = Message(content: .string(content: text), sender: .me, type: .text)
                     chatting.messages.append(message)
                     text = ""
                 }) {

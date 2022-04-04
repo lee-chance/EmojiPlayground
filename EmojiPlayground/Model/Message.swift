@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct Message {
-    let id = UUID()
-    let content: Any
+struct Message: Codable {
+    let id = UUID().description
+    let content: MessageContent
     let sender: Sender
     let type: MessageType
     
@@ -18,7 +18,12 @@ struct Message {
     }
 }
 
-enum Sender {
+enum MessageContent: Codable {
+    case string(content: String)
+    case url(content: URL)
+}
+
+enum Sender: String, Codable {
     case me, other
     
     var messageBackgroundColor: Color {
@@ -36,6 +41,6 @@ enum Sender {
     }
 }
 
-enum MessageType {
+enum MessageType: String, Codable {
     case text, image, emoji
 }

@@ -9,53 +9,71 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct MessageView: View {
-    let content: Any
-    let sender: Sender
-    let type: MessageType
+    @ObservedObject var chatting: ChatViewModel
+    let message: Message
+    
+    @State private var removeAlert = false
     
     var body: some View {
         HStack {
-            if sender == .me {
+            if message.sender == .me {
                 emptySpacer
             }
             
-            switch content {
-            case is String:
-                Text(content as! String)
+            switch message.content {
+            case .string(let content):
+                Text(content)
                     .foregroundColor(.mainTextColor)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 8)
-                    .background(sender.messageBackgroundColor)
+                    .background(message.sender.messageBackgroundColor)
                     .cornerRadius(4)
-            case is URL:
+                
+            case .url(let content):
                 ZStack {
-                    let data = try! Data(contentsOf: content as! URL)
-                    switch type {
+                    let data = try! Data(contentsOf: content)
+                    switch message.type {
                     case .image:
                         if let uiImage = UIImage(data: data) {
                             Image(uiImage: uiImage)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(maxWidth: 200, maxHeight: 200, alignment: sender.messageAlignment)
-                                .frame(maxWidth: .infinity, alignment: sender.messageAlignment)
+                                .frame(maxWidth: 200, maxHeight: 200, alignment: message.sender.messageAlignment)
+                                .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
                         }
                     case .emoji:
                         AnimatedImage(data: data)
                             .resizable()
                             .scaledToFit()
-                            .frame(maxWidth: 200, maxHeight: 200, alignment: sender.messageAlignment)
-                            .frame(maxWidth: .infinity, alignment: sender.messageAlignment)
+                            .frame(maxWidth: 200, maxHeight: 200, alignment: message.sender.messageAlignment)
+                            .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
                     default: EmptyView()
                     }
                 }
+                
             default: emptySpacer
             }
             
-            if sender == .other {
+            if message.sender == .other {
                 emptySpacer
             }
         }
-        .frame(maxWidth: .infinity, alignment: sender.messageAlignment)
+        .onLongPressGesture {
+            removeAlert = true
+        }
+        .alert(isPresented: $removeAlert) {
+            Alert(
+                title: Text("삭제"),
+                message: Text("메시지 삭제??"),
+                primaryButton: .destructive(Text("삭제"), action: {
+                    withAnimation {
+                        chatting.messages.removeAll(where: { $0.id == message.id })
+                    }
+                }),
+                secondaryButton: .cancel()
+            )
+        }
+        .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
     }
     
     private var emptySpacer: some View {
@@ -66,6 +84,7 @@ struct MessageView: View {
 
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageView(content: "ㅎㅎ", sender: .me, type: .text)
+        let msg = Message(content: .string(content: "g"), sender: .me, type: .text)
+        MessageView(chatting: ChatViewModel(), message: msg)
     }
 }

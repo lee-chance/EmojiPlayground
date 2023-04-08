@@ -19,7 +19,27 @@ enum Theme {
         }
     }
     
-    var backgroundColor: Color {
+    var icon: Image {
+        switch self {
+        case .cocoa:
+            return Image("CocoaIcon")
+        case .lime:
+            return Image("LimeIcon")
+        }
+    }
+}
+
+extension Theme {
+    var primaryColor: Color {
+        switch self {
+        case .cocoa:
+            return Color(rgb: 0xFEF01B)
+        case .lime:
+            return Color(rgb: 0x06C755)
+        }
+    }
+    
+    var secondaryColor: Color {
         switch self {
         case .cocoa:
             return Color(rgb: 0xFEE500)
@@ -28,21 +48,30 @@ enum Theme {
         }
     }
     
-    var fontColor: Color {
+    var primaryFontColor: Color {
         switch self {
         case .cocoa:
-            return Color.black
+            return Color(rgb: 0x000000)
         case .lime:
-            return Color.white
+            return Color(rgb: 0x000000)
         }
     }
     
-    var icon: Image {
+    var secondaryFontColor: Color {
         switch self {
         case .cocoa:
-            return Image("CocoaIcon")
+            return Color(rgb: 0x556677)
         case .lime:
-            return Image("LimeIcon")
+            return Color(rgb: 0x556677)
+        }
+    }
+    
+    var chatBackgroundColor: Color {
+        switch self {
+        case .cocoa:
+            return Color(rgb: 0x9bbbd4)
+        case .lime:
+            return Color(rgb: 0x9bbbd4)
         }
     }
 }

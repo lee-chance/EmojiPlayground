@@ -26,13 +26,6 @@ enum MessageContent: Codable {
 enum Sender: String, Codable {
     case me, other
     
-    var messageBackgroundColor: Color {
-        switch self {
-        case .me: return .myMessageBackground
-        case .other: return .otherMessageBackground
-        }
-    }
-    
     var messageAlignment: Alignment {
         switch self {
         case .me: return .trailing

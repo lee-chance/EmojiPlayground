@@ -8,23 +8,45 @@
 import SwiftUI
 
 struct MainView: View {
+    let chatRoomStore = ChatRoomStore<ChatStore>()
+    
     var body: some View {
         NavigationStack {
             NavigationLink {
-                HomeView()
+                EmoticonStorageView()
             } label: {
-                themButton(.cocoa)
+                HStack {
+                    Image(systemName: "archivebox")
+                    
+                    Text("이모티콘 보관함 가기")
+                        .frame(maxWidth: .infinity)
+                }
+                .padding()
+                .frame(height: 32)
+                .frame(width: 200)
+                .font(.system(size: 12))
+                .foregroundColor(.white)
+                .background(.black)
+                .cornerRadius(4)
             }
             
             NavigationLink {
-                HomeView()
+                HomeView(store: chatRoomStore)
+                    .environment(\.theme, .cocoa)
             } label: {
-                themButton(.lime)
+                themeButton(.cocoa)
+            }
+            
+            NavigationLink {
+                HomeView(store: chatRoomStore)
+                    .environment(\.theme, .lime)
+            } label: {
+                themeButton(.lime)
             }
         }
     }
     
-    private func themButton(_ theme: Theme) -> some View {
+    private func themeButton(_ theme: Theme) -> some View {
         HStack {
             theme.icon
             
@@ -35,8 +57,8 @@ struct MainView: View {
         .frame(height: 32)
         .frame(width: 200)
         .font(.system(size: 12))
-        .foregroundColor(theme.fontColor)
-        .background(theme.backgroundColor)
+        .foregroundColor(theme.primaryFontColor)
+        .background(theme.secondaryColor)
         .cornerRadius(4)
     }
 }

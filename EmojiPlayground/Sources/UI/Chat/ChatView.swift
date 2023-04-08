@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-struct ChatView: View {
-    @ObservedObject var chatting: ChatViewModel
-    let showingMode: Sender
+struct ChatView<Store: ChatStoreProtocol>: View {
+    @Environment(\.theme) private var theme
     
+    @StateObject var chatting: Store
+    
+    @State private var showingMode: Sender = .me
     @State private var text = ""
     @State private var showsPhotoLibrary = false
     @State private var showsEmojiLibrary = false
@@ -37,8 +39,8 @@ struct ChatView: View {
             
             bottomEmojiView
         }
-        .background(Color.background)
-        .navigationTitle(showingMode == .me ? "보낼 때" : "받을 때")
+        .background(theme.chatBackgroundColor)
+//        .navigationTitle(showingMode == .me ? "보낼 때" : "받을 때")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showsPhotoLibrary) {
             ImagePicker { res in
@@ -75,56 +77,74 @@ struct ChatView: View {
     }
     
     private var bottomInputView: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 8) {
             Button(action: {
                 showsPhotoLibrary = true
             }) {
-                Image(systemName: "plus")
+                Image(systemName: "plus.app")
                     .buttonModifier
-                    .foregroundColor(.subTextColor)
+                    .foregroundColor(theme.secondaryFontColor)
             }
             
-            TextEditor(text: $text)
-                .frame(height: 40) // 40으로해야 글자의 높이가 중앙에 위치한다.
-                .onTapGesture {
-                    showsEmojiLibrary = false
-                }
-            
-            Button(action: {
-                showsPhotoLibrary = true // 임시
+            HStack(spacing: 0) {
+                TextEditor(text: $text)
+                    .scrollContentBackground(.hidden)
+                    .background(.clear)
+                    .frame(height: 36) // 36으로해야 글자의 높이가 중앙에 위치한다.
+                    .onTapGesture {
+                        showsEmojiLibrary = false
+                    }
                 
-                // TODO: Emoji
-//                UIApplication.shared.endEditing()
-//                withAnimation(.linear(duration: 0.001)) {
-//                    showsEmojiLibrary = true
-//                }
-            }) {
-                Image(systemName: "face.smiling")
-                    .buttonModifier
-                    .foregroundColor(.subTextColor)
-            }
-            
-            if text.count > 0 {
-                Button(action: {
-                    let message = Message(content: .string(content: text), sender: .me, type: .text)
-                    chatting.messages.append(message)
-                    text = ""
-                }) {
-                    Image(systemName: "paperplane.fill")
-                        .buttonModifier
-                        .foregroundColor(.mainTextColor)
-                        .background(Color.myMessageBackground)
+                HStack(spacing: 8) {
+                    Button(action: {
+//                        showsPhotoLibrary = true // 임시
+                        
+                        // TODO: Emoji
+                        UIApplication.shared.endEditing()
+                        withAnimation(.linear(duration: 0.001)) {
+                            showsEmojiLibrary = true
+                        }
+                    }) {
+                        Image(systemName: "face.smiling")
+                            .buttonModifier
+                            .foregroundColor(theme.secondaryFontColor)
+                    }
+                    
+                    if text.count > 0 {
+                        Button(action: {
+                            let message = Message(content: .string(content: text), sender: .me, type: .text)
+                            chatting.messages.append(message)
+                            text = ""
+                        }) {
+                            Image(systemName: "arrow.up")
+                                .buttonModifier
+                                .foregroundColor(theme.primaryFontColor)
+                                .background(
+                                    Circle()
+                                        .stroke(Color.black.opacity(0.1))
+                                        .background(Circle().fill(theme.primaryColor))
+                                )
+                        }
+                    } else {
+                        Button(action: {}) {
+                            Image(systemName: "number")
+                                .buttonModifier
+                                .foregroundColor(theme.secondaryFontColor)
+                        }
+                    }
                 }
-            } else {
-                Button(action: {}) {
-                    Image(systemName: "number")
-                        .buttonModifier
-                        .foregroundColor(.subTextColor)
-                }
             }
+            .padding(4)
+            .background(
+                Capsule()
+                    .stroke(Color.black.opacity(0.1))
+                    .background(Capsule().fill(Color.gray.opacity(0.1)))
+                    .padding(.vertical, 2)
+            )
         }
+        .padding(.horizontal, 12)
         .padding(.bottom, Screen.bottomSafeArea > 0 ? 1 : 0) // Solid Bottom SafeArea
-        .frame(minHeight: 48)
+        .frame(minHeight: 56)
         .background(Color.white)
     }
     
@@ -144,21 +164,17 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(chatting: ChatViewModel(), showingMode: .me)
+        ChatView(chatting: MockChatStore())
+            .environment(\.theme, .cocoa)
     }
 }
 
-extension Image {
+private extension Image {
     var buttonModifier: some View {
         self
             .resizable()
-            .padding(14)
-            .frame(width: 48, height: 48)
-    }
-}
-
-extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            .scaledToFit()
+            .padding(6)
+            .frame(width: 32, height: 32)
     }
 }

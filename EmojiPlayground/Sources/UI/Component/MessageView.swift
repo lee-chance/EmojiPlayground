@@ -8,8 +8,10 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct MessageView: View {
-    @ObservedObject var chatting: ChatViewModel
+struct MessageView<Store: ChatStoreProtocol>: View {
+    @Environment(\.theme) var theme
+    
+    @StateObject var chatting: Store
     let message: Message
     
     @State private var removeAlert = false
@@ -23,11 +25,10 @@ struct MessageView: View {
             switch message.content {
             case .string(let content):
                 Text(content)
-                    .foregroundColor(.mainTextColor)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 8)
-                    .background(message.sender.messageBackgroundColor)
-                    .cornerRadius(4)
+                    .foregroundColor(theme.primaryFontColor)
+                    .padding(12)
+                    .background(message.sender == .me ? theme.primaryColor : .white)
+                    .cornerRadius(12)
                 
             case .url(let content):
                 ZStack {
@@ -84,7 +85,7 @@ struct MessageView: View {
 
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
-        let msg = Message(content: .string(content: "g"), sender: .me, type: .text)
-        MessageView(chatting: ChatViewModel(), message: msg)
+        let msg = Message(content: .string(content: "Hello, WorldHello, WorldHello, WorldHello, WorldHello, WorldHello, World"), sender: .me, type: .text)
+        MessageView(chatting: ChatStore(), message: msg)
     }
 }

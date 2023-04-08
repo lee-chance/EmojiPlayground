@@ -20,30 +20,31 @@ struct ImagePicker: UIViewControllerRepresentable {
         return picker
     }
     
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
-    }
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
     
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-    }
-    
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) { }
+}
+
+extension ImagePicker {
+    final class Coordinator: NSObject {
         let parent: ImagePicker
         
         init(_ parent: ImagePicker) {
             self.parent = parent
         }
+    }
+}
+
+extension ImagePicker.Coordinator: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard
+            let url = info[.imageURL] as? NSURL,
+            let absoluteURL = url.absoluteURL,
+            let ext = url.pathExtension
+        else { return }
         
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            guard
-                let url = info[.imageURL] as? NSURL,
-                let absoluteURL = url.absoluteURL,
-                let ext = url.pathExtension
-            else { return }
-            
-            parent.callback((absoluteURL, ext))
-            parent.mode.wrappedValue.dismiss()
-        }
+        parent.callback((absoluteURL, ext))
+        parent.mode.wrappedValue.dismiss()
     }
 }
 

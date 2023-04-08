@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E4B7945295343C400A41030 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B7944295343C400A41030 /* Environment.swift */; };
+		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
+		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
 		2E5F258D27EF4B4F002F21F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5F258C27EF4B4F002F21F5 /* SDWebImageSwiftUI */; };
 		2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */; };
 		2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80977E27E5BB4F00E40261 /* HomeView.swift */; };
 		2E80978127E5BB5000E40261 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E80978027E5BB5000E40261 /* Assets.xcassets */; };
 		2E80978427E5BB5000E40261 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E80978327E5BB5000E40261 /* Preview Assets.xcassets */; };
 		2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80978A27E5BCDF00E40261 /* ChatView.swift */; };
-		2E80978F27E5C11200E40261 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80978E27E5C11200E40261 /* AppColor.swift */; };
-		2E80979327E5E8D300E40261 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979227E5E8D300E40261 /* ChatViewModel.swift */; };
+		2E80979327E5E8D300E40261 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979227E5E8D300E40261 /* ChatStore.swift */; };
 		2E80979527E5EA1000E40261 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979427E5EA1000E40261 /* Message.swift */; };
 		2E80979727E5F1AB00E40261 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979627E5F1AB00E40261 /* ImagePicker.swift */; };
 		2E80979927E60CB100E40261 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979827E60CB100E40261 /* Screen.swift */; };
@@ -25,17 +27,21 @@
 		2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8097A527E64B7400E40261 /* ColorExtension.swift */; };
 		2E9517842945B168001E6ED6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517832945B168001E6ED6 /* MainView.swift */; };
 		2E9517892945B38D001E6ED6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517882945B38D001E6ED6 /* Theme.swift */; };
+		2EAC6E002957284200D1A89F /* ChatRoomStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAC6DFF2957284200D1A89F /* ChatRoomStore.swift */; };
+		2EFD113229E162EC00924121 /* EmoticonStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFD113129E162EC00924121 /* EmoticonStorageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E4B7944295343C400A41030 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		2E4B79482953447A00A41030 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		2E4B794B2953493F00A41030 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		2E80977927E5BB4F00E40261 /* EmojiPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmojiPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPlaygroundApp.swift; sourceTree = "<group>"; };
 		2E80977E27E5BB4F00E40261 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2E80978027E5BB5000E40261 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E80978327E5BB5000E40261 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2E80978A27E5BCDF00E40261 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
-		2E80978E27E5C11200E40261 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
-		2E80979227E5E8D300E40261 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		2E80979227E5E8D300E40261 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
 		2E80979427E5EA1000E40261 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		2E80979627E5F1AB00E40261 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2E80979827E60CB100E40261 /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
@@ -46,6 +52,8 @@
 		2E8097A527E64B7400E40261 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		2E9517832945B168001E6ED6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2E9517882945B38D001E6ED6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		2EAC6DFF2957284200D1A89F /* ChatRoomStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomStore.swift; sourceTree = "<group>"; };
+		2EFD113129E162EC00924121 /* EmoticonStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E4B794A295344CC00A41030 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				2E80979227E5E8D300E40261 /* ChatStore.swift */,
+				2EAC6DFF2957284200D1A89F /* ChatRoomStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 		2E80977027E5BB4F00E40261 = {
 			isa = PBXGroup;
 			children = (
@@ -81,7 +98,6 @@
 			children = (
 				2E95177D2945B0C1001E6ED6 /* Sources */,
 				2E95177C2945B0B9001E6ED6 /* Resources */,
-				2EABF5CA27E798500017D685 /* ViewModel */,
 				2EABF5CB27E7985C0017D685 /* Common */,
 				2E8097A427E64B2400E40261 /* Toolbox */,
 			);
@@ -108,8 +124,8 @@
 		2E95177C2945B0B9001E6ED6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2E80978E27E5C11200E40261 /* AppColor.swift */,
 				2E80978027E5BB5000E40261 /* Assets.xcassets */,
+				2E4B794B2953493F00A41030 /* Colors.xcassets */,
 				2E80978227E5BB5000E40261 /* Preview Content */,
 			);
 			path = Resources;
@@ -121,6 +137,7 @@
 				2E9517852945B303001E6ED6 /* Utility */,
 				2E95177E2945B0D8001E6ED6 /* App */,
 				2E9517812945B147001E6ED6 /* UI */,
+				2E4B794A295344CC00A41030 /* Store */,
 				2EABF5C727E798180017D685 /* Model */,
 			);
 			path = Sources;
@@ -130,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */,
+				2E4B7944295343C400A41030 /* Environment.swift */,
+				2E4B79482953447A00A41030 /* UIApplicationExtension.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -141,6 +160,7 @@
 				2E9517822945B154001E6ED6 /* Main */,
 				2E95178B2945C120001E6ED6 /* Home */,
 				2E95178C2945C153001E6ED6 /* Chat */,
+				2EFD113029E1619B00924121 /* EmoticonStorage */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -204,20 +224,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		2EABF5CA27E798500017D685 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				2E80979227E5E8D300E40261 /* ChatViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		2EABF5CB27E7985C0017D685 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				2E80979C27E628F500E40261 /* DefaultCharacter.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		2EFD113029E1619B00924121 /* EmoticonStorage */ = {
+			isa = PBXGroup;
+			children = (
+				2EFD113129E162EC00924121 /* EmoticonStorageView.swift */,
+			);
+			path = EmoticonStorage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */,
 				2E80978427E5BB5000E40261 /* Preview Assets.xcassets in Resources */,
 				2E80978127E5BB5000E40261 /* Assets.xcassets in Resources */,
 			);
@@ -296,21 +317,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E80979327E5E8D300E40261 /* ChatViewModel.swift in Sources */,
+				2E80979327E5E8D300E40261 /* ChatStore.swift in Sources */,
+				2E4B7945295343C400A41030 /* Environment.swift in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
 				2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */,
 				2E80979727E5F1AB00E40261 /* ImagePicker.swift in Sources */,
 				2E8097A327E6492F00E40261 /* KeyboardHeightHelper.swift in Sources */,
 				2E80979F27E62C1800E40261 /* MessageView.swift in Sources */,
 				2E80979927E60CB100E40261 /* Screen.swift in Sources */,
+				2EFD113229E162EC00924121 /* EmoticonStorageView.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
 				2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */,
 				2E80979527E5EA1000E40261 /* Message.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
+				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
-				2E80978F27E5C11200E40261 /* AppColor.swift in Sources */,
 				2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */,
+				2EAC6E002957284200D1A89F /* ChatRoomStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

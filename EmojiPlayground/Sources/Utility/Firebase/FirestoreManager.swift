@@ -43,7 +43,7 @@ extension DocumentReference {
 
 
 
-// MARK: FirestoreManager + Skyscape
+// MARK: FirestoreManager + EmojiPlayground
 extension FirestoreManager {
     enum Collection {
         case images

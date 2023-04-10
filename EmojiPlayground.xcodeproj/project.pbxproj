@@ -11,6 +11,8 @@
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
 		2E5F258D27EF4B4F002F21F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5F258C27EF4B4F002F21F5 /* SDWebImageSwiftUI */; };
+		2E70C2B929E2BBFE00D0AE21 /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDE6E5729E26CE10032FCCC /* FirebaseStorageManager.swift */; };
+		2E70C2BA29E2BC0200D0AE21 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDE6E5829E26CE10032FCCC /* FirestoreManager.swift */; };
 		2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */; };
 		2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80977E27E5BB4F00E40261 /* HomeView.swift */; };
 		2E80978127E5BB5000E40261 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E80978027E5BB5000E40261 /* Assets.xcassets */; };
@@ -360,9 +362,11 @@
 				2EFD113229E162EC00924121 /* EmoticonStorageView.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
 				2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */,
+				2E70C2BA29E2BC0200D0AE21 /* FirestoreManager.swift in Sources */,
 				2E80979527E5EA1000E40261 /* Message.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
+				2E70C2B929E2BBFE00D0AE21 /* FirebaseStorageManager.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
 				2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */,
@@ -495,6 +499,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"EmojiPlayground/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 2PJ23MZ7RT;
 				ENABLE_PREVIEWS = YES;
@@ -526,6 +531,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"EmojiPlayground/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 2PJ23MZ7RT;
 				ENABLE_PREVIEWS = YES;

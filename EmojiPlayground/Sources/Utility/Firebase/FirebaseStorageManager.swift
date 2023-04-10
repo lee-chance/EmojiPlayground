@@ -9,6 +9,21 @@ import UIKit
 import FirebaseStorage
 
 final class FirebaseStorageManager {
+    static func upload(from url: URL, to path: String) async throws -> URL {
+        let data = try Data(contentsOf: url)
+        
+        let metaData = StorageMetadata()
+        metaData.contentType = url.pathExtension
+        
+        let imageName = "\(UUID().uuidString)_\(String(Date().timeIntervalSince1970))"
+        
+        let reference = Storage.storage().reference().child("\(path)/\(imageName)")
+        
+        let _ = try await reference.putDataAsync(data, metadata: metaData)
+        let downloadURL = try await reference.downloadURL()
+        return downloadURL
+    }
+    
     static func uploadImage(image: UIImage, to path: String, completion: @escaping (URL?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.4) else { return }
         let metaData = StorageMetadata()

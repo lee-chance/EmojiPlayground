@@ -10,11 +10,12 @@ import SDWebImageSwiftUI
 
 struct MessageView<Store: ChatStoreProtocol>: View {
     @Environment(\.theme) var theme
+    @EnvironmentObject var mainRounter: MainRouter
     
     @StateObject var chatting: Store
     let message: Message
     
-    @State private var removeAlert = false
+    @State private var presentAlert = false
     
     var body: some View {
         HStack {
@@ -23,36 +24,20 @@ struct MessageView<Store: ChatStoreProtocol>: View {
             }
             
             switch message.content {
-            case .string(let content):
+            case .plainText(let content):
                 Text(content)
                     .foregroundColor(theme.primaryFontColor)
                     .padding(12)
                     .background(message.sender == .me ? theme.primaryColor : .white)
                     .cornerRadius(12)
                 
-            case .url(let content):
-                ZStack {
-                    let data = try! Data(contentsOf: content)
-                    switch message.type {
-                    case .image:
-                        if let uiImage = UIImage(data: data) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxWidth: 200, maxHeight: 200, alignment: message.sender.messageAlignment)
-                                .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
-                        }
-                    case .emoji:
-                        AnimatedImage(data: data)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 200, maxHeight: 200, alignment: message.sender.messageAlignment)
-                            .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
-                    default: EmptyView()
-                    }
-                }
-                
-            default: emptySpacer
+            case .localImage(let url), .storageImage(let url):
+                WebImage(url: url)
+                    .resizable()
+                    .indicator(.activity)
+                    .scaledToFit()
+                    .frame(maxWidth: 200, maxHeight: 200)
+                    .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
             }
             
             if message.sender == .other {
@@ -60,19 +45,50 @@ struct MessageView<Store: ChatStoreProtocol>: View {
             }
         }
         .onLongPressGesture {
-            removeAlert = true
+            if message.sender == .me {
+                presentAlert = true
+            }
         }
-        .alert(isPresented: $removeAlert) {
-            Alert(
-                title: Text("삭제"),
-                message: Text("메시지 삭제??"),
-                primaryButton: .destructive(Text("삭제"), action: {
-                    withAnimation {
-                        chatting.messages.removeAll(where: { $0.id == message.id })
+        .confirmationDialog("", isPresented: $presentAlert) {
+            if let url = message.content.getLocalImageURL() {
+                Button("보관함에 저장") {
+                    Task {
+                        do {
+                            mainRounter.show {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                                    .foregroundColor(.white)
+                            }
+                            
+                            let url = try await FirebaseStorageManager.upload(from: url, to: "image")
+                            
+                            try await FirestoreManager.reference(path: .images)
+                                .document()
+                                .setData(["image_url" : url.absoluteString])
+                            
+                            mainRounter.show {
+                                Image(systemName: "checkmark.circle")
+                                    .resizable()
+                                    .foregroundColor(.green)
+                                    .frame(width: 100, height: 100)
+                                    .onTapGesture {
+                                        mainRounter.hide()
+                                    }
+                            }
+                        } catch {
+                            print(error)
+                        }
                     }
-                }),
-                secondaryButton: .cancel()
-            )
+                }
+            }
+            
+            Button("메시지 삭제", role: .destructive) {
+                withAnimation {
+                    chatting.messages.removeAll(where: { $0.id == message.id })
+                }
+            }
+            
+            Button("취소", role: .cancel) { }
         }
         .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
     }
@@ -85,7 +101,7 @@ struct MessageView<Store: ChatStoreProtocol>: View {
 
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
-        let msg = Message(content: .string(content: "Hello, WorldHello, WorldHello, WorldHello, WorldHello, WorldHello, World"), sender: .me, type: .text)
+        let msg = Message(content: .plainText(content: "Hello, WorldHello, WorldHello, WorldHello, WorldHello, WorldHello, World"), sender: .me)
         MessageView(chatting: ChatStore(), message: msg)
     }
 }

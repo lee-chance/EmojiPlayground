@@ -17,26 +17,31 @@ final class MockChatStore: ChatStoreProtocol {
     @Published var messages = mockChatData
     
     private static var mockChatData: [Message] = [
-        Message(content: .string(content: "Hello"), sender: .me, type: .text),
-        Message(content: .string(content: "World!"), sender: .other, type: .text)
+        Message(content: .plainText(content: "Hello"), sender: .me),
+        Message(content: .plainText(content: "World!"), sender: .other)
     ]
 }
 
 final class ChatStore: ChatStoreProtocol {
-    @Published var messages = [Message]() {
-        didSet {
-            saveMessages(messages)
-        }
+    @AppStorage("messages") var messages: [Message] = []
+}
+
+extension Array: RawRepresentable where Element: Codable {
+    public init?(rawValue: String) {
+        guard
+            let data = rawValue.data(using: .utf8),
+            let result = try? JSONDecoder().decode([Element].self, from: data)
+        else { return nil }
+        
+        self = result
     }
-    
-    init() {
-        if let data = UserDefaults.standard.value(forKey: "messages") as? Data,
-           let messagesData = try? PropertyListDecoder().decode([Message].self, from: data) {
-            messages = messagesData
-        }
-    }
-    
-    private func saveMessages(_ messages: [Message]) {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(messages), forKey: "messages")
+
+    public var rawValue: String {
+        guard
+            let data = try? JSONEncoder().encode(self),
+            let result = String(data: data, encoding: .utf8)
+        else { return "[]" }
+        
+        return result
     }
 }

@@ -43,8 +43,8 @@ struct ChatView<Store: ChatStoreProtocol>: View {
 //        .navigationTitle(showingMode == .me ? "보낼 때" : "받을 때")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showsPhotoLibrary) {
-            ImagePicker { res in
-                let message = Message(content: .url(content: res.url), sender: .me, type: res.ext == "gif" ? .emoji : .image)
+            ImagePicker { url in
+                let message = Message(content: .localImage(url: url), sender: .me)
                 chatting.messages.append(message)
             }
         }
@@ -112,7 +112,7 @@ struct ChatView<Store: ChatStoreProtocol>: View {
                     
                     if text.count > 0 {
                         Button(action: {
-                            let message = Message(content: .string(content: text), sender: .me, type: .text)
+                            let message = Message(content: .plainText(content: text), sender: .me)
                             chatting.messages.append(message)
                             text = ""
                         }) {

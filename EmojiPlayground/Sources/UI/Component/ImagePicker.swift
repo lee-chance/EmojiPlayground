@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ImagePicker: UIViewControllerRepresentable {
-    @Environment(\.presentationMode) var mode
+    @Environment(\.dismiss) private var dismiss
     
-    let callback: (URL) -> Void
+    let perform: (_ imageURL: URL) -> Void
     
     func makeUIViewController(context: Context) -> some UIViewController {
         let picker = UIImagePickerController()
@@ -37,7 +37,7 @@ extension ImagePicker.Coordinator: UINavigationControllerDelegate, UIImagePicker
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let url = info[.imageURL] as? URL else { return }
         
-        parent.callback(url)
-        parent.mode.wrappedValue.dismiss()
+        parent.perform(url)
+        parent.dismiss()
     }
 }

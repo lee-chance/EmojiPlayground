@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    let chatRoomStore = ChatRoomStore<ChatStore>()
-    
     var body: some View {
         NavigationStack {
             NavigationLink {
@@ -30,19 +28,19 @@ struct MainView: View {
                 .cornerRadius(4)
             }
             
-            NavigationLink {
-                HomeView(store: chatRoomStore)
-                    .environment(\.theme, .cocoa)
-            } label: {
-                themeButton(.cocoa)
-            }
+//            NavigationLink {
+//                HomeView(store: chatRoomStore)
+//                    .environment(\.theme, .cocoa)
+//            } label: {
+//                themeButton(.cocoa)
+//            }
             
-            NavigationLink {
-                HomeView(store: chatRoomStore)
-                    .environment(\.theme, .lime)
-            } label: {
-                themeButton(.lime)
-            }
+//            NavigationLink {
+//                HomeView(store: chatRoomStore)
+//                    .environment(\.theme, .lime)
+//            } label: {
+//                themeButton(.lime)
+//            }
         }
     }
     

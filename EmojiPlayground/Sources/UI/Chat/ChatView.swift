@@ -7,22 +7,20 @@
 
 import SwiftUI
 
-struct ChatView<Store: ChatStoreProtocol>: View {
+struct ChatView: View {
     @Environment(\.theme) private var theme
     
-    @StateObject var chatting: Store
-    
-    @State private var showingMode: Sender = .me
     @State private var text = ""
     @State private var showsPhotoLibrary = false
     @State private var showsEmojiLibrary = false
     
-    private var chatMessages: [Message] {
-        var chattings = chatting.messages
-        if showingMode == .other {
-            chattings = chattings.map { $0.reversedSender }
-        }
-        return chattings
+    let room: Room
+    
+    @FetchRequest var chatMessages: FetchedResults<Message>
+    
+    init(room: Room) {
+        self.room = room
+        self._chatMessages = FetchRequest(fetchRequest: Message.all(of: room))
     }
     
     private func moveToBottom(of proxy: ScrollViewProxy) {
@@ -43,9 +41,8 @@ struct ChatView<Store: ChatStoreProtocol>: View {
 //        .navigationTitle(showingMode == .me ? "보낼 때" : "받을 때")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showsPhotoLibrary) {
-            ImagePicker { url in
-                let message = Message(content: .localImage(url: url), sender: .me)
-                chatting.messages.append(message)
+            ImagePicker { imageURL in
+                PersistenceController.shared.addImageMessage(type: .localImage, imageURL: imageURL, sender: .me, in: room)
             }
         }
     }
@@ -54,8 +51,9 @@ struct ChatView<Store: ChatStoreProtocol>: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack {
-                    ForEach(chatMessages, id: \.id) { msg in
-                        MessageView(chatting: chatting, message: msg)
+                    ForEach(chatMessages) { msg in
+                        MessageView(message: msg)
+                            .id(msg.id)
                     }
                     .padding(.horizontal)
                     
@@ -63,7 +61,9 @@ struct ChatView<Store: ChatStoreProtocol>: View {
                         .id(emptyScrollToString)
                 }
                 .onChange(of: chatMessages.count) { _ in
-                    moveToBottom(of: proxy)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        moveToBottom(of: proxy)
+                    }
                 }
                 .onAppear {
                     moveToBottom(of: proxy)
@@ -112,8 +112,7 @@ struct ChatView<Store: ChatStoreProtocol>: View {
                     
                     if text.count > 0 {
                         Button(action: {
-                            let message = Message(content: .plainText(content: text), sender: .me)
-                            chatting.messages.append(message)
+                            PersistenceController.shared.addMessage(type: .plainText, value: text, sender: .me, in: room)
                             text = ""
                         }) {
                             Image(systemName: "arrow.up")
@@ -162,12 +161,12 @@ struct ChatView<Store: ChatStoreProtocol>: View {
     private let emptyScrollToString = "Empty"
 }
 
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView(chatting: MockChatStore())
-            .environment(\.theme, .cocoa)
-    }
-}
+//struct ChatView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChatView(chatting: MockChatStore())
+//            .environment(\.theme, .cocoa)
+//    }
+//}
 
 private extension Image {
     var buttonModifier: some View {

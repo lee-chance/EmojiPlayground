@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct HomeView<Store: ChatRoomStoreProtocol>: View {
-    @StateObject var store: Store
-    
-    @State private var showNewRoomAlert: Bool = false
+struct HomeView: View {
+    @State private var presentNewRoomAlert: Bool = false
     @State private var newRoomName: String = ""
+    
+    @FetchRequest(fetchRequest: Room.all()) private var rooms
     
     var body: some View {
         NavigationStack {
@@ -26,7 +26,7 @@ struct HomeView<Store: ChatRoomStoreProtocol>: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 Button("Add") {
-                    showNewRoomAlert.toggle()
+                    presentNewRoomAlert.toggle()
                 }
             }
         }
@@ -34,16 +34,24 @@ struct HomeView<Store: ChatRoomStoreProtocol>: View {
     }
     
     private var roomListView: some View {
-        ForEach(store.rooms) { room in
+        ForEach(rooms) { room in
             NavigationLink(room.name) {
-                ChatView(chatting: room.chattings)
+                ChatView(room: room)
             }
+        }
+        .onDelete(perform: removeLanguages)
+    }
+    
+    func removeLanguages(at offsets: IndexSet) {
+        for index in offsets {
+            let room = rooms[index]
+            PersistenceController.shared.delete(room)
         }
     }
     
     private var listFooterAddButtonView: some View {
         Button(action: {
-            showNewRoomAlert.toggle()
+            presentNewRoomAlert.toggle()
         }) {
             Image(systemName: "plus")
                 .resizable()
@@ -51,15 +59,16 @@ struct HomeView<Store: ChatRoomStoreProtocol>: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .alert("새로운 대화방", isPresented: $showNewRoomAlert, actions: {
+        .alert("새로운 대화방", isPresented: $presentNewRoomAlert, actions: {
             TextField("대화방 이름을 입력해주세요.", text: $newRoomName)
             
             Button("만들기", action: {
                 if newRoomName.count > 0 {
-                    store.add(newRoom: Room(name: newRoomName))
+                    PersistenceController.shared.addRoom(name: newRoomName)
                     newRoomName = ""
                 }
             })
+            
             Button("취소", role: .cancel, action: {})
         })
     }
@@ -67,6 +76,6 @@ struct HomeView<Store: ChatRoomStoreProtocol>: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(store: MockChatRoomStore())
+        HomeView()
     }
 }

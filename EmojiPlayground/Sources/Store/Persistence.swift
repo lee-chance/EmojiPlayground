@@ -110,10 +110,27 @@ extension PersistenceController {
         let messageImage = MessageImage(id: messageImageID, asset: asset)
         
         Task {
-            guard let messageImage else { return }
-            try await CKContainer.default().privateCloudDatabase.save(messageImage.record)
-            
-            addMessage(type: type, value: messageImageID, sender: sender, in: room)
+            do {
+                guard let messageImage else { return }
+                try await CKContainer.default().privateCloudDatabase.save(messageImage.record)
+                
+                addMessage(type: type, value: messageImageID, sender: sender, in: room)
+            } catch {
+                print("cslog error: \(error)")
+            }
+        }
+    }
+    
+    func deleteImageMessage(_ message: Message) {
+        Task {
+            do {
+                let record = try await message.getRecord()
+                try await CKContainer.default().privateCloudDatabase.deleteRecord(withID: record.recordID)
+                
+                delete(message)
+            } catch {
+                print("cslog error: \(error)")
+            }
         }
     }
 }
@@ -124,7 +141,6 @@ struct MessageImage: CKRecordable {
     let record: CKRecord
     
     private static var recordType: String { "MessageImage" }
-    private static var zoneName: String { "com.apple.coredata.cloudkit.zone" }
     
     init?(record: CKRecord) {
         guard
@@ -138,7 +154,7 @@ struct MessageImage: CKRecordable {
     }
     
     init?(id: String, asset: CKAsset) {
-        let record = CKRecord(recordType: Self.recordType, recordID: CKRecord.ID(zoneID: CKRecordZone.ID(zoneName: Self.zoneName)))
+        let record = CKRecord(recordType: Self.recordType)
         record["id"] = id
         record["ckAsset"] = asset
         

@@ -15,6 +15,17 @@ protocol CKRecordable {
 }
 
 final class CloudKitUtility {
+    static let `public` = CloudKitUtility(database: CKContainer.default().publicCloudDatabase)
+    static let `private` = CloudKitUtility(database: CKContainer.default().privateCloudDatabase)
+    
+    private init(database: CKDatabase) {
+        self.container = CKContainer.default()
+        self.database = database
+    }
+    
+    private let container: CKContainer
+    private let database: CKDatabase
+    
     enum CloudKitError: String, LocalizedError {
         case iCouldAccountNotFound
         case iCouldAccountNotDetermined
@@ -31,8 +42,8 @@ final class CloudKitUtility {
 // MARK: - USER FUNCTIONS (Completion)
 
 extension CloudKitUtility {
-    static func getiCloudStatus(completion: @escaping (Result<Bool, Error>) -> Void) {
-        CKContainer.default().accountStatus { status, error in
+    func getiCloudStatus(completion: @escaping (Result<Bool, Error>) -> Void) {
+        container.accountStatus { status, error in
             switch status {
             case .available:
                 completion(.success(true))
@@ -50,8 +61,8 @@ extension CloudKitUtility {
         }
     }
     
-    static func requestApplicationPermission(completion: @escaping (Result<Bool, Error>) -> Void) {
-        CKContainer.default().requestApplicationPermission([.userDiscoverability]) { status, error in
+    func requestApplicationPermission(completion: @escaping (Result<Bool, Error>) -> Void) {
+        container.requestApplicationPermission([.userDiscoverability]) { status, error in
             if status == .granted {
                 completion(.success(true))
             } else {
@@ -60,8 +71,8 @@ extension CloudKitUtility {
         }
     }
     
-    static func fetchUserRecodeID(completion: @escaping (Result<CKRecord.ID, Error>) -> Void) {
-        CKContainer.default().fetchUserRecordID { id, error in
+    func fetchUserRecodeID(completion: @escaping (Result<CKRecord.ID, Error>) -> Void) {
+        container.fetchUserRecordID { id, error in
             if let id {
                 completion(.success(id))
             } else if let error {
@@ -72,8 +83,8 @@ extension CloudKitUtility {
         }
     }
     
-    static func discoverUserIdentity(id: CKRecord.ID, completion: @escaping (Result<String, Error>) -> Void) {
-        CKContainer.default().discoverUserIdentity(withUserRecordID: id) { identity, error in
+    func discoverUserIdentity(id: CKRecord.ID, completion: @escaping (Result<String, Error>) -> Void) {
+        container.discoverUserIdentity(withUserRecordID: id) { identity, error in
             if let name = identity?.nameComponents?.givenName {
                 completion(.success(name))
             } else if let error {
@@ -84,11 +95,11 @@ extension CloudKitUtility {
         }
     }
     
-    static func discoverUserIdentity(completion: @escaping (Result<String, Error>) -> Void) {
-        fetchUserRecodeID { fetchCompletion in
+    func discoverUserIdentity(completion: @escaping (Result<String, Error>) -> Void) {
+        fetchUserRecodeID { [weak self] fetchCompletion in
             switch fetchCompletion {
             case .success(let recoredID):
-                CloudKitUtility.discoverUserIdentity(id: recoredID, completion: completion)
+                self?.discoverUserIdentity(id: recoredID, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -100,7 +111,7 @@ extension CloudKitUtility {
 // MARK: - CRUD FUNCTIONS (Completion)
 
 extension CloudKitUtility {
-    static func fetch<T: CKRecordable>(
+    func fetch<T: CKRecordable>(
         predicate: NSPredicate,
         recordType: CKRecord.RecordType,
         sortDescriptions: [NSSortDescriptor]? = nil,
@@ -125,7 +136,7 @@ extension CloudKitUtility {
         add(operation: operation)
     }
     
-    static func add<T: CKRecordable>(item: T, completion: @escaping (Result<Bool, Error>) -> Void) {
+    func add<T: CKRecordable>(item: T, completion: @escaping (Result<Bool, Error>) -> Void) {
         // Get record
         let record = item.record
         
@@ -133,18 +144,18 @@ extension CloudKitUtility {
         save(record: record, completion: completion)
     }
     
-    static func update<T: CKRecordable>(item: T, completion: @escaping (Result<Bool, Error>) -> Void) {
+    func update<T: CKRecordable>(item: T, completion: @escaping (Result<Bool, Error>) -> Void) {
         add(item: item, completion: completion)
     }
     
-    static func delete<T: CKRecordable>(item: T, completion: @escaping (Result<Bool, Error>) -> Void) {
-        CloudKitUtility.delete(record: item.record, completion: completion)
+    func delete<T: CKRecordable>(item: T, completion: @escaping (Result<Bool, Error>) -> Void) {
+        delete(record: item.record, completion: completion)
     }
 }
 
 // MARK: CRUD FUNCTIONS Private (Completion)
 private extension CloudKitUtility {
-    static private func createOperation(
+    private func createOperation(
         predicate: NSPredicate,
         recordType: CKRecord.RecordType,
         sortDescriptions: [NSSortDescriptor]? = nil,
@@ -159,7 +170,7 @@ private extension CloudKitUtility {
         return queryOperation
     }
     
-    static private func addRecordMatchedBlock<T: CKRecordable>(operation: CKQueryOperation, completion: @escaping (_ item: T) -> Void) {
+    private func addRecordMatchedBlock<T: CKRecordable>(operation: CKQueryOperation, completion: @escaping (_ item: T) -> Void) {
         if #available(iOS 15.0, *) {
             operation.recordMatchedBlock = { recordID, result in
                 switch result {
@@ -178,7 +189,7 @@ private extension CloudKitUtility {
         }
     }
     
-    static private func addQueryResultBlock(operation: CKQueryOperation, completion: @escaping (_ finished: Bool) -> Void) {
+    private func addQueryResultBlock(operation: CKQueryOperation, completion: @escaping (_ finished: Bool) -> Void) {
         if #available(iOS 15.0, *) {
             operation.queryResultBlock = { result in
                 completion(true)
@@ -190,12 +201,12 @@ private extension CloudKitUtility {
         }
     }
     
-    static private func add(operation: CKDatabaseOperation) {
-        CKContainer.default().publicCloudDatabase.add(operation)
+    private func add(operation: CKDatabaseOperation) {
+        database.add(operation)
     }
     
-    static private func save(record: CKRecord, completion: @escaping (Result<Bool, Error>) -> Void) {
-        CKContainer.default().publicCloudDatabase.save(record) { record, error in
+    private func save(record: CKRecord, completion: @escaping (Result<Bool, Error>) -> Void) {
+        database.save(record) { record, error in
             if let error {
                 completion(.failure(error))
             } else {
@@ -204,8 +215,8 @@ private extension CloudKitUtility {
         }
     }
     
-    static private func delete(record: CKRecord, completion: @escaping (Result<Bool, Error>) -> Void) {
-        CKContainer.default().publicCloudDatabase.delete(withRecordID: record.recordID) { recordID, error in
+    private func delete(record: CKRecord, completion: @escaping (Result<Bool, Error>) -> Void) {
+        database.delete(withRecordID: record.recordID) { recordID, error in
             if let error {
                 print("error: \(error)")
                 completion(.failure(error))

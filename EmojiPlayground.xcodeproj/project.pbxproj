@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07AE702A07961D00674E47 /* ImageCacheManager.swift */; };
+		2E07AE762A079CE300674E47 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07AE752A079CE300674E47 /* MessageView.swift */; };
 		2E4B7945295343C400A41030 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B7944295343C400A41030 /* Environment.swift */; };
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
@@ -26,7 +28,6 @@
 		2E80979927E60CB100E40261 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979827E60CB100E40261 /* Screen.swift */; };
 		2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979A27E60F1C00E40261 /* NavigationBarColor.swift */; };
 		2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979C27E628F500E40261 /* DefaultCharacter.swift */; };
-		2E80979F27E62C1800E40261 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979E27E62C1800E40261 /* MessageView.swift */; };
 		2E8097A327E6492F00E40261 /* KeyboardHeightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8097A227E6492F00E40261 /* KeyboardHeightHelper.swift */; };
 		2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8097A527E64B7400E40261 /* ColorExtension.swift */; };
 		2E9517842945B168001E6ED6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517832945B168001E6ED6 /* MainView.swift */; };
@@ -45,6 +46,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E07AE702A07961D00674E47 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		2E07AE752A079CE300674E47 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2E4B7944295343C400A41030 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		2E4B79482953447A00A41030 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		2E4B794B2953493F00A41030 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -63,7 +66,6 @@
 		2E80979827E60CB100E40261 /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		2E80979A27E60F1C00E40261 /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
 		2E80979C27E628F500E40261 /* DefaultCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCharacter.swift; sourceTree = "<group>"; };
-		2E80979E27E62C1800E40261 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2E8097A227E6492F00E40261 /* KeyboardHeightHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelper.swift; sourceTree = "<group>"; };
 		2E8097A527E64B7400E40261 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		2E9517832945B168001E6ED6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			children = (
 				2E80979827E60CB100E40261 /* Screen.swift */,
 				2E9E832A2A0559AB002A2B90 /* GIFImage.swift */,
+				2E07AE702A07961D00674E47 /* ImageCacheManager.swift */,
 				2E9517862945B315001E6ED6 /* Extension */,
 				2EDE6E5629E26CBA0032FCCC /* Firebase */,
 				2E9E83292A050A49002A2B90 /* CloudKit */,
@@ -226,7 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				2E80979627E5F1AB00E40261 /* ImagePicker.swift */,
-				2E80979E27E62C1800E40261 /* MessageView.swift */,
+				2E07AE752A079CE300674E47 /* MessageView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -380,9 +383,9 @@
 				2E4B7945295343C400A41030 /* Environment.swift in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
 				2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */,
+				2E07AE762A079CE300674E47 /* MessageView.swift in Sources */,
 				2E80979727E5F1AB00E40261 /* ImagePicker.swift in Sources */,
 				2E8097A327E6492F00E40261 /* KeyboardHeightHelper.swift in Sources */,
-				2E80979F27E62C1800E40261 /* MessageView.swift in Sources */,
 				2E80979927E60CB100E40261 /* Screen.swift in Sources */,
 				2EFD113229E162EC00924121 /* EmoticonStorageView.swift in Sources */,
 				2EBE350B29F2D9E000F30846 /* Room.swift in Sources */,
@@ -394,6 +397,7 @@
 				2EBE350D29F2DA2800F30846 /* Persistence.swift in Sources */,
 				2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */,
 				2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */,
+				2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
 				2E72AFE029FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,

@@ -18,8 +18,7 @@ struct EmojiPlaygroundApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
-//            MainView()
+            MainView()
                 .environment(\.managedObjectContext, PersistenceController.shared.context)
                 .environmentObject(mainRouter)
                 .overlay(mainOverlay)

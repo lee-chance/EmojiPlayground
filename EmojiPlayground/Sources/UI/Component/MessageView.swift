@@ -49,7 +49,11 @@ struct MessageView: View {
             }
             
             Button("메시지 삭제", role: .destructive) {
-                PersistenceController.shared.delete(message)
+                if message.contentType.isImage {
+                    PersistenceController.shared.deleteImageMessage(message)
+                } else {
+                    PersistenceController.shared.delete(message)
+                }
             }
             
             Button("취소", role: .cancel) { }
@@ -136,7 +140,7 @@ extension MessageView {
                 )
                 .task(id: retryCount) {
                     do {
-                        let ckAsset = try await message.getAssetData()
+                        let ckAsset = try await message.getAsset()
                         if let url = ckAsset.fileURL {
                             imageState = .success(url)
                         } else {
@@ -170,7 +174,7 @@ extension MessageView {
                         
                         Text("Tap to retry")
                     }
-                        .tint(.white)
+                        .foregroundColor(.white)
                 )
                 .onTapGesture {
                     imageState = .loading

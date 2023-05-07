@@ -39,9 +39,10 @@ struct HomeView: View {
                 ChatView(room: room)
             }
         }
-        .onDelete(perform: removeLanguages)
+//        .onDelete(perform: removeLanguages)
     }
     
+    // FIXME: Room을 삭제해도 이미지가 남아있다. 이것도 삭제되어야 Room 삭제 가능
     func removeLanguages(at offsets: IndexSet) {
         for index in offsets {
             let room = rooms[index]

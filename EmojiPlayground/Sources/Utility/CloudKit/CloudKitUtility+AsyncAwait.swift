@@ -11,9 +11,9 @@ import CloudKit
 // MARK: - USER FUNCTIONS (Async Await)
 
 extension CloudKitUtility {
-    static func getiCloudStatus() async throws -> Bool {
+    func getiCloudStatus() async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
-            CloudKitUtility.getiCloudStatus { result in
+            getiCloudStatus { result in
                 switch result {
                 case .success(let success):
                     continuation.resume(returning: success)
@@ -24,9 +24,9 @@ extension CloudKitUtility {
         }
     }
     
-    static func requestApplicationPermission() async throws -> Bool {
+    func requestApplicationPermission() async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
-            CloudKitUtility.requestApplicationPermission { result in
+            requestApplicationPermission { result in
                 switch result {
                 case .success(let success):
                     continuation.resume(returning: success)
@@ -37,9 +37,9 @@ extension CloudKitUtility {
         }
     }
     
-    static func discoverUserIdentity() async throws -> String {
+    func discoverUserIdentity() async throws -> String {
         try await withCheckedThrowingContinuation { continuation in
-            CloudKitUtility.discoverUserIdentity { result in
+            discoverUserIdentity { result in
                 switch result {
                 case .success(let success):
                     continuation.resume(returning: success)
@@ -55,22 +55,23 @@ extension CloudKitUtility {
 // MARK: - CRUD FUNCTIONS (Async Await)
 
 extension CloudKitUtility {
-    static func fetch<T: CKRecordable>(
+    func fetch<T: CKRecordable>(
         predicate: NSPredicate,
         recordType: CKRecord.RecordType,
         sortDescriptions: [NSSortDescriptor]? = nil,
         resultsLimit: Int? = nil
     ) async -> [T] {
         await withCheckedContinuation { continuation in
-            CloudKitUtility.fetch(predicate: predicate, recordType: recordType, sortDescriptions: sortDescriptions, resultsLimit: resultsLimit) { items in
+            fetch(predicate: predicate, recordType: recordType, sortDescriptions: sortDescriptions, resultsLimit: resultsLimit) { items in
                 continuation.resume(returning: items)
             }
         }
     }
     
-    static func add<T: CKRecordable>(item: T) async throws -> Bool {
+    @discardableResult
+    func add<T: CKRecordable>(item: T) async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
-            CloudKitUtility.add(item: item) { result in
+            add(item: item) { result in
                 switch result {
                 case .success(let success):
                     continuation.resume(returning: success)
@@ -81,9 +82,9 @@ extension CloudKitUtility {
         }
     }
     
-    static func update<T: CKRecordable>(item: T) async throws -> Bool {
+    func update<T: CKRecordable>(item: T) async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
-            CloudKitUtility.update(item: item) { result in
+            update(item: item) { result in
                 switch result {
                 case .success(let success):
                     continuation.resume(returning: success)
@@ -94,9 +95,9 @@ extension CloudKitUtility {
         }
     }
     
-    static func delete<T: CKRecordable>(item: T) async throws -> Bool {
+    func delete<T: CKRecordable>(item: T) async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
-            CloudKitUtility.delete(item: item) { result in
+            delete(item: item) { result in
                 switch result {
                 case .success(let success):
                     continuation.resume(returning: success)

@@ -71,7 +71,24 @@ enum ImageLoadError: Error {
 }
 
 extension Message {
-    func getAssetData() async throws -> CKAsset {
+    func getAsset() async throws -> CKAsset {
+        let cachedKey = NSString(string: contentValue)
+
+        if let cachedAsset = ImageCacheManager.shared.object(forKey: cachedKey) {
+            return cachedAsset
+        }
+
+        let record = try await getRecord()
+
+        guard let asset = record["ckAsset"] as? CKAsset else {
+            throw ImageLoadError.noAsset
+        }
+
+        ImageCacheManager.shared.setObject(asset, forKey: cachedKey)
+        return asset
+    }
+    
+    func getRecord() async throws -> CKRecord {
         try await withCheckedThrowingContinuation { continuation in
             let query = CKQuery(
                 recordType: "MessageImage",
@@ -80,33 +97,26 @@ extension Message {
             
             let operation = CKQueryOperation(query: query)
             operation.qualityOfService = .userInitiated
-            var returendAsset: CKAsset?
+            var returendRecord: CKRecord?
             
             operation.recordMatchedBlock = { id, result in
                 switch result {
                 case .failure(let error):
-                    print("Failed to get audio record. \(error)")
                     continuation.resume(throwing: error)
                 case .success(let record):
-                    guard let asset = record["ckAsset"] as? CKAsset else {
-                        print("failed to get asset")
-                        continuation.resume(throwing: ImageLoadError.noAsset)
-                        return
-                    }
-                    returendAsset = asset
+                    returendRecord = record
                 }
             }
             
             operation.queryResultBlock = { result in
                 switch result {
                 case.success:
-                    if let returendAsset {
-                        continuation.resume(returning: returendAsset)
+                    if let returendRecord {
+                        continuation.resume(returning: returendRecord)
                     } else {
                         continuation.resume(throwing: ImageLoadError.noAsset)
                     }
                 case .failure(let error):
-                    print("Failed to get attachment from cloudkit. \(error)")
                     continuation.resume(throwing: error)
                 }
             }

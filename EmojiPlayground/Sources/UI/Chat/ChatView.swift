@@ -73,6 +73,7 @@ struct ChatView: View {
         .padding(.top, 1) // Solid Navigation Bar
         .onTapGesture {
             UIApplication.shared.endEditing()
+            showsEmojiLibrary = false
         }
     }
     

@@ -112,9 +112,11 @@ extension PersistenceController {
         Task {
             do {
                 guard let messageImage else { return }
-                try await CKContainer.default().privateCloudDatabase.save(messageImage.record)
+                let isAdded = try await CloudKitUtility.private.add(item: messageImage)
                 
-                addMessage(type: type, value: messageImageID, sender: sender, in: room)
+                if isAdded {
+                    addMessage(type: type, value: messageImageID, sender: sender, in: room)
+                }
             } catch {
                 print("cslog error: \(error)")
             }
@@ -124,10 +126,12 @@ extension PersistenceController {
     func deleteImageMessage(_ message: Message) {
         Task {
             do {
-                let record = try await message.getRecord()
-                try await CKContainer.default().privateCloudDatabase.deleteRecord(withID: record.recordID)
+                let messageImage = try await message.getMessageImage()
+                let isDeleted = try await CloudKitUtility.private.delete(item: messageImage)
                 
-                delete(message)
+                if isDeleted {
+                    delete(message)
+                }
             } catch {
                 print("cslog error: \(error)")
             }
@@ -135,7 +139,7 @@ extension PersistenceController {
     }
 }
 
-struct MessageImage: CKRecordable {
+struct MessageImage: CKRecordable, Identifiable {
     let id: String
     let image: CKAsset
     let record: CKRecord
@@ -159,6 +163,17 @@ struct MessageImage: CKRecordable {
         record["ckAsset"] = asset
         
         self.init(record: record)
+    }
+}
+
+extension MessageImage {
+    static func all() async throws -> [MessageImage] {
+        let images: [MessageImage] = await CloudKitUtility.private.fetch(
+            predicate: NSPredicate(value: true),
+            recordType: "MessageImage"
+        )
+        
+        return images
     }
 }
 #endif

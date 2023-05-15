@@ -6,20 +6,38 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct EmoticonStorageView: View {
+    @FetchRequest(fetchRequest: Room.all()) private var rooms
+    @State private var images: [MessageImage] = []
+    
+    var gridItems: [GridItem] {
+        Array(repeating: GridItem(), count: 3)
+    }
+    
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
-                ForEach(0...5, id: \.self) { i in
-                    Text("\(i)")
-                        .frame(width: 50, height: 50)
-                        .border(Color.red)
+        GeometryReader { geometryProxy in
+            ScrollView {
+                LazyVGrid(columns: gridItems, spacing: 20) {
+                    ForEach(images) { image in
+                        WebImage(url: image.image.fileURL)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 200)
+                    }
                 }
+                .padding()
             }
-            .padding()
         }
         .navigationTitle("보관함")
+        .task {
+            do {
+                images = try await MessageImage.all()
+            } catch {
+                print("cslog error: \(error)")
+            }
+        }
     }
 }
 

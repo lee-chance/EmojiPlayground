@@ -14,30 +14,31 @@ struct HomeView: View {
     @FetchRequest(fetchRequest: Room.all()) private var rooms
     
     var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    roomListView
-                } footer: {
-                    listFooterAddButtonView
+        Form {
+            Section {
+                NavigationLink("이모티콘 보관함으로 가기") {
+                    EmoticonStorageView()
                 }
-            }
-            .navigationTitle("연습장 📝")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                Button("Add") {
-                    presentNewRoomAlert.toggle()
-                }
+                
+                roomListView
+            } footer: {
+                listFooterAddButtonView
             }
         }
-        .navigationViewStyle(.stack) // ipad에서 Drawer를 사용하지 않고 iphone과 같은 UI로 동작
+        .toolbar {
+            Button("Add") {
+                presentNewRoomAlert.toggle()
+            }
+        }
+        .navigationTitle("연습장 📝")
+        .navigationDestination(for: Room.self) { room in
+            ChatView(room: room)
+        }
     }
     
     private var roomListView: some View {
         ForEach(rooms) { room in
-            NavigationLink(room.name) {
-                ChatView(room: room)
-            }
+            NavigationLink(room.name, value: room)
         }
 //        .onDelete(perform: removeLanguages)
     }

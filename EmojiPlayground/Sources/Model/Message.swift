@@ -78,7 +78,8 @@ extension Message {
             return cachedAsset
         }
 
-        let record = try await getRecord()
+        let messageImage = try await getMessageImage()
+        let record = messageImage.record
 
         guard let asset = record["ckAsset"] as? CKAsset else {
             throw ImageLoadError.noAsset
@@ -88,42 +89,18 @@ extension Message {
         return asset
     }
     
-    func getRecord() async throws -> CKRecord {
-        try await withCheckedThrowingContinuation { continuation in
-            let query = CKQuery(
-                recordType: "MessageImage",
-                predicate: .init(format: "id == %@", contentValue)
-            )
-            
-            let operation = CKQueryOperation(query: query)
-            operation.qualityOfService = .userInitiated
-            var returendRecord: CKRecord?
-            
-            operation.recordMatchedBlock = { id, result in
-                switch result {
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                case .success(let record):
-                    returendRecord = record
-                }
-            }
-            
-            operation.queryResultBlock = { result in
-                switch result {
-                case.success:
-                    if let returendRecord {
-                        continuation.resume(returning: returendRecord)
-                    } else {
-                        continuation.resume(throwing: ImageLoadError.noAsset)
-                    }
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
-            
-            let database = CKContainer.default().privateCloudDatabase
-            database.add(operation)
+    func getMessageImage() async throws -> MessageImage {
+        let images: [MessageImage] = await CloudKitUtility.private.fetch(
+            predicate: NSPredicate(format: "id == %@", contentValue),
+            recordType: "MessageImage",
+            resultsLimit: 1
+        )
+        
+        guard let image = images.first else {
+            throw ImageLoadError.noAsset
         }
+        
+        return image
     }
 }
 #endif

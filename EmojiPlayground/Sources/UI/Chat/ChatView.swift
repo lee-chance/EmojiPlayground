@@ -38,8 +38,9 @@ struct ChatView: View {
             bottomEmojiView
         }
         .background(theme.chatBackgroundColor)
-//        .navigationTitle(showingMode == .me ? "보낼 때" : "받을 때")
+        .navigationTitle(room.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarRole(.editor)
         .sheet(isPresented: $showsPhotoLibrary) {
             ImagePicker { imageURL in
                 PersistenceController.shared.addImageMessage(type: .localImage, imageURL: imageURL, sender: .me, in: room)

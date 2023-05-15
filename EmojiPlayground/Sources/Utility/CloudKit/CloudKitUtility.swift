@@ -15,16 +15,17 @@ protocol CKRecordable {
 }
 
 final class CloudKitUtility {
-    static let `public` = CloudKitUtility(database: CKContainer.default().publicCloudDatabase)
-    static let `private` = CloudKitUtility(database: CKContainer.default().privateCloudDatabase)
+    static let `public` = CloudKitUtility(database: container.publicCloudDatabase)
+    static let `private` = CloudKitUtility(database: container.privateCloudDatabase)
     
     private init(database: CKDatabase) {
-        self.container = CKContainer.default()
         self.database = database
     }
     
-    private let container: CKContainer
+    private static let container: CKContainer = CKContainer.default()
     private let database: CKDatabase
+    
+    static var isLoggedIn: Bool = false
     
     enum CloudKitError: String, LocalizedError {
         case iCouldAccountNotFound
@@ -42,10 +43,12 @@ final class CloudKitUtility {
 // MARK: - USER FUNCTIONS (Completion)
 
 extension CloudKitUtility {
-    func getiCloudStatus(completion: @escaping (Result<Bool, Error>) -> Void) {
+    static func getiCloudStatus(completion: @escaping (Result<Bool, Error>) -> Void) {
         container.accountStatus { status, error in
+            isLoggedIn = false
             switch status {
             case .available:
+                isLoggedIn = true
                 completion(.success(true))
             case .couldNotDetermine:
                 completion(.failure(CloudKitError.iCouldAccountNotDetermined))
@@ -61,7 +64,7 @@ extension CloudKitUtility {
         }
     }
     
-    func requestApplicationPermission(completion: @escaping (Result<Bool, Error>) -> Void) {
+    static func requestApplicationPermission(completion: @escaping (Result<Bool, Error>) -> Void) {
         container.requestApplicationPermission([.userDiscoverability]) { status, error in
             if status == .granted {
                 completion(.success(true))
@@ -71,7 +74,7 @@ extension CloudKitUtility {
         }
     }
     
-    func fetchUserRecodeID(completion: @escaping (Result<CKRecord.ID, Error>) -> Void) {
+    static func fetchUserRecodeID(completion: @escaping (Result<CKRecord.ID, Error>) -> Void) {
         container.fetchUserRecordID { id, error in
             if let id {
                 completion(.success(id))
@@ -83,7 +86,7 @@ extension CloudKitUtility {
         }
     }
     
-    func discoverUserIdentity(id: CKRecord.ID, completion: @escaping (Result<String, Error>) -> Void) {
+    static func discoverUserIdentity(id: CKRecord.ID, completion: @escaping (Result<String, Error>) -> Void) {
         container.discoverUserIdentity(withUserRecordID: id) { identity, error in
             if let name = identity?.nameComponents?.givenName {
                 completion(.success(name))
@@ -95,11 +98,11 @@ extension CloudKitUtility {
         }
     }
     
-    func discoverUserIdentity(completion: @escaping (Result<String, Error>) -> Void) {
-        fetchUserRecodeID { [weak self] fetchCompletion in
+    static func discoverUserIdentity(completion: @escaping (Result<String, Error>) -> Void) {
+        fetchUserRecodeID { fetchCompletion in
             switch fetchCompletion {
             case .success(let recoredID):
-                self?.discoverUserIdentity(id: recoredID, completion: completion)
+                discoverUserIdentity(id: recoredID, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }

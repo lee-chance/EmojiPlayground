@@ -119,22 +119,13 @@ public enum MessageSender: Int16 {
 
 public enum MessageContentType: Int16 {
     case plainText = 1
-    case localImage = 2
-    case storageImage = 3
+    case image = 2
     
     var isPlainText: Bool {
         self == .plainText
     }
     
-    var isLocalImage: Bool {
-        self == .localImage
-    }
-    
-    var isStorageImage: Bool {
-        self == .storageImage
-    }
-    
     var isImage: Bool {
-        isLocalImage || isStorageImage
+        self == .image
     }
 }

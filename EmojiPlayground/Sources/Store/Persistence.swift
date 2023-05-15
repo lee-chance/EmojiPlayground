@@ -73,10 +73,11 @@ extension PersistenceController {
         save()
     }
     
-    func addMessage(type: MessageContentType, imageData: Data, sender: MessageSender, in room: Room) {
+    func addMessage(type: MessageContentType, value: String, imageData: Data, sender: MessageSender, in room: Room) {
         let newMessage = Message(context: context)
         
         newMessage.contentType = type
+        newMessage.contentValue = value
         newMessage.imageData = imageData
         newMessage.sender = sender
         newMessage.room = room
@@ -115,7 +116,9 @@ extension PersistenceController {
                 let isAdded = try await CloudKitUtility.private.add(item: messageImage)
                 
                 if isAdded {
-                    addMessage(type: type, value: messageImageID, sender: sender, in: room)
+                    if let imageData = try? Data(contentsOf: imageURL) {
+                        addMessage(type: type, value: messageImageID, imageData: imageData, sender: sender, in: room)
+                    }
                 }
             } catch {
                 print("cslog error: \(error)")

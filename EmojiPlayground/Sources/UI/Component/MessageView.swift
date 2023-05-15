@@ -25,7 +25,7 @@ struct MessageView: View {
             switch message.contentType {
             case .plainText:
                 PlainTextMessageView(message: message)
-            case .localImage, .storageImage:
+            case .image:
                 ImageMessageView(message: message)
             }
             
@@ -40,13 +40,13 @@ struct MessageView: View {
             }
         }
         .confirmationDialog("", isPresented: $presentAlert) {
-            if message.contentType.isLocalImage {
-                if let url = URL(string: message.contentValue) {
-                    Button("보관함에 저장") {
-                        saveToStorage(url: url)
-                    }
-                }
-            }
+//            if message.contentType.isLocalImage {
+//                if let url = URL(string: message.contentValue) {
+//                    Button("보관함에 저장") {
+//                        saveToStorage(url: url)
+//                    }
+//                }
+//            }
             
             Button("메시지 삭제", role: .destructive) {
                 if message.contentType.isImage {
@@ -66,37 +66,37 @@ struct MessageView: View {
             .frame(width: Screen.width * 0.15)
     }
     
-    private func saveToStorage(url: URL) {
-        Task {
-            do {
-                mainRounter.show {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .foregroundColor(.white)
-                }
-                
-                let url = try await FirebaseStorageManager.upload(from: url, to: "image")
-                
-                try await FirestoreManager.reference(path: .images)
-                    .document()
-                    .setData(["image_url" : url.absoluteString])
-                
-                PersistenceController.shared.update(message: message, type: .storageImage, value: url.absoluteString)
-                
-                mainRounter.show {
-                    Image(systemName: "checkmark.circle")
-                        .resizable()
-                        .foregroundColor(.green)
-                        .frame(width: 100, height: 100)
-                        .onTapGesture {
-                            mainRounter.hide()
-                        }
-                }
-            } catch {
-                print(error)
-            }
-        }
-    }
+//    private func saveToStorage(url: URL) {
+//        Task {
+//            do {
+//                mainRounter.show {
+//                    ProgressView()
+//                        .progressViewStyle(.circular)
+//                        .foregroundColor(.white)
+//                }
+//
+//                let url = try await FirebaseStorageManager.upload(from: url, to: "image")
+//
+//                try await FirestoreManager.reference(path: .images)
+//                    .document()
+//                    .setData(["image_url" : url.absoluteString])
+//
+//                PersistenceController.shared.update(message: message, type: .storageImage, value: url.absoluteString)
+//
+//                mainRounter.show {
+//                    Image(systemName: "checkmark.circle")
+//                        .resizable()
+//                        .foregroundColor(.green)
+//                        .frame(width: 100, height: 100)
+//                        .onTapGesture {
+//                            mainRounter.hide()
+//                        }
+//                }
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
 }
 
 extension MessageView {
@@ -133,6 +133,16 @@ extension MessageView {
         
         private func loadingView() -> some View {
             commonMaterialView
+                .background(
+                    Group {
+                        if let imageData = message.imageData, let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                        }
+                    }
+                )
+                .cornerRadius(12)
                 .overlay(
                     ProgressView()
                         .progressViewStyle(.circular)
@@ -184,7 +194,7 @@ extension MessageView {
         private var commonMaterialView: some View {
             Rectangle()
                 .frame(width: 200, height: 200)
-                .background(.thickMaterial)
+                .foregroundColor(.black.opacity(0.5))
                 .cornerRadius(12)
         }
         

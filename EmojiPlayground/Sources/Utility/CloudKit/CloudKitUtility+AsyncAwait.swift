@@ -11,7 +11,7 @@ import CloudKit
 // MARK: - USER FUNCTIONS (Async Await)
 
 extension CloudKitUtility {
-    func getiCloudStatus() async throws -> Bool {
+    static func getiCloudStatus() async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
             getiCloudStatus { result in
                 switch result {
@@ -24,7 +24,7 @@ extension CloudKitUtility {
         }
     }
     
-    func requestApplicationPermission() async throws -> Bool {
+    static func requestApplicationPermission() async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
             requestApplicationPermission { result in
                 switch result {
@@ -37,7 +37,7 @@ extension CloudKitUtility {
         }
     }
     
-    func discoverUserIdentity() async throws -> String {
+    static func discoverUserIdentity() async throws -> String {
         try await withCheckedThrowingContinuation { continuation in
             discoverUserIdentity { result in
                 switch result {

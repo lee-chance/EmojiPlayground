@@ -9,7 +9,6 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct EmoticonStorageView: View {
-    @FetchRequest(fetchRequest: Room.all()) private var rooms
     @State private var images: [MessageImage] = []
     
     var gridItems: [GridItem] {

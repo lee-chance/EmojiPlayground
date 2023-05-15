@@ -13,6 +13,7 @@ struct ChatView: View {
     @State private var text = ""
     @State private var showsPhotoLibrary = false
     @State private var showsEmojiLibrary = false
+    @State private var iCloudAccountNotFoundAlert = false
     
     let room: Room
     
@@ -43,9 +44,25 @@ struct ChatView: View {
         .toolbarRole(.editor)
         .sheet(isPresented: $showsPhotoLibrary) {
             ImagePicker { imageURL in
-                PersistenceController.shared.addImageMessage(type: .localImage, imageURL: imageURL, sender: .me, in: room)
+                if CloudKitUtility.isLoggedIn {
+                    PersistenceController.shared.addImageMessage(type: .image, imageURL: imageURL, sender: .me, in: room)
+                } else {
+                    // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        iCloudAccountNotFoundAlert = true
+                    }
+                }
             }
         }
+        .alert("로그인 오류", isPresented: $iCloudAccountNotFoundAlert, actions: {
+            Button("설정으로 이동") {
+                UIApplication.shared.open(URL(string: UIApplication.openNotificationSettingsURLString)!)
+            }
+            
+            Button("취소", role: .cancel) { }
+        }, message: {
+            Text("로그인 후에 사용할 수 있는 기능입니다.\n설정에서 iCloud에 로그인을 해주세요.")
+        })
     }
     
     private var chatListView: some View {

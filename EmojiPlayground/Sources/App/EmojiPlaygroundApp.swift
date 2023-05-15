@@ -10,7 +10,11 @@ import FirebaseCore
 
 @main
 struct EmojiPlaygroundApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+    
     @StateObject var mainRouter = MainRouter()
+    
+    @State private var iCloudAccountNotFoundAlert = false
     
     init() {
         FirebaseApp.configure()
@@ -22,6 +26,31 @@ struct EmojiPlaygroundApp: App {
                 .environment(\.managedObjectContext, PersistenceController.shared.context)
                 .environmentObject(mainRouter)
                 .overlay(mainOverlay)
+                .alert("로그인 오류", isPresented: $iCloudAccountNotFoundAlert, actions: {
+                    Button("설정으로 이동") {
+                        UIApplication.shared.open(URL(string: UIApplication.openNotificationSettingsURLString)!)
+                    }
+                    
+                    Button("취소", role: .cancel) { }
+                }, message: {
+                    Text("설정에서 iCloud에 로그인을 해주세요.")
+                })
+        }
+        .onChange(of: scenePhase) { newValue in
+            switch newValue {
+            case .active:
+                Task {
+                    do {
+                        let _ = try await CloudKitUtility.getiCloudStatus()
+                    } catch CloudKitUtility.CloudKitError.iCouldAccountNotFound {
+                        iCloudAccountNotFoundAlert = true
+                    } catch {
+                        print("cslog error: \(error)")
+                    }
+                }
+            default:
+                break
+            }
         }
     }
     

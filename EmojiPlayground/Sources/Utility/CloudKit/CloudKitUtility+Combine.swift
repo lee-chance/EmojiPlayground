@@ -12,25 +12,25 @@ import CloudKit
 // MARK: - USER FUNCTIONS (Combine)
 
 extension CloudKitUtility {
-    func getiCloudStatus() -> Future<Bool, Error> {
-        Future { [weak self] promise in
-            self?.getiCloudStatus { result in
+    static func getiCloudStatus() -> Future<Bool, Error> {
+        Future { promise in
+            getiCloudStatus { result in
                 promise(result)
             }
         }
     }
     
-    func requestApplicationPermission() -> Future<Bool, Error> {
-        Future { [weak self] promise in
-            self?.requestApplicationPermission { result in
+    static func requestApplicationPermission() -> Future<Bool, Error> {
+        Future { promise in
+            requestApplicationPermission { result in
                 promise(result)
             }
         }
     }
     
-    func discoverUserIdentity() -> Future<String, Error> {
-        Future { [weak self] promise in
-            self?.discoverUserIdentity(completion: promise)
+    static func discoverUserIdentity() -> Future<String, Error> {
+        Future { promise in
+            discoverUserIdentity(completion: promise)
         }
     }
 }

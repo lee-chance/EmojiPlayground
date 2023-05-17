@@ -20,6 +20,9 @@
 		2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDB29FFAE4B00DAFC39 /* CloudKitUtility.swift */; };
 		2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDD29FFB07500DAFC39 /* CloudKitUtility+Combine.swift */; };
 		2E72AFE029FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDF29FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift */; };
+		2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C8F602A14CF5D00B3B3A0 /* CommunityView.swift */; };
+		2E7C8F652A14FD4A00B3B3A0 /* EmoticonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C8F642A14FD4A00B3B3A0 /* EmoticonStorage.swift */; };
+		2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C8F662A15056A00B3B3A0 /* Community.swift */; };
 		2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */; };
 		2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80977E27E5BB4F00E40261 /* HomeView.swift */; };
 		2E80978127E5BB5000E40261 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E80978027E5BB5000E40261 /* Assets.xcassets */; };
@@ -59,6 +62,9 @@
 		2E72AFDB29FFAE4B00DAFC39 /* CloudKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitUtility.swift; sourceTree = "<group>"; };
 		2E72AFDD29FFB07500DAFC39 /* CloudKitUtility+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudKitUtility+Combine.swift"; sourceTree = "<group>"; };
 		2E72AFDF29FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudKitUtility+AsyncAwait.swift"; sourceTree = "<group>"; };
+		2E7C8F602A14CF5D00B3B3A0 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		2E7C8F642A14FD4A00B3B3A0 /* EmoticonStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorage.swift; sourceTree = "<group>"; };
+		2E7C8F662A15056A00B3B3A0 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		2E80977927E5BB4F00E40261 /* EmojiPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmojiPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPlaygroundApp.swift; sourceTree = "<group>"; };
 		2E80977E27E5BB4F00E40261 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -116,6 +122,15 @@
 				2EBE350C29F2DA2800F30846 /* Persistence.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		2E7C8F5F2A14CF5100B3B3A0 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				2E7C8F602A14CF5D00B3B3A0 /* CommunityView.swift */,
+				2E7C8F662A15056A00B3B3A0 /* Community.swift */,
+			);
+			path = Community;
 			sourceTree = "<group>";
 		};
 		2E80977027E5BB4F00E40261 = {
@@ -201,11 +216,12 @@
 			isa = PBXGroup;
 			children = (
 				2E3A025D2A122611003E8293 /* Navigation */,
-				2E9517872945B32D001E6ED6 /* Component */,
 				2E9517822945B154001E6ED6 /* Main */,
 				2E95178B2945C120001E6ED6 /* Home */,
 				2E95178C2945C153001E6ED6 /* Chat */,
+				2E9517872945B32D001E6ED6 /* Component */,
 				2EFD113029E1619B00924121 /* EmoticonStorage */,
+				2E7C8F5F2A14CF5100B3B3A0 /* Community */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -305,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				2EFD113129E162EC00924121 /* EmoticonStorageView.swift */,
+				2E7C8F642A14FD4A00B3B3A0 /* EmoticonStorage.swift */,
 			);
 			path = EmoticonStorage;
 			sourceTree = "<group>";
@@ -402,6 +419,7 @@
 				2E8097A327E6492F00E40261 /* KeyboardHeightHelper.swift in Sources */,
 				2E80979927E60CB100E40261 /* Screen.swift in Sources */,
 				2EFD113229E162EC00924121 /* EmoticonStorageView.swift in Sources */,
+				2E7C8F652A14FD4A00B3B3A0 /* EmoticonStorage.swift in Sources */,
 				2EBE350B29F2D9E000F30846 /* Room.swift in Sources */,
 				2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
@@ -413,10 +431,12 @@
 				2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */,
 				2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */,
 				2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */,
+				2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
 				2E72AFE029FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift in Sources */,
 				2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
+				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
 				2E70C2B929E2BBFE00D0AE21 /* FirebaseStorageManager.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,

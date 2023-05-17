@@ -12,6 +12,10 @@ enum Panel: Hashable {
     case home
     /// The value for the ``EmoticonStorageView``.
     case emoticonStorage
+    /// The value for the ``CommunityView``.
+    case community
+    /// The value for the ``SettingsView``.
+    case settings
 }
 
 struct Sidebar: View {
@@ -26,6 +30,14 @@ struct Sidebar: View {
             NavigationLink(value: Panel.emoticonStorage) {
                 Label("보관함", systemImage: "archivebox")
             }
+            
+            NavigationLink(value: Panel.community) {
+                Label("커뮤니티", systemImage: "globe")
+            }
+            
+//            NavigationLink(value: Panel.settings) {
+//                Label("설정", systemImage: "gearshape")
+//            }
         }
         .navigationTitle("Emote")
     }

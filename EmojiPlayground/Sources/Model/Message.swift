@@ -92,7 +92,6 @@ extension Message {
     func getMessageImage() async throws -> MessageImage {
         let images: [MessageImage] = await CloudKitUtility.private.fetch(
             predicate: NSPredicate(format: "id == %@", contentValue),
-            recordType: "MessageImage",
             resultsLimit: 1
         )
         

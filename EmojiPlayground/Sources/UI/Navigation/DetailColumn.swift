@@ -16,6 +16,10 @@ struct DetailColumn: View {
             HomeView()
         case .emoticonStorage:
             EmoticonStorageView()
+        case .community:
+            CommunityView()
+        case .settings:
+            Text("Settings")
         }
     }
 }

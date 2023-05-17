@@ -15,11 +15,15 @@ struct HomeView: View {
     
     var body: some View {
         Form {
+            NavigationLink("이모티콘 보관함으로 가기") {
+                EmoticonStorageView()
+            }
+            
+            NavigationLink("커뮤니티로 가기") {
+                CommunityView()
+            }
+            
             Section {
-                NavigationLink("이모티콘 보관함으로 가기") {
-                    EmoticonStorageView()
-                }
-                
                 roomListView
             } footer: {
                 listFooterAddButtonView

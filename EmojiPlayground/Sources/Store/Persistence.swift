@@ -135,6 +135,9 @@ extension PersistenceController {
                 if isDeleted {
                     delete(message)
                 }
+            } catch ImageLoadError.noAsset {
+                print("cslog error: noAsset")
+                delete(message)
             } catch {
                 print("cslog error: \(error)")
             }
@@ -144,19 +147,19 @@ extension PersistenceController {
 
 struct MessageImage: CKRecordable, Identifiable {
     let id: String
-    let image: CKAsset
+    let asset: CKAsset
     let record: CKRecord
     
-    private static var recordType: String { "MessageImage" }
+    static var recordType: String { "MessageImage" }
     
     init?(record: CKRecord) {
         guard
             let id = record["id"] as? String,
-            let image = record["ckAsset"] as? CKAsset
+            let asset = record["ckAsset"] as? CKAsset
         else { return nil }
         
         self.id = id
-        self.image = image
+        self.asset = asset
         self.record = record
     }
     
@@ -173,7 +176,16 @@ extension MessageImage {
     static func all() async throws -> [MessageImage] {
         let images: [MessageImage] = await CloudKitUtility.private.fetch(
             predicate: NSPredicate(value: true),
-            recordType: "MessageImage"
+            sortDescriptions: [NSSortDescriptor(key: "creationDate", ascending: false)]
+        )
+        
+        return images
+    }
+    
+    static func allPublic() async throws -> [MessageImage] {
+        let images: [MessageImage] = await CloudKitUtility.public.fetch(
+            predicate: NSPredicate(value: true),
+            sortDescriptions: [NSSortDescriptor(key: "creationDate", ascending: false)]
         )
         
         return images

@@ -10,6 +10,7 @@ import CloudKit
 
 protocol CKRecordable {
     var record: CKRecord { get }
+    static var recordType: CKRecord.RecordType { get }
     
     init?(record: CKRecord)
 }

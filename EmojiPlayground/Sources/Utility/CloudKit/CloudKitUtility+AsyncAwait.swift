@@ -57,7 +57,7 @@ extension CloudKitUtility {
 extension CloudKitUtility {
     func fetch<T: CKRecordable>(
         predicate: NSPredicate,
-        recordType: CKRecord.RecordType,
+        recordType: CKRecord.RecordType = T.recordType,
         sortDescriptions: [NSSortDescriptor]? = nil,
         resultsLimit: Int? = nil
     ) async -> [T] {

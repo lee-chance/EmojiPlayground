@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseCore
 
 @main
 struct EmojiPlaygroundApp: App {
@@ -15,10 +14,6 @@ struct EmojiPlaygroundApp: App {
     @StateObject var mainRouter = MainRouter()
     
     @State private var iCloudAccountNotFoundAlert = false
-    
-    init() {
-        FirebaseApp.configure()
-    }
     
     var body: some Scene {
         WindowGroup {

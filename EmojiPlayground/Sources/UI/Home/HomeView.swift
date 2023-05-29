@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Binding var navigationSelection: Panel?
+    
     @State private var presentNewRoomAlert: Bool = false
     @State private var newRoomName: String = ""
     
@@ -15,13 +17,11 @@ struct HomeView: View {
     
     var body: some View {
         Form {
-            NavigationLink("이모티콘 보관함으로 가기") {
-                EmoticonStorageView()
-            }
+            Link("이모티콘 가이드로 이동", destination: URL(string: "https://emoticonstudio.kakao.com/pages/start")!)
             
-            NavigationLink("커뮤니티로 가기") {
-                CommunityView()
-            }
+            NavigationLink("내 보관함", value: Panel.emoticonStorage)
+            
+//            NavigationLink("커뮤니티로 가기", value: Panel.community)
             
             Section {
                 roomListView
@@ -37,6 +37,16 @@ struct HomeView: View {
         .navigationTitle("연습장 📝")
         .navigationDestination(for: Room.self) { room in
             ChatView(room: room)
+        }
+        .navigationDestination(for: Panel.self) { panel in
+            switch panel {
+            case .emoticonStorage:
+                EmoticonStorageMainView()
+            case .community:
+                CommunityView()
+            default:
+                Text("Error")
+            }
         }
     }
     
@@ -82,6 +92,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(navigationSelection: .constant(.home))
     }
 }

@@ -13,9 +13,9 @@ struct DetailColumn: View {
     var body: some View {
         switch selection ?? .home {
         case .home:
-            HomeView()
+            HomeView(navigationSelection: $selection)
         case .emoticonStorage:
-            EmoticonStorageView()
+            EmoticonStorageMainView()
         case .community:
             CommunityView()
         case .settings:

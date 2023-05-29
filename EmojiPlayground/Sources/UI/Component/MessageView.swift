@@ -40,14 +40,6 @@ struct MessageView: View {
             }
         }
         .confirmationDialog("", isPresented: $presentAlert) {
-//            if message.contentType.isLocalImage {
-//                if let url = URL(string: message.contentValue) {
-//                    Button("보관함에 저장") {
-//                        saveToStorage(url: url)
-//                    }
-//                }
-//            }
-            
             Button("메시지 삭제", role: .destructive) {
                 if message.contentType.isImage {
                     PersistenceController.shared.deleteImageMessage(message)
@@ -65,38 +57,6 @@ struct MessageView: View {
         Text(" ")
             .frame(width: Screen.width * 0.15)
     }
-    
-//    private func saveToStorage(url: URL) {
-//        Task {
-//            do {
-//                mainRounter.show {
-//                    ProgressView()
-//                        .progressViewStyle(.circular)
-//                        .foregroundColor(.white)
-//                }
-//
-//                let url = try await FirebaseStorageManager.upload(from: url, to: "image")
-//
-//                try await FirestoreManager.reference(path: .images)
-//                    .document()
-//                    .setData(["image_url" : url.absoluteString])
-//
-//                PersistenceController.shared.update(message: message, type: .storageImage, value: url.absoluteString)
-//
-//                mainRounter.show {
-//                    Image(systemName: "checkmark.circle")
-//                        .resizable()
-//                        .foregroundColor(.green)
-//                        .frame(width: 100, height: 100)
-//                        .onTapGesture {
-//                            mainRounter.hide()
-//                        }
-//                }
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
 }
 
 extension MessageView {

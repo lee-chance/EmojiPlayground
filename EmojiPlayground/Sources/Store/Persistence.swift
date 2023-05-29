@@ -108,7 +108,7 @@ extension PersistenceController {
     func addImageMessage(type: MessageContentType, imageURL: URL, sender: MessageSender, in room: Room) {
         let messageImageID = UUID().uuidString
         let asset = CKAsset(fileURL: imageURL)
-        let messageImage = MessageImage(id: messageImageID, asset: asset)
+        let messageImage = MessageImage(id: messageImageID, asset: asset, memo: nil, groupName: nil)
         
         Task {
             do {
@@ -145,9 +145,11 @@ extension PersistenceController {
     }
 }
 
-struct MessageImage: CKRecordable, Identifiable {
+struct MessageImage: CKRecordable, Identifiable, Hashable {
     let id: String
     let asset: CKAsset
+    let memo: String?
+    let groupName: String?
     let record: CKRecord
     
     static var recordType: String { "MessageImage" }
@@ -160,15 +162,28 @@ struct MessageImage: CKRecordable, Identifiable {
         
         self.id = id
         self.asset = asset
+        self.memo = record["memo"] as? String
+        self.groupName = record["groupName"] as? String
         self.record = record
     }
     
-    init?(id: String, asset: CKAsset) {
+    init?(id: String, asset: CKAsset, memo: String?, groupName: String?) {
         let record = CKRecord(recordType: Self.recordType)
         record["id"] = id
         record["ckAsset"] = asset
+        record["memo"] = memo
+        record["groupName"] = groupName
         
         self.init(record: record)
+    }
+    
+    func clone(id: String? = nil, memo: String? = nil, groupName: String? = nil) -> MessageImage? {
+        guard
+            let fileURL = asset.fileURL,
+            let image = MessageImage(id: id ?? self.id, asset: CKAsset(fileURL: fileURL), memo: memo ?? self.memo, groupName: groupName ?? self.groupName)
+        else { return nil }
+        
+        return image
     }
 }
 

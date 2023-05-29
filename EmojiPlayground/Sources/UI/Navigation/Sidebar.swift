@@ -31,9 +31,9 @@ struct Sidebar: View {
                 Label("보관함", systemImage: "archivebox")
             }
             
-            NavigationLink(value: Panel.community) {
-                Label("커뮤니티", systemImage: "globe")
-            }
+//            NavigationLink(value: Panel.community) {
+//                Label("커뮤니티", systemImage: "globe")
+//            }
             
 //            NavigationLink(value: Panel.settings) {
 //                Label("설정", systemImage: "gearshape")

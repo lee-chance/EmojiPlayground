@@ -18,7 +18,7 @@ struct EmoticonStorageDetailView: View {
     var body: some View {
         List {
             LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
-                ForEach(model.images) { image in
+                ForEach(model.groupImages) { image in
                     EmoticonView(model: model, image: image)
                 }
             }
@@ -30,6 +30,8 @@ struct EmoticonStorageDetailView: View {
 
 struct EmoticonView: View {
     @State private var presentActionAlert: Bool = false
+    @State private var groupAlert: Bool = false
+    @State private var newGroupName: String = ""
     
     @StateObject var model: EmoticonStorageDetail
     
@@ -48,8 +50,8 @@ struct EmoticonView: View {
 //                    model.uploadToCommunity(image: image)
 //                }
                 
-                Button("그룹 이동") {
-                    model.update(image: image, groupName: "뉴 그룹")
+                Button("그룹 수정") {
+                    groupAlert.toggle()
                 }
                 
                 Button("메시지 삭제", role: .destructive) {
@@ -57,6 +59,41 @@ struct EmoticonView: View {
                 }
                 
                 Button("취소", role: .cancel) { }
+            }
+            .sheet(isPresented: $groupAlert) {
+                NavigationView {
+                    Form {
+                        TextField("새 그룹명", text: $newGroupName)
+                        
+                        Section("그룹 선택") {
+                            ForEach(model.groups, id: \.self) { name in
+                                Button(name) {
+                                    model.update(image: image, groupName: name)
+                                    groupAlert.toggle()
+                                }
+                                .disabled(name == image.groupName)
+                            }
+                        }
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .primaryAction) {
+                            let name = newGroupName.trimmingCharacters(in: .whitespaces)
+                            
+                            Button("수정하기") {
+                                model.update(image: image, groupName: name)
+                                groupAlert.toggle()
+                            }
+                            .disabled(name == image.groupName)
+                            .disabled(name.count == 0)
+                        }
+                        
+//                        ToolbarItem(placement: .cancellationAction) {
+//                            Button("취소", role: .cancel) {
+//                                groupAlert.toggle()
+//                            }
+//                        }
+                    }
+                }
             }
     }
 }

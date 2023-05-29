@@ -63,7 +63,7 @@ struct EmoticonStorageMainView: View {
     }
     
     private var gridView: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
+        LazyVGrid(columns: Array(repeating: GridItem(), count: 2)) {
             ForEach(groupedImages) { item in
                 NavigationLink(value: item) {
                     VStack {
@@ -129,6 +129,7 @@ struct EmoticonGroupView: View {
             WebImage(url: image.asset.fileURL)
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
+                .cornerRadius(4)
         } else {
             Rectangle()
                 .aspectRatio(1, contentMode: .fit)

@@ -14,6 +14,15 @@ final class EmoticonStorageDetail: ObservableObject {
     
     @Published private(set) var images: [MessageImage] = []
     
+    var groupImages: [MessageImage] {
+        images.filter { $0.groupName ?? " " == name }
+    }
+    
+    var groups: [String] {
+        Array(Set(images.compactMap { $0.groupName }))
+            .sorted()
+    }
+    
     init(name: String) {
         self.name = name
         Task { await fetchImages() }
@@ -21,8 +30,7 @@ final class EmoticonStorageDetail: ObservableObject {
     
     func fetchImages() async {
         do {
-            let allImages = try await MessageImage.all()
-            images = allImages.filter { $0.groupName ?? " " == name }
+            images = try await MessageImage.all()
         } catch {
             print("cslog error: \(error)")
         }

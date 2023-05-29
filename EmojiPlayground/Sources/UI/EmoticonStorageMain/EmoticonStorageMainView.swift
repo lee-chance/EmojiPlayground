@@ -8,23 +8,10 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct GroupedImage: Identifiable, Hashable {
-    let name: String
-    let images: [MessageImage]
-    
-    var id: String { name }
-}
-
 struct EmoticonStorageMainView: View {
-    @StateObject private var model = EmoticonStorageMain()
+    @EnvironmentObject private var storage: EmoticonStorage
     
     @State private var isLoading: Bool = false
-    
-    private var groupedImages: [GroupedImage] {
-        Dictionary(grouping: model.images, by: { $0.groupName ?? " " })
-            .sorted(by: { $0.key > $1.key })
-            .map { GroupedImage(name: $0.key, images: $0.value) }
-    }
     
     private var gridItems: [GridItem] {
         [GridItem(.adaptive(minimum: 100, maximum: 200), alignment: .top)]
@@ -51,7 +38,7 @@ struct EmoticonStorageMainView: View {
 //        }
         .task {
             isLoading = true
-            await model.fetchImages()
+            await storage.fetchImages()
             isLoading = false
         }
     }
@@ -64,7 +51,7 @@ struct EmoticonStorageMainView: View {
     
     private var gridView: some View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: 2)) {
-            ForEach(groupedImages) { item in
+            ForEach(storage.groupedImages()) { item in
                 NavigationLink(value: item) {
                     VStack {
                         EmoticonGroupView(images: item.images)
@@ -128,6 +115,7 @@ struct EmoticonGroupView: View {
             
             WebImage(url: image.asset.fileURL)
                 .resizable()
+                .customLoopCount(4)
                 .aspectRatio(1, contentMode: .fit)
                 .cornerRadius(4)
         } else {

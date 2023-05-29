@@ -1,5 +1,5 @@
 //
-//  EmoticonStorageDetail.swift
+//  EmoticonStorage.swift
 //  EmojiPlayground
 //
 //  Created by Changsu Lee on 2023/05/29.
@@ -9,22 +9,25 @@ import Foundation
 import CloudKit
 
 @MainActor
-final class EmoticonStorageDetail: ObservableObject {
-    let name: String
-    
+final class EmoticonStorage: ObservableObject {
     @Published private(set) var images: [MessageImage] = []
     
-    var groupImages: [MessageImage] {
-        images.filter { $0.groupName ?? " " == name }
+    func groupedImages() -> [GroupedImage] {
+        Dictionary(grouping: images, by: { $0.groupName ?? " " })
+            .sorted(by: { $0.key > $1.key })
+            .map { GroupedImage(name: $0.key, images: $0.value) }
     }
     
-    var groups: [String] {
+    func groupImages(groupName: String) -> [MessageImage] {
+        images.filter { $0.groupName ?? " " == groupName }
+    }
+    
+    var groupNames: [String] {
         Array(Set(images.compactMap { $0.groupName }))
             .sorted()
     }
     
-    init(name: String) {
-        self.name = name
+    init() {
         Task { await fetchImages() }
     }
     
@@ -73,4 +76,11 @@ final class EmoticonStorageDetail: ObservableObject {
             }
         }
     }
+}
+
+struct GroupedImage: Identifiable, Hashable {
+    let name: String
+    let images: [MessageImage]
+    
+    var id: String { name }
 }

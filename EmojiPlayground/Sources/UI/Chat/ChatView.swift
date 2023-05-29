@@ -6,14 +6,18 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ChatView: View {
+    @EnvironmentObject private var storage: EmoticonStorage
+    
     @Environment(\.theme) private var theme
     
     @State private var text = ""
     @State private var showsPhotoLibrary = false
     @State private var showsEmojiLibrary = false
     @State private var iCloudAccountNotFoundAlert = false
+    @State private var sender: MessageSender = .me
     
     let room: Room
     
@@ -34,6 +38,8 @@ struct ChatView: View {
         VStack(spacing: 0) {
             chatListView
             
+//            senderPickerView
+            
             bottomInputView
             
             bottomEmojiView
@@ -45,7 +51,7 @@ struct ChatView: View {
         .sheet(isPresented: $showsPhotoLibrary) {
             ImagePicker { imageURL in
                 if CloudKitUtility.isLoggedIn {
-                    PersistenceController.shared.addImageMessage(type: .image, imageURL: imageURL, sender: .me, in: room)
+                    PersistenceController.shared.addImageMessage(type: .image, imageURL: imageURL, sender: sender, in: room)
                 } else {
                     // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -95,6 +101,19 @@ struct ChatView: View {
         }
     }
     
+    private var senderPickerView: some View {
+        Picker("", selection: $sender) {
+            Text("👈")
+                .font(.title2)
+                .tag(MessageSender.other)
+            
+            Text("👉")
+                .font(.title2)
+                .tag(MessageSender.me)
+        }
+        .pickerStyle(.segmented)
+    }
+    
     private var bottomInputView: some View {
         HStack(spacing: 8) {
             Button(action: {
@@ -131,7 +150,7 @@ struct ChatView: View {
                     
                     if text.count > 0 {
                         Button(action: {
-                            PersistenceController.shared.addMessage(type: .plainText, value: text, sender: .me, in: room)
+                            PersistenceController.shared.addMessage(type: .plainText, value: text, sender: sender, in: room)
                             text = ""
                         }) {
                             Image(systemName: "arrow.up")
@@ -144,10 +163,14 @@ struct ChatView: View {
                                 )
                         }
                     } else {
-                        Button(action: {}) {
-                            Image(systemName: "number")
+                        Button(action: {
+                            if sender == .me { sender = .other }
+                            else { sender = .me }
+                        }) {
+                            Image(systemName: sender == .me ? "hand.point.right" : "hand.point.left")
                                 .buttonModifier
                                 .foregroundColor(theme.secondaryFontColor)
+                                .animation(nil, value: sender)
                         }
                     }
                 }
@@ -167,9 +190,26 @@ struct ChatView: View {
     }
     
     private var bottomEmojiView: some View {
-        VStack(spacing: 0) {
-            Text("무야호~ ")
-                .background(Color.red)
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: Array(repeating: GridItem(), count: 2)) {
+                ForEach(storage.images) { image in
+                    WebImage(url: image.asset.fileURL)
+                        .resizable()
+                        .customLoopCount(4)
+                        .scaledToFit()
+                        .onTapGesture {
+                            if CloudKitUtility.isLoggedIn {
+                                PersistenceController.shared.addMessage(type: .image, value: image.id, sender: sender, in: room)
+                            } else {
+                                // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    iCloudAccountNotFoundAlert = true
+                                }
+                            }
+                        }
+                }
+            }
+            .padding()
         }
         .frame(height: showsEmojiLibrary ? Screen.height / 3 : 0)
         .frame(maxWidth: .infinity)

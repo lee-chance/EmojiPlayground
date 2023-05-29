@@ -16,6 +16,7 @@ struct CommunityView: View {
             ForEach(model.images) { image in
                 WebImage(url: image.asset.fileURL)
                     .resizable()
+                    .customLoopCount(4)
                     .scaledToFit()
             }
         }

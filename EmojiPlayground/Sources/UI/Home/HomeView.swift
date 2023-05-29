@@ -25,12 +25,14 @@ struct HomeView: View {
             
             Section {
                 roomListView
+            } header: {
+                Text("대화방")
             } footer: {
                 listFooterAddButtonView
             }
         }
         .toolbar {
-            Button("Add") {
+            Button("추가") {
                 presentNewRoomAlert.toggle()
             }
         }

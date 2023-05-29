@@ -9,37 +9,36 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct EmoticonStorageDetailView: View {
-    @StateObject private var model: EmoticonStorageDetail
+    @EnvironmentObject private var storage: EmoticonStorage
     
-    init(groupName: String) {
-        self._model = StateObject(wrappedValue: EmoticonStorageDetail(name: groupName))
-    }
+    let groupName: String
     
     var body: some View {
         List {
             LazyVGrid(columns: Array(repeating: GridItem(), count: 3)) {
-                ForEach(model.groupImages) { image in
-                    EmoticonView(model: model, image: image)
+                ForEach(storage.groupImages(groupName: groupName)) { image in
+                    EmoticonView(image: image)
                 }
             }
         }
-        .navigationTitle(model.name)
+        .navigationTitle(groupName)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct EmoticonView: View {
+    @EnvironmentObject private var storage: EmoticonStorage
+    
     @State private var presentActionAlert: Bool = false
     @State private var groupAlert: Bool = false
     @State private var newGroupName: String = ""
-    
-    @StateObject var model: EmoticonStorageDetail
     
     let image: MessageImage
     
     var body: some View {
         WebImage(url: image.asset.fileURL)
             .resizable()
+            .customLoopCount(4)
             .scaledToFit()
             .onTapGesture { /* SCROLLABLE WITH LONG PRESS GESTURE */ }
             .onLongPressGesture {
@@ -55,7 +54,7 @@ struct EmoticonView: View {
                 }
                 
                 Button("메시지 삭제", role: .destructive) {
-                    model.delete(image: image)
+                    storage.delete(image: image)
                 }
                 
                 Button("취소", role: .cancel) { }
@@ -66,9 +65,9 @@ struct EmoticonView: View {
                         TextField("새 그룹명", text: $newGroupName)
                         
                         Section("그룹 선택") {
-                            ForEach(model.groups, id: \.self) { name in
+                            ForEach(storage.groupNames, id: \.self) { name in
                                 Button(name) {
-                                    model.update(image: image, groupName: name)
+                                    storage.update(image: image, groupName: name)
                                     groupAlert.toggle()
                                 }
                                 .disabled(name == image.groupName)
@@ -80,7 +79,7 @@ struct EmoticonView: View {
                             let name = newGroupName.trimmingCharacters(in: .whitespaces)
                             
                             Button("수정하기") {
-                                model.update(image: image, groupName: name)
+                                storage.update(image: image, groupName: name)
                                 groupAlert.toggle()
                             }
                             .disabled(name == image.groupName)

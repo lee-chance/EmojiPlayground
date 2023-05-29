@@ -12,6 +12,7 @@ struct EmojiPlaygroundApp: App {
     @Environment(\.scenePhase) private var scenePhase
     
     @StateObject var mainRouter = MainRouter()
+    @StateObject var emoticonStorage = EmoticonStorage()
     
     @State private var iCloudAccountNotFoundAlert = false
     
@@ -20,6 +21,7 @@ struct EmojiPlaygroundApp: App {
             MainView()
                 .environment(\.managedObjectContext, PersistenceController.shared.context)
                 .environmentObject(mainRouter)
+                .environmentObject(emoticonStorage)
                 .overlay(mainOverlay)
                 .alert("로그인 오류", isPresented: $iCloudAccountNotFoundAlert, actions: {
                     Button("설정으로 이동") {

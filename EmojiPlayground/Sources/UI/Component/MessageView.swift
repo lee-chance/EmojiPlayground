@@ -93,16 +93,6 @@ extension MessageView {
         
         private func loadingView() -> some View {
             commonMaterialView
-                .background(
-                    Group {
-                        if let imageData = message.imageData, let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFill()
-                        }
-                    }
-                )
-                .cornerRadius(12)
                 .overlay(
                     ProgressView()
                         .progressViewStyle(.circular)
@@ -155,6 +145,15 @@ extension MessageView {
             Rectangle()
                 .frame(width: 200, height: 200)
                 .foregroundColor(.black.opacity(0.5))
+                .background(
+                    Group {
+                        if let imageData = message.imageData, let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                        }
+                    }
+                )
                 .cornerRadius(12)
         }
         

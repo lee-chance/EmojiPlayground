@@ -10,8 +10,7 @@ import SDWebImageSwiftUI
 
 struct ChatView: View {
     @EnvironmentObject private var storage: EmoticonStorage
-    
-    @Environment(\.theme) private var theme
+    @EnvironmentObject private var theme: Theme
     
     @State private var text = ""
     @State private var showsPhotoLibrary = false
@@ -44,7 +43,7 @@ struct ChatView: View {
             
             bottomEmojiView
         }
-        .background(theme.chatBackgroundColor)
+        .background(theme.roomBackgoundColor)
         .navigationTitle(room.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarRole(.editor)
@@ -121,7 +120,7 @@ struct ChatView: View {
             }) {
                 Image(systemName: "plus.app")
                     .buttonModifier
-                    .foregroundColor(theme.secondaryFontColor)
+                    .foregroundColor(Color.gray)
             }
             
             HStack(spacing: 0) {
@@ -145,7 +144,7 @@ struct ChatView: View {
                     }) {
                         Image(systemName: "face.smiling")
                             .buttonModifier
-                            .foregroundColor(theme.secondaryFontColor)
+                            .foregroundColor(Color.gray)
                     }
                     
                     if text.count > 0 {
@@ -155,11 +154,11 @@ struct ChatView: View {
                         }) {
                             Image(systemName: "arrow.up")
                                 .buttonModifier
-                                .foregroundColor(theme.primaryFontColor)
+                                .foregroundColor(sender == .me ? theme.myMessageFontColor : theme.otherMessageFontColor)
                                 .background(
                                     Circle()
                                         .stroke(Color.black.opacity(0.1))
-                                        .background(Circle().fill(theme.primaryColor))
+                                        .background(Circle().fill(sender == .me ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor))
                                 )
                         }
                     } else {
@@ -169,7 +168,7 @@ struct ChatView: View {
                         }) {
                             Image(systemName: sender == .me ? "hand.point.right" : "hand.point.left")
                                 .buttonModifier
-                                .foregroundColor(theme.secondaryFontColor)
+                                .foregroundColor(Color.gray)
                                 .animation(nil, value: sender)
                         }
                     }

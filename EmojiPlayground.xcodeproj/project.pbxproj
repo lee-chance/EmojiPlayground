@@ -13,10 +13,13 @@
 		2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A02602A1226E5003E8293 /* DetailColumn.swift */; };
 		2E3A56EB2A234FE60081C546 /* EmoticonStorageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */; };
 		2E3A56F12A24C4710081C546 /* EmoticonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56F02A24C4710081C546 /* EmoticonStorage.swift */; };
-		2E4B7945295343C400A41030 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B7944295343C400A41030 /* Environment.swift */; };
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
 		2E5F258D27EF4B4F002F21F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5F258C27EF4B4F002F21F5 /* SDWebImageSwiftUI */; };
+		2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */; };
+		2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C12A3609C200EB1F65 /* Colors.swift */; };
+		2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */; };
+		2E6467C62A3636D100EB1F65 /* IconSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C52A3636D100EB1F65 /* IconSettingsView.swift */; };
 		2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDB29FFAE4B00DAFC39 /* CloudKitUtility.swift */; };
 		2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDD29FFB07500DAFC39 /* CloudKitUtility+Combine.swift */; };
 		2E72AFE029FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDF29FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift */; };
@@ -51,16 +54,19 @@
 		2E3A02602A1226E5003E8293 /* DetailColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColumn.swift; sourceTree = "<group>"; };
 		2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageDetailView.swift; sourceTree = "<group>"; };
 		2E3A56F02A24C4710081C546 /* EmoticonStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorage.swift; sourceTree = "<group>"; };
-		2E4B7944295343C400A41030 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		2E4B79482953447A00A41030 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		2E4B794B2953493F00A41030 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2E6467C12A3609C200EB1F65 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsView.swift; sourceTree = "<group>"; };
+		2E6467C52A3636D100EB1F65 /* IconSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettingsView.swift; sourceTree = "<group>"; };
 		2E72AFDA29FFAD1A00DAFC39 /* EmojiPlayground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmojiPlayground.entitlements; sourceTree = "<group>"; };
 		2E72AFDB29FFAE4B00DAFC39 /* CloudKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitUtility.swift; sourceTree = "<group>"; };
 		2E72AFDD29FFB07500DAFC39 /* CloudKitUtility+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudKitUtility+Combine.swift"; sourceTree = "<group>"; };
 		2E72AFDF29FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudKitUtility+AsyncAwait.swift"; sourceTree = "<group>"; };
 		2E7C8F602A14CF5D00B3B3A0 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		2E7C8F662A15056A00B3B3A0 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
-		2E80977927E5BB4F00E40261 /* EmojiPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmojiPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E80977927E5BB4F00E40261 /* Emote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPlaygroundApp.swift; sourceTree = "<group>"; };
 		2E80977E27E5BB4F00E40261 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2E80978027E5BB5000E40261 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -121,6 +127,16 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		2E6467BC2A35AAA600EB1F65 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */,
+				2E6467C52A3636D100EB1F65 /* IconSettingsView.swift */,
+				2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		2E7C8F5F2A14CF5100B3B3A0 /* Community */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,7 +157,7 @@
 		2E80977A27E5BB4F00E40261 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2E80977927E5BB4F00E40261 /* EmojiPlayground.app */,
+				2E80977927E5BB4F00E40261 /* Emote.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,6 +199,7 @@
 				2E4B794B2953493F00A41030 /* Colors.xcassets */,
 				2E80978227E5BB5000E40261 /* Preview Content */,
 				2EBE34BB29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld */,
+				2E6467C12A3609C200EB1F65 /* Colors.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -203,7 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */,
-				2E4B7944295343C400A41030 /* Environment.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -219,6 +235,7 @@
 				2EFD113029E1619B00924121 /* EmoticonStorageMain */,
 				2E3A56E92A234FD00081C546 /* EmoticonStorageDetail */,
 				2E7C8F5F2A14CF5100B3B3A0 /* Community */,
+				2E6467BC2A35AAA600EB1F65 /* Settings */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -316,9 +333,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2E80977827E5BB4F00E40261 /* EmojiPlayground */ = {
+		2E80977827E5BB4F00E40261 /* Emote */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2E80978727E5BB5000E40261 /* Build configuration list for PBXNativeTarget "EmojiPlayground" */;
+			buildConfigurationList = 2E80978727E5BB5000E40261 /* Build configuration list for PBXNativeTarget "Emote" */;
 			buildPhases = (
 				2E80977527E5BB4F00E40261 /* Sources */,
 				2E80977627E5BB4F00E40261 /* Frameworks */,
@@ -328,12 +345,12 @@
 			);
 			dependencies = (
 			);
-			name = EmojiPlayground;
+			name = Emote;
 			packageProductDependencies = (
 				2E5F258C27EF4B4F002F21F5 /* SDWebImageSwiftUI */,
 			);
 			productName = EmojiPlayground;
-			productReference = 2E80977927E5BB4F00E40261 /* EmojiPlayground.app */;
+			productReference = 2E80977927E5BB4F00E40261 /* Emote.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -367,7 +384,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2E80977827E5BB4F00E40261 /* EmojiPlayground */,
+				2E80977827E5BB4F00E40261 /* Emote */,
 			);
 		};
 /* End PBXProject section */
@@ -392,7 +409,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */,
-				2E4B7945295343C400A41030 /* Environment.swift in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
 				2E3A56F12A24C4710081C546 /* EmoticonStorage.swift in Sources */,
 				2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */,
@@ -411,15 +427,19 @@
 				2E3A025F2A12261D003E8293 /* Sidebar.swift in Sources */,
 				2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */,
 				2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */,
+				2E6467C62A3636D100EB1F65 /* IconSettingsView.swift in Sources */,
 				2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */,
 				2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
+				2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */,
 				2E72AFE029FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift in Sources */,
 				2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */,
+				2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
 				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
+				2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */,
 				2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +566,8 @@
 		2E80978827E5BB5000E40261 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AppIconAlternate1;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EmojiPlayground/EmojiPlayground.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -579,6 +601,8 @@
 		2E80978927E5BB5000E40261 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AppIconAlternate1;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EmojiPlayground/EmojiPlayground.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -621,7 +645,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2E80978727E5BB5000E40261 /* Build configuration list for PBXNativeTarget "EmojiPlayground" */ = {
+		2E80978727E5BB5000E40261 /* Build configuration list for PBXNativeTarget "Emote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2E80978827E5BB5000E40261 /* Debug */,

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2E80977827E5BB4F00E40261"
-               BuildableName = "EmojiPlayground.app"
-               BlueprintName = "EmojiPlayground"
+               BuildableName = "Emote.app"
+               BlueprintName = "Emote"
                ReferencedContainer = "container:EmojiPlayground.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2E80977827E5BB4F00E40261"
-            BuildableName = "EmojiPlayground.app"
-            BlueprintName = "EmojiPlayground"
+            BuildableName = "Emote.app"
+            BlueprintName = "Emote"
             ReferencedContainer = "container:EmojiPlayground.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2E80977827E5BB4F00E40261"
-            BuildableName = "EmojiPlayground.app"
-            BlueprintName = "EmojiPlayground"
+            BuildableName = "Emote.app"
+            BlueprintName = "Emote"
             ReferencedContainer = "container:EmojiPlayground.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

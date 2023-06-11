@@ -35,9 +35,9 @@ struct Sidebar: View {
 //                Label("커뮤니티", systemImage: "globe")
 //            }
             
-//            NavigationLink(value: Panel.settings) {
-//                Label("설정", systemImage: "gearshape")
-//            }
+            NavigationLink(value: Panel.settings) {
+                Label("설정", systemImage: "gearshape")
+            }
         }
         .navigationTitle("Emote")
     }

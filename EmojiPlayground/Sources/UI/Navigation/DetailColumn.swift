@@ -19,7 +19,7 @@ struct DetailColumn: View {
         case .community:
             CommunityView()
         case .settings:
-            Text("Settings")
+            SettingsView()
         }
     }
 }

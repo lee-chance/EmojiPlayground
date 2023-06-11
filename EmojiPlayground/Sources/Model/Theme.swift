@@ -7,71 +7,104 @@
 
 import SwiftUI
 
-enum Theme {
-    case cocoa, lime
+public class Theme: ObservableObject {
+    enum ThemeKey {
+        case selectedTheme
+        case roomBackgoundColor
+        case myMessageBubbleColor
+        case myMessageFontColor
+        case otherMessageBubbleColor
+        case otherMessageFontColor
+        
+        var key: String {
+            switch self {
+            case .selectedTheme:
+                return "THEME_SELECTED_THEME_NAME"
+            case .roomBackgoundColor:
+                return "THEME_ROOM_BACKGROUND_COLOR"
+            case .myMessageBubbleColor:
+                return "THEME_MY_MESSAGE_BUBBLE_COLOR"
+            case .myMessageFontColor:
+                return "THEME_MY_MESSAGE_FONT_COLOR"
+            case .otherMessageBubbleColor:
+                return "THEME_OTHER_MESSAGE_BUBBLE_COLOR"
+            case .otherMessageFontColor:
+                return "THEME_OTHER_MESSAGE_FONT_COLOR"
+            }
+        }
+    }
     
-    var name: String {
+    @AppStorage(ThemeKey.selectedTheme.key) public var selectedThemeName: ThemeName = .cocoa {
+        didSet {
+            switch selectedThemeName {
+            case .cocoa:
+                roomBackgoundColor = .cacaoRoomBackground
+                myMessageBubbleColor = .cacaoMyBubble
+                myMessageFontColor = .cacaoFont
+                otherMessageBubbleColor = .cacaoOtherBubble
+                otherMessageFontColor = .cacaoFont
+            case .lime:
+                roomBackgoundColor = .limeRoomBackground
+                myMessageBubbleColor = .limeMyBubble
+                myMessageFontColor = .limeFont
+                otherMessageBubbleColor = .limeOtherBubble
+                otherMessageFontColor = .limeFont
+            case .custom:
+                break
+            }
+        }
+    }
+    @AppStorage(ThemeKey.roomBackgoundColor.key) public var roomBackgoundColor: Color = .cacaoRoomBackground
+    @AppStorage(ThemeKey.myMessageBubbleColor.key) public var myMessageBubbleColor: Color = .cacaoMyBubble
+    @AppStorage(ThemeKey.myMessageFontColor.key) public var myMessageFontColor: Color = .cacaoFont
+    @AppStorage(ThemeKey.otherMessageBubbleColor.key) public var otherMessageBubbleColor: Color = .cacaoOtherBubble
+    @AppStorage(ThemeKey.otherMessageFontColor.key) public var otherMessageFontColor: Color = .cacaoFont
+    
+    public static let shared = Theme()
+    
+    private init() { }
+}
+
+public enum ThemeName: String, CaseIterable {
+    case cocoa
+    case lime
+    case custom
+    
+    var displayedName: String {
         switch self {
         case .cocoa:
             return "코코아"
         case .lime:
             return "라임"
-        }
-    }
-    
-    var icon: Image {
-        switch self {
-        case .cocoa:
-            return Image("CocoaIcon")
-        case .lime:
-            return Image("LimeIcon")
+        case .custom:
+            return "커스텀"
         }
     }
 }
 
-extension Theme {
-    var primaryColor: Color {
-        switch self {
-        case .cocoa:
-            return Color(rgb: 0xFEF01B)
-        case .lime:
-            return Color(rgb: 0x06C755)
-        }
-    }
-    
-    var secondaryColor: Color {
-        switch self {
-        case .cocoa:
-            return Color(rgb: 0xFEE500)
-        case .lime:
-            return Color(rgb: 0x06C755)
-        }
-    }
-    
-    var primaryFontColor: Color {
-        switch self {
-        case .cocoa:
-            return Color(rgb: 0x000000)
-        case .lime:
-            return Color(rgb: 0x000000)
-        }
-    }
-    
-    var secondaryFontColor: Color {
-        switch self {
-        case .cocoa:
-            return Color(rgb: 0x556677)
-        case .lime:
-            return Color(rgb: 0x556677)
-        }
-    }
-    
-    var chatBackgroundColor: Color {
-        switch self {
-        case .cocoa:
-            return Color(rgb: 0x9bbbd4)
-        case .lime:
-            return Color(rgb: 0x9bbbd4)
-        }
-    }
+protocol ThemeStyle {
+    var name: ThemeName { get }
+    var roomBackgroundColor: Color { get set }
+    var myBubbleColor: Color { get set }
+    var myFontColor: Color { get set }
+    var otherBubbleColor: Color { get set }
+    var otherFontColor: Color { get set }
+}
+
+struct CocoaTheme: ThemeStyle {
+    let name: ThemeName = .cocoa
+    var roomBackgroundColor: Color = .cacaoRoomBackground
+    var myBubbleColor: Color = .cacaoMyBubble
+    var myFontColor: Color = .cacaoFont
+    var otherBubbleColor: Color = .cacaoOtherBubble
+    var otherFontColor: Color = .cacaoFont
+}
+
+struct LimeTheme: ThemeStyle {
+    let name: ThemeName = .lime
+    var roomBackgroundColor: Color = .limeRoomBackground
+    var myBubbleColor: Color = .limeMyBubble
+    var myFontColor: Color = .limeFont
+    var otherBubbleColor: Color = .limeOtherBubble
+    var otherFontColor: Color = .limeFont
 }

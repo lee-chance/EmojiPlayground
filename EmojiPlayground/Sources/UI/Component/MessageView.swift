@@ -9,8 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct MessageView: View {
-    @Environment(\.theme) var theme
-    @EnvironmentObject var mainRounter: MainRouter
+    @EnvironmentObject private var mainRounter: MainRouter
     
     let message: Message
     
@@ -61,15 +60,15 @@ struct MessageView: View {
 
 extension MessageView {
     struct PlainTextMessageView: View {
-        @Environment(\.theme) var theme
+        @EnvironmentObject private var theme: Theme
         
         let message: Message
         
         var body: some View {
             Text(message.contentValue)
-                .foregroundColor(theme.primaryFontColor)
+                .foregroundColor(message.sender == .me ? theme.myMessageFontColor : theme.otherMessageFontColor)
                 .padding(12)
-                .background(message.sender == .me ? theme.primaryColor : .white)
+                .background(message.sender == .me ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor)
                 .cornerRadius(12)
         }
     }

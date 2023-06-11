@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-public final class Message: NSManagedObject {
+public class Message: NSManagedObject {
     public override func awakeFromInsert() {
         super.awakeFromInsert()
         
@@ -25,8 +25,8 @@ extension Message {
     @NSManaged public var id: UUID
     @NSManaged public var contentValue: String
     @NSManaged public var imageData: Data?
-    @NSManaged private var contentTypeValue: Int16
-    @NSManaged private var senderValue: Int16
+    @NSManaged public var contentTypeValue: Int16
+    @NSManaged public var senderValue: Int16
     @NSManaged public var timestamp: Date
     @NSManaged public var room: Room?
     

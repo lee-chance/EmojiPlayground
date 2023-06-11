@@ -22,6 +22,7 @@ struct EmojiPlaygroundApp: App {
                 .environment(\.managedObjectContext, PersistenceController.shared.context)
                 .environmentObject(mainRouter)
                 .environmentObject(emoticonStorage)
+                .environmentObject(Theme.shared)
                 .overlay(mainOverlay)
                 .alert("로그인 오류", isPresented: $iCloudAccountNotFoundAlert, actions: {
                     Button("설정으로 이동") {

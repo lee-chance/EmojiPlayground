@@ -7,20 +7,25 @@
 
 import SwiftUI
 
-extension Color {
-    init(red: Int, green: Int, blue: Int) {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
-        self.init(CGColor(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0))
+extension Color: RawRepresentable {
+    public init?(rawValue: Int) {
+        let red = Double((rawValue & 0xFF0000) >> 16) / 0xFF
+        let green = Double((rawValue & 0x00FF00) >> 8) / 0xFF
+        let blue = Double(rawValue & 0x0000FF) / 0xFF
+        self = Color(red: red, green: green, blue: blue)
     }
     
-    init(rgb: Int) {
-        self.init(
-            red: (rgb >> 16) & 0xFF,
-            green: (rgb >> 8) & 0xFF,
-            blue: rgb & 0xFF
-        )
+    public var rawValue: Int {
+        guard let coreImageColor = coreImageColor else {
+            return 0
+        }
+        let red = Int(coreImageColor.red * 255 + 0.5)
+        let green = Int(coreImageColor.green * 255 + 0.5)
+        let blue = Int(coreImageColor.blue * 255 + 0.5)
+        return (red << 16) | (green << 8) | blue
+    }
+    
+    private var coreImageColor: CIColor? {
+        CIColor(color: .init(self))
     }
 }

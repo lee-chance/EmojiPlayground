@@ -15,7 +15,6 @@
 		2E3A56F12A24C4710081C546 /* EmoticonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56F02A24C4710081C546 /* EmoticonStorage.swift */; };
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
-		2E5F258D27EF4B4F002F21F5 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2E5F258C27EF4B4F002F21F5 /* SDWebImageSwiftUI */; };
 		2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */; };
 		2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C12A3609C200EB1F65 /* Colors.swift */; };
 		2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */; };
@@ -40,6 +39,7 @@
 		2E9517842945B168001E6ED6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517832945B168001E6ED6 /* MainView.swift */; };
 		2E9517892945B38D001E6ED6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517882945B38D001E6ED6 /* Theme.swift */; };
 		2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E832A2A0559AB002A2B90 /* GIFImage.swift */; };
+		2EAEF3E82AADB6730098ECAB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2EAEF3E72AADB6730098ECAB /* SDWebImageSwiftUI */; };
 		2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE34BB29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld */; };
 		2EBE350B29F2D9E000F30846 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350A29F2D9E000F30846 /* Room.swift */; };
 		2EBE350D29F2DA2800F30846 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350C29F2DA2800F30846 /* Persistence.swift */; };
@@ -94,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E5F258D27EF4B4F002F21F5 /* SDWebImageSwiftUI in Frameworks */,
+				2EAEF3E82AADB6730098ECAB /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +151,7 @@
 			children = (
 				2E80977B27E5BB4F00E40261 /* EmojiPlayground */,
 				2E80977A27E5BB4F00E40261 /* Products */,
+				2EAEF3E62AADB6730098ECAB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -322,6 +323,13 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		2EAEF3E62AADB6730098ECAB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2EFD113029E1619B00924121 /* EmoticonStorageMain */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,7 +355,7 @@
 			);
 			name = Emote;
 			packageProductDependencies = (
-				2E5F258C27EF4B4F002F21F5 /* SDWebImageSwiftUI */,
+				2EAEF3E72AADB6730098ECAB /* SDWebImageSwiftUI */,
 			);
 			productName = EmojiPlayground;
 			productReference = 2E80977927E5BB4F00E40261 /* Emote.app */;
@@ -668,7 +676,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2E5F258C27EF4B4F002F21F5 /* SDWebImageSwiftUI */ = {
+		2EAEF3E72AADB6730098ECAB /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5F258B27EF4B4F002F21F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;

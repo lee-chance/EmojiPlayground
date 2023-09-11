@@ -32,7 +32,7 @@ struct HomeView: View {
             }
         }
         .toolbar {
-            Button("추가") {
+            Button("새 대화방") {
                 presentNewRoomAlert.toggle()
             }
         }

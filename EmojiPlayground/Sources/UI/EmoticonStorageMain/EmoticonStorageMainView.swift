@@ -101,6 +101,7 @@ struct EmoticonGroupView: View {
                             )
                     }
                 }
+                .cornerRadius(4)
             }
         }
         .padding(8)
@@ -117,7 +118,6 @@ struct EmoticonGroupView: View {
                 .resizable()
                 .customLoopCount(4)
                 .aspectRatio(1, contentMode: .fit)
-                .cornerRadius(4)
         } else {
             Rectangle()
                 .aspectRatio(1, contentMode: .fit)

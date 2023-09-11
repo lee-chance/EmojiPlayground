@@ -134,9 +134,6 @@ struct ChatView: View {
                 
                 HStack(spacing: 8) {
                     Button(action: {
-//                        showsPhotoLibrary = true // 임시
-                        
-                        // TODO: Emoji
                         UIApplication.shared.endEditing()
                         withAnimation(.linear(duration: 0.001)) {
                             showsEmojiLibrary = true
@@ -189,26 +186,15 @@ struct ChatView: View {
     }
     
     private var bottomEmojiView: some View {
-        ScrollView(.horizontal) {
-            LazyHGrid(rows: Array(repeating: GridItem(), count: 2)) {
-                ForEach(storage.images) { image in
-                    WebImage(url: image.asset.fileURL)
-                        .resizable()
-                        .customLoopCount(4)
-                        .scaledToFit()
-                        .onTapGesture {
-                            if CloudKitUtility.isLoggedIn {
-                                PersistenceController.shared.addMessage(type: .image, value: image.id, sender: sender, in: room)
-                            } else {
-                                // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                    iCloudAccountNotFoundAlert = true
-                                }
-                            }
-                        }
+        ChatImageStorageView { image in
+            if CloudKitUtility.isLoggedIn {
+                PersistenceController.shared.addMessage(type: .image, value: image.id, sender: sender, in: room)
+            } else {
+                // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    iCloudAccountNotFoundAlert = true
                 }
             }
-            .padding()
         }
         .frame(height: showsEmojiLibrary ? Screen.height / 3 : 0)
         .frame(maxWidth: .infinity)

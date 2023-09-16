@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07AE702A07961D00674E47 /* ImageCacheManager.swift */; };
 		2E07AE762A079CE300674E47 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07AE752A079CE300674E47 /* MessageView.swift */; };
+		2E21006B2AB5D919004AF19D /* DropItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E21006A2AB5D919004AF19D /* DropItem.swift */; };
 		2E3A025F2A12261D003E8293 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A025E2A12261D003E8293 /* Sidebar.swift */; };
 		2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A02602A1226E5003E8293 /* DetailColumn.swift */; };
 		2E3A56EB2A234FE60081C546 /* EmoticonStorageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		2E07AE702A07961D00674E47 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		2E07AE752A079CE300674E47 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		2E21006A2AB5D919004AF19D /* DropItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropItem.swift; sourceTree = "<group>"; };
 		2E3A025E2A12261D003E8293 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		2E3A02602A1226E5003E8293 /* DetailColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColumn.swift; sourceTree = "<group>"; };
 		2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageDetailView.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				2E80979427E5EA1000E40261 /* Message.swift */,
 				2EBE350A29F2D9E000F30846 /* Room.swift */,
 				2E9517882945B38D001E6ED6 /* Theme.swift */,
+				2E21006A2AB5D919004AF19D /* DropItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */,
 				2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */,
 				2E6467C62A3636D100EB1F65 /* IconSettingsView.swift in Sources */,
+				2E21006B2AB5D919004AF19D /* DropItem.swift in Sources */,
 				2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */,
 				2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,

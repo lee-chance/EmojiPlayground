@@ -36,6 +36,27 @@ struct ChatView: View {
     var body: some View {
         VStack(spacing: 0) {
             chatListView
+                .dropDestination(for: DropItem.self) { items, _ in
+                    for item in items {
+                        guard CloudKitUtility.isLoggedIn else { return false }
+                        
+                        switch item {
+                        case .text(let message):
+                            PersistenceController.shared.addMessage(type: .plainText, value: message, sender: sender, in: room)
+                        case .data(let data):
+                            guard let _ = UIImage(data: data) else { return false }
+                            
+                            let temporaryDirectory = NSTemporaryDirectory()
+                            let temporaryFileURL = URL(filePath: temporaryDirectory).appending(path: UUID().uuidString)
+                            try? data.write(to: temporaryFileURL)
+                            PersistenceController.shared.addImageMessage(type: .image, imageURL: temporaryFileURL, sender: sender, in: room)
+                        }
+                    }
+
+                    return true
+                } isTargeted: { isTargeted in
+                    print("isTargeted: \(isTargeted)")
+                }
             
 //            senderPickerView
             

@@ -23,10 +23,16 @@ struct ChatImageStorageView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            tabHeader
-            
-            tabBody
+            if tabs.count > 0 {
+                tabHeader
+                
+                tabBody
+            } else {
+                Text("xxx")
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.systemGray6)
     }
     
     private var tabHeader: some View {
@@ -58,13 +64,13 @@ struct ChatImageStorageView: View {
             }
             .animation(.easeInOut, value: internalIndex)
         }
-        .background(Color.systemGray6)
     }
     
     private var tabBody: some View {
         TabView(selection: $internalIndex) {
             ForEach(tabs.indices, id: \.self) { index in
                 let tab = tabs[index]
+                
                 ScrollView {
                     VStack {
                         Text(tab.name)
@@ -88,7 +94,6 @@ struct ChatImageStorageView: View {
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-        .background(Color.systemGray6)
     }
 }
 

@@ -120,8 +120,9 @@ extension MessageView {
         private func imageLoadedView(url: URL) -> some View {
             WebImage(url: url)
                 .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 200)
+//                .scaledToFit()
+//                .frame(maxWidth: 200)
+                .frame(width: 200, height: 200)
                 .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
         }
         

@@ -17,7 +17,7 @@ struct HomeView: View {
     
     var body: some View {
         Form {
-            Link("이모티콘 가이드로 이동", destination: URL(string: "https://emoticonstudio.kakao.com/pages/start")!)
+            Link("이모티콘 제안 가이드로 이동하기", destination: URL(string: "https://emoticonstudio.kakao.com/pages/start")!)
             
             NavigationLink("내 보관함", value: Panel.emoticonStorage)
             
@@ -56,7 +56,7 @@ struct HomeView: View {
         ForEach(rooms) { room in
             NavigationLink(room.name, value: room)
         }
-//        .onDelete(perform: removeLanguages)
+        .onDelete(perform: removeLanguages)
     }
     
     // FIXME: Room을 삭제해도 이미지가 남아있다. 이것도 삭제되어야 Room 삭제 가능
@@ -87,7 +87,9 @@ struct HomeView: View {
                 }
             })
             
-            Button("취소", role: .cancel, action: {})
+            Button("취소", role: .cancel, action: {
+                newRoomName = ""
+            })
         })
     }
 }

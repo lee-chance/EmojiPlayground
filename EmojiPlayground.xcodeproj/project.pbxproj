@@ -46,6 +46,7 @@
 		2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE34BB29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld */; };
 		2EBE350B29F2D9E000F30846 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350A29F2D9E000F30846 /* Room.swift */; };
 		2EBE350D29F2DA2800F30846 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350C29F2DA2800F30846 /* Persistence.swift */; };
+		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
 		2EFD113229E162EC00924121 /* EmoticonStorageMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */; };
 		2EFD113829E16CBA00924121 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EFD113729E16CBA00924121 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -91,6 +92,7 @@
 		2EBE34BC29EA5AF600F30846 /* EmojiPlayground.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EmojiPlayground.xcdatamodel; sourceTree = "<group>"; };
 		2EBE350A29F2D9E000F30846 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		2EBE350C29F2DA2800F30846 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageMainView.swift; sourceTree = "<group>"; };
 		2EFD113729E16CBA00924121 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -261,6 +263,7 @@
 				2E80979827E60CB100E40261 /* Screen.swift */,
 				2E9E832A2A0559AB002A2B90 /* GIFImage.swift */,
 				2E07AE702A07961D00674E47 /* ImageCacheManager.swift */,
+				2ECD95892ABEAD8800E99B5A /* Alerts.swift */,
 				2E9517862945B315001E6ED6 /* Extension */,
 				2E9E83292A050A49002A2B90 /* CloudKit */,
 			);
@@ -456,6 +459,7 @@
 				2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
 				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
+				2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
 				2EAEF3F02AADBFF90098ECAB /* ChatImageStorageView.swift in Sources */,
@@ -586,7 +590,7 @@
 		2E80978827E5BB5000E40261 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AppIconAlternate1;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconAlternate1 AppIconAlternate2";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EmojiPlayground/EmojiPlayground.entitlements;
@@ -621,7 +625,7 @@
 		2E80978927E5BB5000E40261 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AppIconAlternate1;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconAlternate1 AppIconAlternate2";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EmojiPlayground/EmojiPlayground.entitlements;

@@ -7,16 +7,19 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import PhotosUI
 
 struct ChatView: View {
     @EnvironmentObject private var storage: EmoticonStorage
     @EnvironmentObject private var theme: Theme
     
     @State private var text = ""
-    @State private var showsPhotoLibrary = false
     @State private var showsEmojiLibrary = false
     @State private var iCloudAccountNotFoundAlert = false
     @State private var sender: MessageSender = .me
+    @State private var photoSelections: [PhotosPickerItem] = []
+    @State private var errorAlertMessage: String?
+    @State private var isPresentedUploadOverlay = false
     
     let room: Room
     
@@ -37,14 +40,26 @@ struct ChatView: View {
         VStack(spacing: 0) {
             chatListView
                 .dropDestination(for: DropItem.self) { items, _ in
+                    isPresentedUploadOverlay = true
+                    
+                    guard CloudKitUtility.isLoggedIn else {
+                        isPresentedUploadOverlay = false
+                        // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            iCloudAccountNotFoundAlert = true
+                        }
+                        return false
+                    }
+                    
                     for item in items {
-                        guard CloudKitUtility.isLoggedIn else { return false }
-                        
                         switch item {
                         case .text(let message):
                             PersistenceController.shared.addMessage(type: .plainText, value: message, sender: sender, in: room)
                         case .data(let data):
-                            guard let _ = UIImage(data: data) else { return false }
+                            guard let _ = UIImage(data: data) else {
+                                isPresentedUploadOverlay = false
+                                return false
+                            }
                             
                             let temporaryDirectory = NSTemporaryDirectory()
                             let temporaryFileURL = URL(filePath: temporaryDirectory).appending(path: UUID().uuidString)
@@ -52,10 +67,9 @@ struct ChatView: View {
                             PersistenceController.shared.addImageMessage(type: .image, imageURL: temporaryFileURL, sender: sender, in: room)
                         }
                     }
-
+                    
+                    isPresentedUploadOverlay = false
                     return true
-                } isTargeted: { isTargeted in
-                    print("isTargeted: \(isTargeted)")
                 }
             
 //            senderPickerView
@@ -65,21 +79,21 @@ struct ChatView: View {
             bottomEmojiView
         }
         .background(theme.roomBackgoundColor)
+        .overlay {
+            if isPresentedUploadOverlay {
+                Color.black.opacity(0.5)
+                    .ignoresSafeArea()
+                    .overlay(
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .controlSize(.large)
+                            .tint(.white)
+                    )
+            }
+        }
         .navigationTitle(room.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarRole(.editor)
-        .sheet(isPresented: $showsPhotoLibrary) {
-            ImagePicker { imageURL in
-                if CloudKitUtility.isLoggedIn {
-                    PersistenceController.shared.addImageMessage(type: .image, imageURL: imageURL, sender: sender, in: room)
-                } else {
-                    // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        iCloudAccountNotFoundAlert = true
-                    }
-                }
-            }
-        }
         .alert("로그인 오류", isPresented: $iCloudAccountNotFoundAlert, actions: {
             Button("설정으로 이동") {
                 UIApplication.shared.open(URL(string: UIApplication.openNotificationSettingsURLString)!)
@@ -136,13 +150,55 @@ struct ChatView: View {
     
     private var bottomInputView: some View {
         HStack(spacing: 8) {
-            Button(action: {
-                showsPhotoLibrary = true
-            }) {
-                Image(systemName: "plus.app")
-                    .buttonModifier
-                    .foregroundColor(Color.gray)
-            }
+            PhotosPicker(
+                selection: $photoSelections,
+                maxSelectionCount: 3, // MEMO: 너무 많아지면 오류가 발생하므로 안전하게 3개씩만 하기로
+                matching: .images) {
+                    Image(systemName: "plus.app")
+                        .buttonModifier
+                        .foregroundColor(Color.gray)
+                }
+                .onChange(of: photoSelections) { newValue in
+                    guard !newValue.isEmpty else { return }
+                    photoSelections.removeAll()
+                    
+                    isPresentedUploadOverlay = true
+                    
+                    guard CloudKitUtility.isLoggedIn else {
+                        isPresentedUploadOverlay = false
+                        // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            iCloudAccountNotFoundAlert = true
+                        }
+                        return
+                    }
+                    
+                    
+                    Task {
+                        for selection in newValue {
+                            guard
+                                let data = try await selection.loadTransferable(type: Data.self),
+                                let _ = UIImage(data: data)
+                            else {
+                                isPresentedUploadOverlay = false
+                                errorAlertMessage = "업로드 중 오류가 발생했습니다."
+                                return
+                            }
+                            
+                            let temporaryDirectory = NSTemporaryDirectory()
+                            let temporaryFileURL = URL(filePath: temporaryDirectory).appending(path: UUID().uuidString)
+                            try data.write(to: temporaryFileURL)
+                            PersistenceController.shared.addImageMessage(type: .image, imageURL: temporaryFileURL, sender: sender, in: room)
+                        }
+                        
+                        isPresentedUploadOverlay = false
+                    }
+                }
+                .alert("오류", presenting: $errorAlertMessage) { _ in
+                    Button("확인", role: .cancel, action: {})
+                } message: { message in
+                    Text(message)
+                }
             
             HStack(spacing: 0) {
                 TextEditor(text: $text)
@@ -206,21 +262,25 @@ struct ChatView: View {
         .background(Color.white)
     }
     
+    @ViewBuilder
     private var bottomEmojiView: some View {
-        ChatImageStorageView { image in
-            if CloudKitUtility.isLoggedIn {
-                PersistenceController.shared.addMessage(type: .image, value: image.id, sender: sender, in: room)
-            } else {
-                // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    iCloudAccountNotFoundAlert = true
+        if showsEmojiLibrary {
+            ChatImageStorageView { image in
+                if CloudKitUtility.isLoggedIn {
+                    PersistenceController.shared.addMessage(type: .image, value: image.id, sender: sender, in: room)
+                } else {
+                    // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        iCloudAccountNotFoundAlert = true
+                    }
                 }
             }
+            .frame(height: Screen.height / 3)
+//            .frame(height: showsEmojiLibrary ? Screen.height / 3 : 0)
+            .frame(maxWidth: .infinity)
+//            .opacity(showsEmojiLibrary ? 1 : 0)
+            .background(Color.white)
         }
-        .frame(height: showsEmojiLibrary ? Screen.height / 3 : 0)
-        .frame(maxWidth: .infinity)
-        .opacity(showsEmojiLibrary ? 1 : 0)
-        .background(Color.white)
     }
     
     private let emptyScrollToString = "Empty"

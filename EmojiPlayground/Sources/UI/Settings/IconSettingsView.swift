@@ -67,6 +67,7 @@ extension IconSettingsView {
     enum Icon: Int, CaseIterable, Identifiable {
         case main = 0
         case alt1
+        case alt2
         
         init(string: String?) {
             guard let string else {
@@ -104,7 +105,7 @@ extension IconSettingsView {
         let icons: [Icon]
         
         static let items = [
-            IconSelector(title: "공식 아이콘", icons: [.main, .alt1]),
+            IconSelector(title: "공식 아이콘", icons: Icon.allCases),
             IconSelector(title: "기타", icons: [])
         ]
     }

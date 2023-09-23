@@ -28,11 +28,14 @@ struct ChatImageStorageView: View {
                 
                 tabBody
             } else {
-                Text("xxx")
+                Text("사용할 수 있는 이모티콘이 없어요! 🥲")
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.systemGray6)
+        .task {
+            await storage.fetchImages()
+        }
     }
     
     private var tabHeader: some View {
@@ -42,7 +45,7 @@ struct ChatImageStorageView: View {
                     ForEach(tabs.indices, id: \.self) { index in
                         let tab = tabs[index]
                         
-                        Text(String(tab.name.first ?? "?"))
+                        Text(String(tab.firstCharacterOfName))
                             .font(.body)
                             .foregroundColor(internalIndex == index ? .black : .gray)
                             .padding()

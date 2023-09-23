@@ -83,4 +83,12 @@ struct GroupedImage: Identifiable, Hashable {
     let images: [MessageImage]
     
     var id: String { name }
+    
+    var firstCharacterOfName: Character {
+        if let first = name.trimmingCharacters(in: .whitespacesAndNewlines).first {
+            return first
+        } else {
+            return "-"
+        }
+    }
 }

@@ -213,7 +213,7 @@ struct ChatView: View {
                     Button(action: {
                         UIApplication.shared.endEditing()
                         withAnimation(.linear(duration: 0.001)) {
-                            showsEmojiLibrary = true
+                            showsEmojiLibrary.toggle()
                         }
                     }) {
                         Image(systemName: "face.smiling")

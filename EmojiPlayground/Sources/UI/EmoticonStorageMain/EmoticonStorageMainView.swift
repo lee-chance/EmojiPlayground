@@ -11,6 +11,8 @@ import SDWebImageSwiftUI
 struct EmoticonStorageMainView: View {
     @EnvironmentObject private var storage: EmoticonStorage
     
+    @State private var isLoading: Bool = false
+    
     private var gridItems: [GridItem] {
         [GridItem(.adaptive(minimum: 100, maximum: 200), alignment: .top)]
     }
@@ -18,11 +20,11 @@ struct EmoticonStorageMainView: View {
     var body: some View {
         GeometryReader { geometry in // 이거로 loadingView, emptyView를 화면 중앙에 두기
             ScrollView {
-                if storage.images.isEmpty {
+                if isLoading, storage.images.isEmpty {
                     ProgressView()
                         .progressViewStyle(.circular)
                         .frame(width: geometry.size.width, height: geometry.size.height)
-                } else if storage.groupedImages().isEmpty {
+                } else if storage.images.isEmpty {
                     Text("사용할 수 있는 이모티콘이 없어요! 🥲")
                         .frame(width: geometry.size.width, height: geometry.size.height)
                 } else {
@@ -47,7 +49,9 @@ struct EmoticonStorageMainView: View {
 //            }
 //        }
         .task {
+            isLoading = true
             await storage.fetchImages()
+            isLoading = false
         }
     }
     

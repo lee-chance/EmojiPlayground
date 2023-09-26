@@ -11,19 +11,29 @@ import SDWebImageSwiftUI
 struct EmoticonStorageMainView: View {
     @EnvironmentObject private var storage: EmoticonStorage
     
-    @State private var isLoading: Bool = false
-    
     private var gridItems: [GridItem] {
         [GridItem(.adaptive(minimum: 100, maximum: 200), alignment: .top)]
     }
     
     var body: some View {
-        GeometryReader { geometryProxy in
+        GeometryReader { geometry in // 이거로 loadingView, emptyView를 화면 중앙에 두기
             ScrollView {
-                if isLoading {
-                    loadingView
+                if storage.images.isEmpty {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                } else if storage.groupedImages().isEmpty {
+                    Text("사용할 수 있는 이모티콘이 없어요! 🥲")
+                        .frame(width: geometry.size.width, height: geometry.size.height)
                 } else {
-                    gridView
+                    VStack(alignment: .leading) {
+                        Text("이모티콘은 1:1 비율의 사이즈를 권장합니다.")
+                            .font(.callout)
+                            .foregroundColor(.gray)
+                            .padding(.horizontal)
+                        
+                        gridView
+                    }
                 }
             }
         }
@@ -37,16 +47,8 @@ struct EmoticonStorageMainView: View {
 //            }
 //        }
         .task {
-            isLoading = true
             await storage.fetchImages()
-            isLoading = false
         }
-    }
-    
-    private var loadingView: some View {
-        ProgressView()
-            .progressViewStyle(.circular)
-            .frame(maxWidth: .infinity)
     }
     
     private var gridView: some View {
@@ -116,7 +118,6 @@ struct EmoticonGroupView: View {
             
             WebImage(url: image.asset.fileURL)
                 .resizable()
-                .customLoopCount(4)
                 .aspectRatio(1, contentMode: .fit)
         } else {
             Rectangle()

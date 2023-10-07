@@ -50,6 +50,7 @@
 		2EC4EF3E2AD14D9C003910AC /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF3D2AD14D9C003910AC /* FirebaseCrashlytics */; };
 		2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF592AD14D9C003910AC /* FirebasePerformance */; };
 		2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */; };
+		2EC4EF642AD16060003910AC /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4EF632AD16060003910AC /* Version.swift */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
 		2EFD113229E162EC00924121 /* EmoticonStorageMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */; };
 		2EFD113829E16CBA00924121 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EFD113729E16CBA00924121 /* GoogleService-Info.plist */; };
@@ -96,6 +97,7 @@
 		2EBE34BC29EA5AF600F30846 /* EmojiPlayground.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EmojiPlayground.xcdatamodel; sourceTree = "<group>"; };
 		2EBE350A29F2D9E000F30846 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		2EBE350C29F2DA2800F30846 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		2EC4EF632AD16060003910AC /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageMainView.swift; sourceTree = "<group>"; };
 		2EFD113729E16CBA00924121 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				2E9E832A2A0559AB002A2B90 /* GIFImage.swift */,
 				2E07AE702A07961D00674E47 /* ImageCacheManager.swift */,
 				2ECD95892ABEAD8800E99B5A /* Alerts.swift */,
+				2EC4EF632AD16060003910AC /* Version.swift */,
 				2E9517862945B315001E6ED6 /* Extension */,
 				2E9E83292A050A49002A2B90 /* CloudKit */,
 			);
@@ -473,6 +476,7 @@
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
 				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
 				2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */,
+				2EC4EF642AD16060003910AC /* Version.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
 				2EAEF3F02AADBFF90098ECAB /* ChatImageStorageView.swift in Sources */,

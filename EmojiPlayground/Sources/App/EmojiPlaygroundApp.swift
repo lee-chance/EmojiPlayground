@@ -94,13 +94,14 @@ struct EmojiPlaygroundApp: App {
         let minimumVersion = RemoteConfig.remoteConfig().configValue(forKey: "minimum_version")
         guard
             let minimumVersion = minimumVersion.stringValue,
+            !minimumVersion.isEmpty,
             let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         else {
             isSuccessedVersionCheck = false
             return
         }
         
-        isSuccessedVersionCheck = minimumVersion <= appVersion
+        isSuccessedVersionCheck = Version(string: minimumVersion) <= Version(string: appVersion)
     }
     
     @ViewBuilder

@@ -5,6 +5,12 @@
 //  Created by Changsu Lee on 2023/06/12.
 //
 
+/*
+ How to add App Icon
+  1. Add Assets AppIcon and Image
+  2. Add Alternate App Icon Set of Build Settings
+ */
+
 import SwiftUI
 
 struct IconSettingsView: View {
@@ -15,14 +21,15 @@ struct IconSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                ForEach(IconSelector.items) { item in
-                    Section {
-                        makeIconGridView(icons: item.icons)
-                    } header: {
-                        Text(item.title)
-                            .font(.headline)
-                    }
-                }
+                makeIconGridView(icons: Icon.allCases)
+//                ForEach(IconSelector.items) { item in
+//                    Section {
+//                        makeIconGridView(icons: item.icons)
+//                    } header: {
+//                        Text(item.title)
+//                            .font(.headline)
+//                    }
+//                }
             }
             .padding()
         }
@@ -68,6 +75,8 @@ extension IconSettingsView {
         case main = 0
         case alt1
         case alt2
+        case alt3
+        case alt4
         
         init(string: String?) {
             guard let string else {

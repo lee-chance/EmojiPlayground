@@ -23,20 +23,63 @@ struct Sidebar: View {
     
     var body: some View {
         List(selection: $selection) {
-            NavigationLink(value: Panel.home) {
-                Label("연습장", systemImage: "note.text")
+            Section("바로가기") {
+                NavigationLink(value: Panel.home) {
+                    Label("연습장", systemImage: "note.text")
+                }
+                
+                NavigationLink(value: Panel.emoticonStorage) {
+                    Label("보관함", systemImage: "archivebox")
+                }
+                
+//                NavigationLink(value: Panel.community) {
+//                    Label("커뮤니티", systemImage: "globe")
+//                }
+                
+//                NavigationLink(value: Panel.settings) {
+//                    Label("설정", systemImage: "gearshape")
+//                }
             }
             
-            NavigationLink(value: Panel.emoticonStorage) {
-                Label("보관함", systemImage: "archivebox")
+            Section("앱 설정") {
+                NavigationLink(destination: IconSettingsView()) {
+                    Label {
+                        Text("앱 아이콘")
+                    } icon: {
+                        let icon = IconSettingsView.Icon(string: UIApplication.shared.alternateIconName)
+                        
+                        Image(uiImage: .init(named: icon.iconName)!)
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .cornerRadius(4)
+                    }
+                }
+                
+//                if let reviewURL = URL(string: "https://apps.apple.com/app/id(AppInfo.appStoreAppId)?action=write-review") {
+//                    Link(destination: reviewURL) {
+//                        Label("리뷰 남기러 가기", systemImage: "star.bubble")
+//                    }
+//                    .tint(Color.black)
+//                }
+                
+//                NavigationLink(destination: AboutView()) {
+//                  Label("settings.app.about", systemImage: "info.circle")
+//                }
+                
+                if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                    Label("앱 버전: \(appVersion)", systemImage: "info.circle")
+                }
             }
             
-//            NavigationLink(value: Panel.community) {
-//                Label("커뮤니티", systemImage: "globe")
-//            }
-            
-            NavigationLink(value: Panel.settings) {
-                Label("설정", systemImage: "gearshape")
+            Section("일반 설정") {
+                NavigationLink(destination: DisplaySettingsView()) {
+                    Label("화면 설정", systemImage: "paintpalette")
+                }
+                
+                Link(destination: URL(string: UIApplication.openSettingsURLString)!) {
+                    Label("시스템 설정", systemImage: "gear")
+                }
+                .tint(Color.black)
             }
         }
         .navigationTitle("Emote")

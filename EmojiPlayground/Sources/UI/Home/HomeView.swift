@@ -19,6 +19,8 @@ struct HomeView: View {
         Form {
             Link("이모티콘 제안 가이드로 이동하기", destination: URL(string: "https://emoticonstudio.kakao.com/pages/start")!)
             
+//            NavigationLink("캔버스에서 그리기", value: Panel.canvas)
+            
             NavigationLink("내 보관함", value: Panel.emoticonStorage)
             
 //            NavigationLink("커뮤니티로 가기", value: Panel.community)
@@ -46,6 +48,8 @@ struct HomeView: View {
                 EmoticonStorageMainView()
             case .community:
                 CommunityView()
+            case .canvas:
+                CanvasView()
             default:
                 Text("Error")
             }

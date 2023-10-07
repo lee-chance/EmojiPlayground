@@ -16,6 +16,8 @@ enum Panel: Hashable {
     case community
     /// The value for the ``SettingsView``.
     case settings
+    /// The value for the ``CanvasView``.
+    case canvas
 }
 
 struct Sidebar: View {
@@ -26,6 +28,10 @@ struct Sidebar: View {
             NavigationLink(value: Panel.home) {
                 Label("연습장", systemImage: "note.text")
             }
+            
+//            NavigationLink(value: Panel.canvas) {
+//                Label("캔버스", systemImage: "archivebox")
+//            }
             
             NavigationLink(value: Panel.emoticonStorage) {
                 Label("보관함", systemImage: "archivebox")

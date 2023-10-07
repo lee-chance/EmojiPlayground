@@ -47,6 +47,8 @@
 		2EBE350B29F2D9E000F30846 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350A29F2D9E000F30846 /* Room.swift */; };
 		2EBE350D29F2DA2800F30846 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350C29F2DA2800F30846 /* Persistence.swift */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
+		2EF4D7642ACAB9E500FC6DA1 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF4D7632ACAB9E500FC6DA1 /* CanvasView.swift */; };
+		2EF4D7662ACAC5AD00FC6DA1 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF4D7652ACAC5AD00FC6DA1 /* Canvas.swift */; };
 		2EFD113229E162EC00924121 /* EmoticonStorageMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */; };
 		2EFD113829E16CBA00924121 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EFD113729E16CBA00924121 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -93,6 +95,8 @@
 		2EBE350A29F2D9E000F30846 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		2EBE350C29F2DA2800F30846 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		2EF4D7632ACAB9E500FC6DA1 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		2EF4D7652ACAC5AD00FC6DA1 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageMainView.swift; sourceTree = "<group>"; };
 		2EFD113729E16CBA00924121 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -245,6 +249,7 @@
 				2E3A56E92A234FD00081C546 /* EmoticonStorageDetail */,
 				2E7C8F5F2A14CF5100B3B3A0 /* Community */,
 				2E6467BC2A35AAA600EB1F65 /* Settings */,
+				2EF4D7622ACAB9D400FC6DA1 /* Canvas */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -342,6 +347,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2EF4D7622ACAB9D400FC6DA1 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				2EF4D7632ACAB9E500FC6DA1 /* CanvasView.swift */,
+				2EF4D7652ACAC5AD00FC6DA1 /* Canvas.swift */,
+			);
+			path = Canvas;
+			sourceTree = "<group>";
+		};
 		2EFD113029E1619B00924121 /* EmoticonStorageMain */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +442,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EF4D7642ACAB9E500FC6DA1 /* CanvasView.swift in Sources */,
 				2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
 				2E3A56F12A24C4710081C546 /* EmoticonStorage.swift in Sources */,
@@ -441,6 +456,7 @@
 				2EAEF3EE2AADBDCB0098ECAB /* OSLogExtension.swift in Sources */,
 				2EBE350B29F2D9E000F30846 /* Room.swift in Sources */,
 				2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */,
+				2EF4D7662ACAC5AD00FC6DA1 /* Canvas.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
 				2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */,
 				2E80979527E5EA1000E40261 /* Message.swift in Sources */,

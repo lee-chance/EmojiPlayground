@@ -46,6 +46,10 @@
 		2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE34BB29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld */; };
 		2EBE350B29F2D9E000F30846 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350A29F2D9E000F30846 /* Room.swift */; };
 		2EBE350D29F2DA2800F30846 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350C29F2DA2800F30846 /* Persistence.swift */; };
+		2EC4EF2E2AD14D9C003910AC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF2D2AD14D9C003910AC /* FirebaseAnalytics */; };
+		2EC4EF3E2AD14D9C003910AC /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF3D2AD14D9C003910AC /* FirebaseCrashlytics */; };
+		2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF592AD14D9C003910AC /* FirebasePerformance */; };
+		2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
 		2EFD113229E162EC00924121 /* EmoticonStorageMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */; };
 		2EFD113829E16CBA00924121 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EFD113729E16CBA00924121 /* GoogleService-Info.plist */; };
@@ -102,6 +106,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC4EF2E2AD14D9C003910AC /* FirebaseAnalytics in Frameworks */,
+				2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */,
+				2EC4EF3E2AD14D9C003910AC /* FirebaseCrashlytics in Frameworks */,
+				2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */,
 				2EAEF3E82AADB6730098ECAB /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +376,10 @@
 			name = Emote;
 			packageProductDependencies = (
 				2EAEF3E72AADB6730098ECAB /* SDWebImageSwiftUI */,
+				2EC4EF2D2AD14D9C003910AC /* FirebaseAnalytics */,
+				2EC4EF3D2AD14D9C003910AC /* FirebaseCrashlytics */,
+				2EC4EF592AD14D9C003910AC /* FirebasePerformance */,
+				2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */,
 			);
 			productName = EmojiPlayground;
 			productReference = 2E80977927E5BB4F00E40261 /* Emote.app */;
@@ -399,6 +411,7 @@
 			mainGroup = 2E80977027E5BB4F00E40261;
 			packageReferences = (
 				2E5F258B27EF4B4F002F21F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 2E80977A27E5BB4F00E40261 /* Products */;
 			projectDirPath = "";
@@ -689,6 +702,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.16.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -696,6 +717,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5F258B27EF4B4F002F21F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		2EC4EF2D2AD14D9C003910AC /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		2EC4EF3D2AD14D9C003910AC /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		2EC4EF592AD14D9C003910AC /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
+		};
+		2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
 		};
 /* End XCSwiftPackageProductDependency section */
 

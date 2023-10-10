@@ -55,18 +55,18 @@ struct Sidebar: View {
                     }
                 }
                 
-//                if let reviewURL = URL(string: "https://apps.apple.com/app/id(AppInfo.appStoreAppId)?action=write-review") {
-//                    Link(destination: reviewURL) {
-//                        Label("리뷰 남기러 가기", systemImage: "star.bubble")
-//                    }
-//                    .tint(Color.black)
-//                }
+                if let reviewURL = URL(string: "https://apps.apple.com/app/id\(AppInfo.appStoreAppleID)?action=write-review") {
+                    Link(destination: reviewURL) {
+                        Label("리뷰 남기러 가기", systemImage: "star.bubble")
+                    }
+                    .tint(Color.black)
+                }
                 
 //                NavigationLink(destination: AboutView()) {
 //                  Label("settings.app.about", systemImage: "info.circle")
 //                }
                 
-                if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                if let appVersion = AppInfo.appVersion {
                     Label("앱 버전: \(appVersion)", systemImage: "info.circle")
                 }
             }
@@ -82,7 +82,7 @@ struct Sidebar: View {
                 .tint(Color.black)
             }
         }
-        .navigationTitle("Emote")
+        .navigationTitle("테스티콘")
     }
 }
 

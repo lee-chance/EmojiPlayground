@@ -57,7 +57,10 @@ struct EmojiPlaygroundApp: App {
                 Color(uiColor: .systemBackground)
                     .alert("업데이트가 필요합니다.", presenting: $isSuccessedVersionCheck, actions: { _ in
                         Button("업데이트") {
-                            UIApplication.shared.open(URL(string: UIApplication.openNotificationSettingsURLString)!)
+                            guard let url = URL(string: "itms-apps://itunes.apple.com/app/\(AppInfo.appStoreAppleID)") else { return }
+                            if UIApplication.shared.canOpenURL(url) {
+                                UIApplication.shared.open(url)
+                            }
                         }
                     }, message: { _ in
                         Text("앱 업데이트 후 이용가능합니다.")
@@ -95,7 +98,7 @@ struct EmojiPlaygroundApp: App {
         guard
             let minimumVersion = minimumVersion.stringValue,
             !minimumVersion.isEmpty,
-            let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+            let appVersion = AppInfo.appVersion
         else {
             isSuccessedVersionCheck = false
             return

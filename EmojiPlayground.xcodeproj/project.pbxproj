@@ -36,6 +36,7 @@
 		2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979A27E60F1C00E40261 /* NavigationBarColor.swift */; };
 		2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979C27E628F500E40261 /* DefaultCharacter.swift */; };
 		2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8097A527E64B7400E40261 /* ColorExtension.swift */; };
+		2E86F8362AD25021009BD12D /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86F8352AD25021009BD12D /* AppInfo.swift */; };
 		2E9517842945B168001E6ED6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517832945B168001E6ED6 /* MainView.swift */; };
 		2E9517892945B38D001E6ED6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517882945B38D001E6ED6 /* Theme.swift */; };
 		2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E832A2A0559AB002A2B90 /* GIFImage.swift */; };
@@ -88,6 +89,7 @@
 		2E80979A27E60F1C00E40261 /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
 		2E80979C27E628F500E40261 /* DefaultCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCharacter.swift; sourceTree = "<group>"; };
 		2E8097A527E64B7400E40261 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		2E86F8352AD25021009BD12D /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		2E9517832945B168001E6ED6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2E9517882945B38D001E6ED6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		2E9E832A2A0559AB002A2B90 /* GIFImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImage.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		2E9517852945B303001E6ED6 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				2E86F8352AD25021009BD12D /* AppInfo.swift */,
 				2E80979827E60CB100E40261 /* Screen.swift */,
 				2E9E832A2A0559AB002A2B90 /* GIFImage.swift */,
 				2E07AE702A07961D00674E47 /* ImageCacheManager.swift */,
@@ -455,6 +458,7 @@
 				2E80979927E60CB100E40261 /* Screen.swift in Sources */,
 				2EFD113229E162EC00924121 /* EmoticonStorageMainView.swift in Sources */,
 				2EAEF3EE2AADBDCB0098ECAB /* OSLogExtension.swift in Sources */,
+				2E86F8362AD25021009BD12D /* AppInfo.swift in Sources */,
 				2EBE350B29F2D9E000F30846 /* Room.swift in Sources */,
 				2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
@@ -619,6 +623,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EmojiPlayground/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "테스티콘";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -654,6 +659,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EmojiPlayground/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "테스티콘";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

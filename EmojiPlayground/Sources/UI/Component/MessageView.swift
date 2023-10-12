@@ -122,7 +122,7 @@ extension MessageView {
                 .resizable()
 //                .scaledToFit()
 //                .frame(maxWidth: 200)
-                .frame(width: 200, height: 200)
+                .frame(width: 150, height: 150)
                 .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
         }
         
@@ -143,7 +143,7 @@ extension MessageView {
         
         private var commonMaterialView: some View {
             Rectangle()
-                .frame(width: 200, height: 200)
+                .frame(width: 150, height: 150)
                 .foregroundColor(.black.opacity(0.5))
                 .background(
                     Group {

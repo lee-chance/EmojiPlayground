@@ -14,9 +14,7 @@ struct EmojiPlaygroundApp: App {
     @Environment(\.scenePhase) private var scenePhase
     
     @StateObject var mainRouter = MainRouter()
-    @StateObject var emoticonStorage = EmoticonStorage()
     
-    @State private var iCloudAccountNotFoundAlert = false
     @State private var isSuccessedVersionCheck: Bool?
     
     init() {
@@ -31,28 +29,9 @@ struct EmojiPlaygroundApp: App {
         WindowGroup {
             if isSuccessedVersionCheck == true {
                 MainView()
-                    .environment(\.managedObjectContext, PersistenceController.shared.context)
                     .environmentObject(mainRouter)
-                    .environmentObject(emoticonStorage)
                     .environmentObject(Theme.shared)
                     .overlay(mainOverlay)
-                    .alert("로그인 오류", isPresented: $iCloudAccountNotFoundAlert, actions: {
-                        Button("설정으로 이동") {
-                            UIApplication.shared.open(URL(string: UIApplication.openNotificationSettingsURLString)!)
-                        }
-                        
-                        Button("취소", role: .cancel) { }
-                    }, message: {
-                        Text("설정에서 iCloud에 로그인을 해주세요.")
-                    })
-                    .onAppear {
-                        checkiCloudLoggedIn()
-                    }
-                    .onChange(of: scenePhase) { newValue in
-                        if newValue == .active {
-                            checkiCloudLoggedIn()
-                        }
-                    }
             } else {
                 Color(uiColor: .systemBackground)
                     .alert("업데이트가 필요합니다.", presenting: $isSuccessedVersionCheck, actions: { _ in
@@ -75,20 +54,6 @@ struct EmojiPlaygroundApp: App {
                             checkMinVersion()
                         }
                     }
-            }
-        }
-    }
-    
-    private func checkiCloudLoggedIn() {
-        Task {
-            do {
-                let _ = try await CloudKitUtility.getiCloudStatus()
-            } catch CloudKitUtility.CloudKitError.iCouldAccountNotFound {
-                iCloudAccountNotFoundAlert = true
-            } catch CloudKitUtility.CloudKitError.iCouldAccountTemporarilyUnavailable {
-                iCloudAccountNotFoundAlert = true
-            } catch {
-                print("cslog error: \(error)")
             }
         }
     }

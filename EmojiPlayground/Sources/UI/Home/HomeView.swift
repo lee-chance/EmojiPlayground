@@ -13,7 +13,7 @@ struct HomeView: View {
     @State private var presentNewRoomAlert: Bool = false
     @State private var newRoomName: String = ""
     
-    @FetchRequest(fetchRequest: Room.all()) private var rooms
+    @State private var rooms: [Room] = []
     
     var body: some View {
         Form {
@@ -31,6 +31,9 @@ struct HomeView: View {
                 listFooterAddButtonView
             }
         }
+        .task {
+            rooms = await Room.all()
+        }
         .toolbar {
             Button("새 대화방") {
                 presentNewRoomAlert.toggle()
@@ -39,11 +42,13 @@ struct HomeView: View {
         .navigationTitle("연습장 📝")
         .navigationDestination(for: Room.self) { room in
             ChatView(room: room)
+                .environmentObject(MessageStore(id: room.id!))
         }
         .navigationDestination(for: Panel.self) { panel in
             switch panel {
             case .emoticonStorage:
                 EmoticonStorageMainView()
+                    .environmentObject(EmoticonStore())
             case .community:
                 CommunityView()
             default:
@@ -59,11 +64,10 @@ struct HomeView: View {
         .onDelete(perform: removeLanguages)
     }
     
-    // FIXME: Room을 삭제해도 이미지가 남아있다. 이것도 삭제되어야 Room 삭제 가능
     func removeLanguages(at offsets: IndexSet) {
         for index in offsets {
             let room = rooms[index]
-            PersistenceController.shared.delete(room)
+            Task { await room.delete() }
         }
     }
     
@@ -82,8 +86,12 @@ struct HomeView: View {
             
             Button("만들기", action: {
                 if newRoomName.count > 0 {
-                    PersistenceController.shared.addRoom(name: newRoomName)
-                    newRoomName = ""
+                    let room = Room(name: newRoomName)
+                    Task {
+                        await room.add()
+                        newRoomName = ""
+                        rooms = await Room.all()
+                    }
                 }
             })
             

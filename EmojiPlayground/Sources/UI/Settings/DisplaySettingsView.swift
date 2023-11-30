@@ -7,34 +7,6 @@
 
 import SwiftUI
 
-private final class MockMessage: Message {
-    convenience init(contentType: MessageContentType = .plainText, contentValue: String, sender: MessageSender) {
-        self.init()
-        self.mockContentType = contentType
-        self.mockContentValue = contentValue
-        self.mockSender = sender
-    }
-    
-    var mockContentType: MessageContentType = .plainText
-    var mockContentValue: String = ""
-    var mockSender: MessageSender = .me
-    
-    override var contentTypeValue: Int16 {
-        get { mockContentType.rawValue }
-        set { }
-    }
-    
-    override var contentValue: String {
-        get { mockContentValue }
-        set { }
-    }
-    
-    override var senderValue: Int16 {
-        get { mockSender.rawValue }
-        set { }
-    }
-}
-
 struct DisplaySettingsView: View {
     @EnvironmentObject private var theme: Theme
     
@@ -65,9 +37,9 @@ struct DisplaySettingsView: View {
     
     private var mockChatView: some View {
         VStack {
-            MessageView(message: MockMessage(contentValue: "내가 보낸 메세지", sender: .me))
+            MessageView(message: Message(plainText: "내가 보낸 메시지", sender: .to))
             
-            MessageView(message: MockMessage(contentValue: "상대방이 보낸 메세지", sender: .other))
+            MessageView(message: Message(plainText: "상대방이 보낸 메시지", sender: .from))
         }
     }
     

@@ -6,125 +6,71 @@
 //
 
 import SwiftUI
-import CoreData
+import FirebaseFirestoreSwift
 
-public class Message: NSManagedObject {
-    public override func awakeFromInsert() {
-        super.awakeFromInsert()
-        
-        setPrimitiveValue(UUID(), forKey: "id")
-        setPrimitiveValue(Date.now, forKey: "timestamp")
+struct Message: Codable, Identifiable {
+    @DocumentID var id: String?
+    @ServerTimestamp var timestamp: Date?
+    
+    let contentValue: String
+    let contentType: MessageContentType
+    let sender: MessageSender
+    
+    var imageURL: URL? {
+        URL(string: contentValue)
+    }
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case timestamp
+        case contentValue
+        case contentType
+        case sender
+    }
+    
+    init(plainText: String, sender: MessageSender) {
+        self.contentValue = plainText
+        self.contentType = .plainText
+        self.sender = sender
+    }
+    
+    init(imageURLString: String, sender: MessageSender) {
+        self.contentValue = imageURLString
+        self.contentType = .image
+        self.sender = sender
+    }
+    
+    func setEmoticon(groupName: String) async {
+        guard contentType == .image else { return }
+                
+        await FirestoreManager
+            .reference(path: .emoticons)
+            .setData(from: Emoticon(urlString: contentValue, groupName: groupName))
     }
 }
 
 extension Message {
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Message> {
-        return NSFetchRequest<Message>(entityName: "Message")
-    }
-    
-    @NSManaged public var id: UUID
-    @NSManaged public var contentValue: String
-    @NSManaged public var imageData: Data?
-    @NSManaged public var contentTypeValue: Int16
-    @NSManaged public var senderValue: Int16
-    @NSManaged public var timestamp: Date
-    @NSManaged public var room: Room?
-    
-    public var sender: MessageSender {
-        get { MessageSender(rawValue: senderValue) ?? .me }
-        set { senderValue = newValue.rawValue }
-    }
-    
-    public var contentType: MessageContentType {
-        get { MessageContentType(rawValue: contentTypeValue) ?? .plainText }
-        set { contentTypeValue = newValue.rawValue }
-    }
-    
-    static func all() -> NSFetchRequest<Message> {
-        let request: NSFetchRequest<Message> = fetchRequest()
-        request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Message.timestamp, ascending: true)
-        ]
-        return request
-    }
-    
-    static func all(of room: Room) -> NSFetchRequest<Message> {
-        let request: NSFetchRequest<Message> = fetchRequest()
-        request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \Message.timestamp, ascending: true)
-        ]
-        
-        let filter = NSPredicate(format: "room == %@", room)
-        request.predicate = filter
-        
-        return request
+    static func getMessages(of room: Room) async -> [Self] {
+        await FirestoreManager
+            .reference(path: .rooms)
+            .reference(path: room.id!)
+            .reference(path: .messages)
+            .order(by: CodingKeys.timestamp.stringValue)
+            .get(type: Message.self)
     }
 }
 
-extension Message: Identifiable { }
-
-#if canImport(CloudKit)
-import CloudKit
-
-enum ImageLoadError: Error {
-    case noAsset
-}
-
-extension Message {
-    func getAsset() async throws -> CKAsset {
-        let cachedKey = NSString(string: contentValue)
-
-        if let cachedAsset = ImageCacheManager.shared.object(forKey: cachedKey) {
-            return cachedAsset
-        }
-
-        let messageImage = try await getMessageImage()
-        let record = messageImage.record
-
-        guard let asset = record["ckAsset"] as? CKAsset else {
-            throw ImageLoadError.noAsset
-        }
-
-        ImageCacheManager.shared.setObject(asset, forKey: cachedKey)
-        return asset
-    }
-    
-    func getMessageImage() async throws -> MessageImage {
-        let images: [MessageImage] = await CloudKitUtility.private.fetch(
-            predicate: NSPredicate(format: "id == %@", contentValue),
-            resultsLimit: 1
-        )
-        
-        guard let image = images.first else {
-            throw ImageLoadError.noAsset
-        }
-        
-        return image
-    }
-}
-#endif
-
-public enum MessageSender: Int16 {
-    case me = 1
-    case other = 2
+enum MessageSender: String, Codable {
+    case from, to
     
     var messageAlignment: Alignment {
         switch self {
-        case .me: return .trailing
-        case .other: return .leading
+        case .to: return .trailing
+        case .from: return .leading
         }
     }
 }
 
-public enum MessageContentType: Int16 {
-    case plainText = 1
-    case image = 2
-    
-    var isPlainText: Bool {
-        self == .plainText
-    }
-    
-    var isImage: Bool {
-        self == .image
-    }
+enum MessageContentType: String, Codable {
+    case plainText, image
 }

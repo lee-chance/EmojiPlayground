@@ -9,9 +9,13 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct EmoticonStorageMainView: View {
-    @EnvironmentObject private var storage: EmoticonStorage
+    @EnvironmentObject private var store: EmoticonStore
     
     @State private var isLoading: Bool = false
+    
+    private var emoticonGroups: [EmoticonGroup] {
+        store.emoticonGroups
+    }
     
     private var gridItems: [GridItem] {
         [GridItem(.adaptive(minimum: 100, maximum: 200), alignment: .top)]
@@ -20,11 +24,11 @@ struct EmoticonStorageMainView: View {
     var body: some View {
         GeometryReader { geometry in // 이거로 loadingView, emptyView를 화면 중앙에 두기
             ScrollView {
-                if isLoading, storage.images.isEmpty {
+                if isLoading, emoticonGroups.isEmpty {
                     ProgressView()
                         .progressViewStyle(.circular)
                         .frame(width: geometry.size.width, height: geometry.size.height)
-                } else if storage.images.isEmpty {
+                } else if emoticonGroups.isEmpty {
                     Text("사용할 수 있는 이모티콘이 없어요! 🥲")
                         .frame(width: geometry.size.width, height: geometry.size.height)
                 } else {
@@ -40,8 +44,9 @@ struct EmoticonStorageMainView: View {
             }
         }
         .navigationTitle("보관함")
-        .navigationDestination(for: GroupedImage.self) { group in
+        .navigationDestination(for: EmoticonGroup.self) { group in
             EmoticonStorageDetailView(groupName: group.name)
+                .environmentObject(store)
         }
 //        .toolbar {
 //            ToolbarItemGroup {
@@ -50,19 +55,19 @@ struct EmoticonStorageMainView: View {
 //        }
         .task {
             isLoading = true
-            await storage.fetchImages()
+            await store.fetchEmoticons()
             isLoading = false
         }
     }
     
     private var gridView: some View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: 2)) {
-            ForEach(storage.groupedImages()) { item in
-                NavigationLink(value: item) {
+            ForEach(emoticonGroups) { group in
+                NavigationLink(value: group) {
                     VStack {
-                        EmoticonGroupView(images: item.images)
+                        EmoticonGroupView(emoticons: group.emoticons)
                         
-                        Text(item.name)
+                        Text(group.name)
                     }
                 }
                 .buttonStyle(.plain)
@@ -89,7 +94,7 @@ struct EmoticonStorageMainView: View {
 }
 
 struct EmoticonGroupView: View {
-    let images: [MessageImage]
+    let emoticons: [Emoticon]
     
     var body: some View {
         LazyVGrid(columns: [GridItem(), GridItem()]) {
@@ -98,11 +103,11 @@ struct EmoticonGroupView: View {
                 ZStack {
                     thumbnail(of: index)
                     
-                    if index == 3, images.count > 4 {
+                    if index == 3, emoticons.count > 4 {
                         Color.black
                             .opacity(0.5)
                             .overlay(
-                                Text("+\(images.count - 3)")
+                                Text("+\(emoticons.count - 3)")
                                     .foregroundColor(.white)
                             )
                     }
@@ -117,10 +122,10 @@ struct EmoticonGroupView: View {
     
     @ViewBuilder
     func thumbnail(of index: Int) -> some View {
-        if 0 <= index && index < images.count {
-            let image = images[index]
+        if 0 <= index && index < emoticons.count {
+            let emoticon = emoticons[index]
             
-            WebImage(url: image.asset.fileURL)
+            WebImage(url: emoticon.url)
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
         } else {

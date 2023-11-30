@@ -13,16 +13,12 @@
 		2E3A025F2A12261D003E8293 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A025E2A12261D003E8293 /* Sidebar.swift */; };
 		2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A02602A1226E5003E8293 /* DetailColumn.swift */; };
 		2E3A56EB2A234FE60081C546 /* EmoticonStorageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */; };
-		2E3A56F12A24C4710081C546 /* EmoticonStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56F02A24C4710081C546 /* EmoticonStorage.swift */; };
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
 		2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */; };
 		2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C12A3609C200EB1F65 /* Colors.swift */; };
 		2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */; };
 		2E6467C62A3636D100EB1F65 /* IconSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C52A3636D100EB1F65 /* IconSettingsView.swift */; };
-		2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDB29FFAE4B00DAFC39 /* CloudKitUtility.swift */; };
-		2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDD29FFB07500DAFC39 /* CloudKitUtility+Combine.swift */; };
-		2E72AFE029FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72AFDF29FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift */; };
 		2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C8F602A14CF5D00B3B3A0 /* CommunityView.swift */; };
 		2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7C8F662A15056A00B3B3A0 /* Community.swift */; };
 		2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80977C27E5BB4F00E40261 /* EmojiPlaygroundApp.swift */; };
@@ -36,6 +32,7 @@
 		2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979A27E60F1C00E40261 /* NavigationBarColor.swift */; };
 		2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80979C27E628F500E40261 /* DefaultCharacter.swift */; };
 		2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8097A527E64B7400E40261 /* ColorExtension.swift */; };
+		2E857A4C2B177A82005945F6 /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E857A4B2B177A82005945F6 /* MessageStore.swift */; };
 		2E86F8362AD25021009BD12D /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86F8352AD25021009BD12D /* AppInfo.swift */; };
 		2E9517842945B168001E6ED6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517832945B168001E6ED6 /* MainView.swift */; };
 		2E9517892945B38D001E6ED6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517882945B38D001E6ED6 /* Theme.swift */; };
@@ -46,13 +43,21 @@
 		2EAEF3F22AAF81FD0098ECAB /* KeyboardHeightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAEF3F12AAF81FD0098ECAB /* KeyboardHeightHelper.swift */; };
 		2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE34BB29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld */; };
 		2EBE350B29F2D9E000F30846 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350A29F2D9E000F30846 /* Room.swift */; };
-		2EBE350D29F2DA2800F30846 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350C29F2DA2800F30846 /* Persistence.swift */; };
+		2EC3CB192B13772200D2449C /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC3CB182B13772200D2449C /* FirestoreManager.swift */; };
+		2EC3CB1B2B1377CF00D2449C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC3CB1A2B1377CF00D2449C /* FirebaseFirestore */; };
+		2EC3CB1F2B1643CE00D2449C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC3CB1E2B1643CE00D2449C /* FirebaseStorage */; };
+		2EC3CB212B16453C00D2449C /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC3CB202B16453C00D2449C /* FirebaseFirestoreSwift */; };
 		2EC4EF2E2AD14D9C003910AC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF2D2AD14D9C003910AC /* FirebaseAnalytics */; };
 		2EC4EF3E2AD14D9C003910AC /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF3D2AD14D9C003910AC /* FirebaseCrashlytics */; };
 		2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF592AD14D9C003910AC /* FirebasePerformance */; };
 		2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */; };
 		2EC4EF642AD16060003910AC /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4EF632AD16060003910AC /* Version.swift */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
+		2EF21BA82B177F2400AB42BA /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */; };
+		2EF21BAA2B17856900AB42BA /* Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BA92B17856900AB42BA /* Emoticon.swift */; };
+		2EF21BAC2B1789F700AB42BA /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BAB2B1789F700AB42BA /* DataExtension.swift */; };
+		2EF21BAE2B17924500AB42BA /* EmoticonStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BAD2B17924500AB42BA /* EmoticonStore.swift */; };
+		2EF21BB02B1793D600AB42BA /* EmoticonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BAF2B1793D600AB42BA /* EmoticonGroup.swift */; };
 		2EFD113229E162EC00924121 /* EmoticonStorageMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */; };
 		2EFD113829E16CBA00924121 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2EFD113729E16CBA00924121 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -64,7 +69,6 @@
 		2E3A025E2A12261D003E8293 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		2E3A02602A1226E5003E8293 /* DetailColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailColumn.swift; sourceTree = "<group>"; };
 		2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageDetailView.swift; sourceTree = "<group>"; };
-		2E3A56F02A24C4710081C546 /* EmoticonStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorage.swift; sourceTree = "<group>"; };
 		2E4B79482953447A00A41030 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		2E4B794B2953493F00A41030 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -72,9 +76,6 @@
 		2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsView.swift; sourceTree = "<group>"; };
 		2E6467C52A3636D100EB1F65 /* IconSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettingsView.swift; sourceTree = "<group>"; };
 		2E72AFDA29FFAD1A00DAFC39 /* EmojiPlayground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmojiPlayground.entitlements; sourceTree = "<group>"; };
-		2E72AFDB29FFAE4B00DAFC39 /* CloudKitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitUtility.swift; sourceTree = "<group>"; };
-		2E72AFDD29FFB07500DAFC39 /* CloudKitUtility+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudKitUtility+Combine.swift"; sourceTree = "<group>"; };
-		2E72AFDF29FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudKitUtility+AsyncAwait.swift"; sourceTree = "<group>"; };
 		2E7C8F602A14CF5D00B3B3A0 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		2E7C8F662A15056A00B3B3A0 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		2E80977927E5BB4F00E40261 /* Emote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emote.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +90,7 @@
 		2E80979A27E60F1C00E40261 /* NavigationBarColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColor.swift; sourceTree = "<group>"; };
 		2E80979C27E628F500E40261 /* DefaultCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCharacter.swift; sourceTree = "<group>"; };
 		2E8097A527E64B7400E40261 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		2E857A4B2B177A82005945F6 /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 		2E86F8352AD25021009BD12D /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		2E9517832945B168001E6ED6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2E9517882945B38D001E6ED6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -98,9 +100,14 @@
 		2EAEF3F12AAF81FD0098ECAB /* KeyboardHeightHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelper.swift; sourceTree = "<group>"; };
 		2EBE34BC29EA5AF600F30846 /* EmojiPlayground.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EmojiPlayground.xcdatamodel; sourceTree = "<group>"; };
 		2EBE350A29F2D9E000F30846 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
-		2EBE350C29F2DA2800F30846 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		2EC3CB182B13772200D2449C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		2EC4EF632AD16060003910AC /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
+		2EF21BA92B17856900AB42BA /* Emoticon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoticon.swift; sourceTree = "<group>"; };
+		2EF21BAB2B1789F700AB42BA /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		2EF21BAD2B17924500AB42BA /* EmoticonStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStore.swift; sourceTree = "<group>"; };
+		2EF21BAF2B1793D600AB42BA /* EmoticonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonGroup.swift; sourceTree = "<group>"; };
 		2EFD113129E162EC00924121 /* EmoticonStorageMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageMainView.swift; sourceTree = "<group>"; };
 		2EFD113729E16CBA00924121 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,7 +121,10 @@
 				2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */,
 				2EC4EF3E2AD14D9C003910AC /* FirebaseCrashlytics in Frameworks */,
 				2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */,
+				2EC3CB1F2B1643CE00D2449C /* FirebaseStorage in Frameworks */,
 				2EAEF3E82AADB6730098ECAB /* SDWebImageSwiftUI in Frameworks */,
+				2EC3CB1B2B1377CF00D2449C /* FirebaseFirestore in Frameworks */,
+				2EC3CB212B16453C00D2449C /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,8 +151,8 @@
 		2E4B794A295344CC00A41030 /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				2EBE350C29F2DA2800F30846 /* Persistence.swift */,
-				2E3A56F02A24C4710081C546 /* EmoticonStorage.swift */,
+				2E857A4B2B177A82005945F6 /* MessageStore.swift */,
+				2EF21BAD2B17924500AB42BA /* EmoticonStore.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -279,7 +289,7 @@
 				2ECD95892ABEAD8800E99B5A /* Alerts.swift */,
 				2EC4EF632AD16060003910AC /* Version.swift */,
 				2E9517862945B315001E6ED6 /* Extension */,
-				2E9E83292A050A49002A2B90 /* CloudKit */,
+				2EC3CB172B1376F000D2449C /* Firebase */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -290,6 +300,7 @@
 				2E8097A527E64B7400E40261 /* ColorExtension.swift */,
 				2E4B79482953447A00A41030 /* UIApplicationExtension.swift */,
 				2EAEF3ED2AADBDCB0098ECAB /* OSLogExtension.swift */,
+				2EF21BAB2B1789F700AB42BA /* DataExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -320,21 +331,13 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
-		2E9E83292A050A49002A2B90 /* CloudKit */ = {
-			isa = PBXGroup;
-			children = (
-				2E72AFDB29FFAE4B00DAFC39 /* CloudKitUtility.swift */,
-				2E72AFDD29FFB07500DAFC39 /* CloudKitUtility+Combine.swift */,
-				2E72AFDF29FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift */,
-			);
-			path = CloudKit;
-			sourceTree = "<group>";
-		};
 		2EABF5C727E798180017D685 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				2E80979427E5EA1000E40261 /* Message.swift */,
 				2EBE350A29F2D9E000F30846 /* Room.swift */,
+				2EF21BA92B17856900AB42BA /* Emoticon.swift */,
+				2EF21BAF2B1793D600AB42BA /* EmoticonGroup.swift */,
 				2E9517882945B38D001E6ED6 /* Theme.swift */,
 				2E21006A2AB5D919004AF19D /* DropItem.swift */,
 			);
@@ -354,6 +357,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2EC3CB172B1376F000D2449C /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				2EC3CB182B13772200D2449C /* FirestoreManager.swift */,
+				2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		2EFD113029E1619B00924121 /* EmoticonStorageMain */ = {
@@ -386,6 +398,9 @@
 				2EC4EF3D2AD14D9C003910AC /* FirebaseCrashlytics */,
 				2EC4EF592AD14D9C003910AC /* FirebasePerformance */,
 				2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */,
+				2EC3CB1A2B1377CF00D2449C /* FirebaseFirestore */,
+				2EC3CB1E2B1643CE00D2449C /* FirebaseStorage */,
+				2EC3CB202B16453C00D2449C /* FirebaseFirestoreSwift */,
 			);
 			productName = EmojiPlayground;
 			productReference = 2E80977927E5BB4F00E40261 /* Emote.app */;
@@ -448,10 +463,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */,
+				2EF21BB02B1793D600AB42BA /* EmoticonGroup.swift in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
-				2E3A56F12A24C4710081C546 /* EmoticonStorage.swift in Sources */,
 				2EAEF3F22AAF81FD0098ECAB /* KeyboardHeightHelper.swift in Sources */,
 				2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */,
+				2EF21BAE2B17924500AB42BA /* EmoticonStore.swift in Sources */,
 				2E07AE762A079CE300674E47 /* MessageView.swift in Sources */,
 				2E80979727E5F1AB00E40261 /* ImagePicker.swift in Sources */,
 				2E3A56EB2A234FE60081C546 /* EmoticonStorageDetailView.swift in Sources */,
@@ -461,23 +477,23 @@
 				2E86F8362AD25021009BD12D /* AppInfo.swift in Sources */,
 				2EBE350B29F2D9E000F30846 /* Room.swift in Sources */,
 				2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */,
+				2EF21BAA2B17856900AB42BA /* Emoticon.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
 				2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */,
 				2E80979527E5EA1000E40261 /* Message.swift in Sources */,
-				2EBE350D29F2DA2800F30846 /* Persistence.swift in Sources */,
 				2E3A025F2A12261D003E8293 /* Sidebar.swift in Sources */,
-				2E72AFDE29FFB07500DAFC39 /* CloudKitUtility+Combine.swift in Sources */,
-				2E72AFDC29FFAE4B00DAFC39 /* CloudKitUtility.swift in Sources */,
 				2E6467C62A3636D100EB1F65 /* IconSettingsView.swift in Sources */,
 				2E21006B2AB5D919004AF19D /* DropItem.swift in Sources */,
 				2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */,
+				2EF21BAC2B1789F700AB42BA /* DataExtension.swift in Sources */,
 				2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
 				2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */,
-				2E72AFE029FFB07D00DAFC39 /* CloudKitUtility+AsyncAwait.swift in Sources */,
+				2E857A4C2B177A82005945F6 /* MessageStore.swift in Sources */,
 				2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */,
 				2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
+				2EC3CB192B13772200D2449C /* FirestoreManager.swift in Sources */,
 				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
 				2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */,
 				2EC4EF642AD16060003910AC /* Version.swift in Sources */,
@@ -485,6 +501,7 @@
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
 				2EAEF3F02AADBFF90098ECAB /* ChatImageStorageView.swift in Sources */,
 				2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */,
+				2EF21BA82B177F2400AB42BA /* FirebaseStorageManager.swift in Sources */,
 				2E8097A627E64B7400E40261 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -731,6 +748,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5F258B27EF4B4F002F21F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		2EC3CB1A2B1377CF00D2449C /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		2EC3CB1E2B1643CE00D2449C /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		2EC3CB202B16453C00D2449C /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
 		};
 		2EC4EF2D2AD14D9C003910AC /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

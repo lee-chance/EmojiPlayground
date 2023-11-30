@@ -10,24 +10,20 @@ import SDWebImageSwiftUI
 import PhotosUI
 
 struct ChatView: View {
-    @EnvironmentObject private var storage: EmoticonStorage
+    @EnvironmentObject private var messageStore: MessageStore
     @EnvironmentObject private var theme: Theme
     
     @State private var text = ""
     @State private var showsEmojiLibrary = false
-    @State private var iCloudAccountNotFoundAlert = false
-    @State private var sender: MessageSender = .me
+    @State private var sender: MessageSender = .to
     @State private var photoSelections: [PhotosPickerItem] = []
     @State private var errorAlertMessage: String?
     @State private var isPresentedUploadOverlay = false
     
     let room: Room
     
-    @FetchRequest var chatMessages: FetchedResults<Message>
-    
     init(room: Room) {
         self.room = room
-        self._chatMessages = FetchRequest(fetchRequest: Message.all(of: room))
     }
     
     private func moveToBottom(of proxy: ScrollViewProxy) {
@@ -42,29 +38,23 @@ struct ChatView: View {
                 .dropDestination(for: DropItem.self) { items, _ in
                     isPresentedUploadOverlay = true
                     
-                    guard CloudKitUtility.isLoggedIn else {
-                        isPresentedUploadOverlay = false
-                        // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            iCloudAccountNotFoundAlert = true
-                        }
-                        return false
-                    }
-                    
                     for item in items {
-                        switch item {
-                        case .text(let message):
-                            PersistenceController.shared.addMessage(type: .plainText, value: message, sender: sender, in: room)
-                        case .data(let data):
-                            guard let _ = UIImage(data: data) else {
-                                isPresentedUploadOverlay = false
-                                return false
+                        Task {
+                            switch item {
+                            case .text(let message):
+                                let message = Message(plainText: message, sender: sender)
+                                await messageStore.add(message: message)
+                            case .data(let data):
+                                guard let url = await FirebaseStorageManager.upload(data: data, to: "test") else {
+                                    isPresentedUploadOverlay = false
+                                    return false
+                                }
+                                
+                                let message = Message(imageURLString: url.absoluteString, sender: sender)
+                                await messageStore.add(message: message)
+                                await message.setEmoticon(groupName: room.name)
                             }
-                            
-                            let temporaryDirectory = NSTemporaryDirectory()
-                            let temporaryFileURL = URL(filePath: temporaryDirectory).appending(path: UUID().uuidString)
-                            try? data.write(to: temporaryFileURL)
-                            PersistenceController.shared.addImageMessage(type: .image, imageURL: temporaryFileURL, sender: sender, in: room)
+                            return true
                         }
                     }
                     
@@ -94,31 +84,21 @@ struct ChatView: View {
         .navigationTitle(room.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarRole(.editor)
-        .alert("로그인 오류", isPresented: $iCloudAccountNotFoundAlert, actions: {
-            Button("설정으로 이동") {
-                UIApplication.shared.open(URL(string: UIApplication.openNotificationSettingsURLString)!)
-            }
-            
-            Button("취소", role: .cancel) { }
-        }, message: {
-            Text("로그인 후에 사용할 수 있는 기능입니다.\n설정에서 iCloud에 로그인을 해주세요.")
-        })
     }
     
     private var chatListView: some View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack {
-                    ForEach(chatMessages) { msg in
+                    ForEach(messageStore.messages) { msg in
                         MessageView(message: msg)
-                            .id(msg.id)
                     }
                     .padding(.horizontal)
                     
                     HStack { Spacer() }
                         .id(emptyScrollToString)
                 }
-                .onChange(of: chatMessages.count) { _ in
+                .onChange(of: messageStore.messages.count) { _ in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         moveToBottom(of: proxy)
                     }
@@ -139,11 +119,11 @@ struct ChatView: View {
         Picker("", selection: $sender) {
             Text("👈")
                 .font(.title2)
-                .tag(MessageSender.other)
+                .tag(MessageSender.from)
             
             Text("👉")
                 .font(.title2)
-                .tag(MessageSender.me)
+                .tag(MessageSender.to)
         }
         .pickerStyle(.segmented)
     }
@@ -164,31 +144,20 @@ struct ChatView: View {
                     
                     isPresentedUploadOverlay = true
                     
-                    guard CloudKitUtility.isLoggedIn else {
-                        isPresentedUploadOverlay = false
-                        // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            iCloudAccountNotFoundAlert = true
-                        }
-                        return
-                    }
-                    
-                    
                     Task {
                         for selection in newValue {
                             guard
                                 let data = try await selection.loadTransferable(type: Data.self),
-                                let _ = UIImage(data: data)
+                                let url = await FirebaseStorageManager.upload(data: data, to: "test")
                             else {
                                 isPresentedUploadOverlay = false
                                 errorAlertMessage = "업로드 중 오류가 발생했습니다."
                                 return
                             }
                             
-                            let temporaryDirectory = NSTemporaryDirectory()
-                            let temporaryFileURL = URL(filePath: temporaryDirectory).appending(path: UUID().uuidString)
-                            try data.write(to: temporaryFileURL)
-                            PersistenceController.shared.addImageMessage(type: .image, imageURL: temporaryFileURL, sender: sender, in: room)
+                            let message = Message(imageURLString: url.absoluteString, sender: sender)
+                            await messageStore.add(message: message)
+                            await message.setEmoticon(groupName: room.name)
                         }
                         
                         isPresentedUploadOverlay = false
@@ -223,24 +192,27 @@ struct ChatView: View {
                     
                     if text.count > 0 {
                         Button(action: {
-                            PersistenceController.shared.addMessage(type: .plainText, value: text, sender: sender, in: room)
-                            text = ""
+                            Task {
+                                let message = Message(plainText: text, sender: sender)
+                                text = ""
+                                await messageStore.add(message: message)
+                            }
                         }) {
                             Image(systemName: "arrow.up")
                                 .buttonModifier
-                                .foregroundColor(sender == .me ? theme.myMessageFontColor : theme.otherMessageFontColor)
+                                .foregroundColor(sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
                                 .background(
                                     Circle()
                                         .stroke(Color.black.opacity(0.1))
-                                        .background(Circle().fill(sender == .me ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor))
+                                        .background(Circle().fill(sender == .to ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor))
                                 )
                         }
                     } else {
                         Button(action: {
-                            if sender == .me { sender = .other }
-                            else { sender = .me }
+                            if sender == .to { sender = .from }
+                            else { sender = .to }
                         }) {
-                            Image(systemName: sender == .me ? "hand.point.right" : "hand.point.left")
+                            Image(systemName: sender == .to ? "hand.point.right" : "hand.point.left")
                                 .buttonModifier
                                 .foregroundColor(Color.gray)
                                 .animation(nil, value: sender)
@@ -265,20 +237,15 @@ struct ChatView: View {
     @ViewBuilder
     private var bottomEmojiView: some View {
         if showsEmojiLibrary {
-            ChatImageStorageView { image in
-                if CloudKitUtility.isLoggedIn {
-                    PersistenceController.shared.addMessage(type: .image, value: image.id, sender: sender, in: room)
-                } else {
-                    // 네비게이션 버그로 즉시 실행하면 alert가 실행되지 않는다.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        iCloudAccountNotFoundAlert = true
-                    }
+            ChatImageStorageView { emoticon in
+                Task {
+                    let message = Message(imageURLString: emoticon.urlString, sender: sender)
+                    await messageStore.add(message: message)
                 }
             }
+            .environmentObject(EmoticonStore())
             .frame(height: Screen.height / 3)
-//            .frame(height: showsEmojiLibrary ? Screen.height / 3 : 0)
             .frame(maxWidth: .infinity)
-//            .opacity(showsEmojiLibrary ? 1 : 0)
             .background(Color.white)
         }
     }

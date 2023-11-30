@@ -9,13 +9,13 @@ import Foundation
 
 @MainActor
 final class Community: ObservableObject {
-    @Published private(set) var images: [MessageImage] = []
+    @Published private(set) var images: [Emoticon] = []
     
-    func fetchImages() async {
-        do {
-            images = try await MessageImage.allPublic()
-        } catch {
-            print("cslog error: \(error)")
-        }
-    }
+//    func fetchImages() async {
+//        do {
+//            images = try await MessageImage.allPublic()
+//        } catch {
+//            print("cslog error: \(error)")
+//        }
+//    }
 }

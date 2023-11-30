@@ -9,17 +9,17 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ChatImageStorageView: View {
-    @EnvironmentObject private var storage: EmoticonStorage
+    @EnvironmentObject private var store: EmoticonStore
     
     @State private var internalIndex: Int = 0
     
+    private var tabs: [EmoticonGroup] {
+        store.emoticonGroups
+    }
+    
     private let leftOffset: CGFloat = 0.1
     
-    let onTapImage: (MessageImage) -> Void
-    
-    var tabs: [GroupedImage] {
-        storage.groupedImages()
-    }
+    let onTapEmoticon: (Emoticon) -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -34,7 +34,7 @@ struct ChatImageStorageView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.systemGray6)
         .task {
-            await storage.fetchImages()
+            await store.fetchEmoticons()
         }
     }
     
@@ -80,13 +80,13 @@ struct ChatImageStorageView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 4)) {
-                            ForEach(tab.images) { image in
-                                WebImage(url: image.asset.fileURL)
+                            ForEach(tab.emoticons) { emoticon in
+                                WebImage(url: emoticon.url)
                                     .resizable()
                                     .customLoopCount(4)
                                     .aspectRatio(1, contentMode: .fit)
                                     .onTapGesture {
-                                        onTapImage(image)
+                                        onTapEmoticon(emoticon)
                                     }
                             }
                         }

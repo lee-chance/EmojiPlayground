@@ -14,7 +14,7 @@ struct CommunityView: View {
     var body: some View {
         Form {
             ForEach(model.images) { image in
-                WebImage(url: image.asset.fileURL)
+                WebImage(url: image.url)
                     .resizable()
                     .customLoopCount(4)
                     .scaledToFit()
@@ -22,9 +22,9 @@ struct CommunityView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("커뮤니티")
-        .task {
-            await model.fetchImages()
-        }
+//        .task {
+//            await model.fetchImages()
+//        }
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct MessageView: View {
+    @EnvironmentObject private var messageStore: MessageStore
     @EnvironmentObject private var mainRounter: MainRouter
     
     let message: Message
@@ -17,7 +18,7 @@ struct MessageView: View {
     
     var body: some View {
         HStack {
-            if message.sender == .me {
+            if message.sender == .to {
                 emptySpacer
             }
             
@@ -28,22 +29,20 @@ struct MessageView: View {
                 ImageMessageView(message: message)
             }
             
-            if message.sender == .other {
+            if message.sender == .from {
                 emptySpacer
             }
         }
         .onTapGesture { /* SCROLLABLE WITH LONG PRESS GESTURE */ }
         .onLongPressGesture {
-            if message.sender == .me {
+            if message.sender == .to {
                 presentAlert = true
             }
         }
         .confirmationDialog("", isPresented: $presentAlert) {
             Button("메시지 삭제", role: .destructive) {
-                if message.contentType.isImage {
-                    PersistenceController.shared.deleteImageMessage(message)
-                } else {
-                    PersistenceController.shared.delete(message)
+                Task {
+                    await messageStore.delete(message: message)
                 }
             }
             
@@ -66,13 +65,14 @@ extension MessageView {
         
         var body: some View {
             Text(message.contentValue)
-                .foregroundColor(message.sender == .me ? theme.myMessageFontColor : theme.otherMessageFontColor)
+                .foregroundColor(message.sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
                 .padding(12)
-                .background(message.sender == .me ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor)
+                .background(message.sender == .to ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor)
                 .cornerRadius(12)
         }
     }
     
+    // FIXME: CloudKit -> 파이어베이스로 바꾸면서 이미지 불러오기 성공확률이 높아졌으므로 좀더 심플하게 수정하자!
     struct ImageMessageView: View {
         let message: Message
         
@@ -97,22 +97,11 @@ extension MessageView {
                         .progressViewStyle(.circular)
                         .tint(.white)
                 )
-                .task(id: retryCount) {
-                    do {
-                        let ckAsset = try await message.getAsset()
-                        if let url = ckAsset.fileURL {
-                            imageState = .success(url)
-                        } else {
-                            imageState = .failure()
-                        }
-                    } catch {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            if retryCount < 5 {
-                                retryCount += 1
-                            } else {
-                                imageState = .failure(error)
-                            }
-                        }
+                .task {
+                    if let url = message.imageURL {
+                        imageState = .success(url)
+                    } else {
+                        imageState = .failure()
                     }
                 }
         }
@@ -147,11 +136,11 @@ extension MessageView {
                 .foregroundColor(.black.opacity(0.5))
                 .background(
                     Group {
-                        if let imageData = message.imageData, let uiImage = UIImage(data: imageData) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFill()
-                        }
+//                        if let imageData = message.imageData, let uiImage = UIImage(data: imageData) {
+//                            Image(uiImage: uiImage)
+//                                .resizable()
+//                                .scaledToFill()
+//                        }
                     }
                 )
                 .cornerRadius(12)
@@ -167,15 +156,8 @@ extension MessageView {
 
 struct MessageView_Previews: PreviewProvider {
     struct Wrapper: View {
-        let msg: Message
-        
-        init() {
-            msg = Message(context: PersistenceController.shared.context)
-            msg.contentValue = "Hello, WorldHello, WorldHello, WorldHello, WorldHello, WorldHello, World"
-            msg.sender = .me
-        }
-        
         var body: some View {
+            let msg = Message(plainText: "Hello, WorldHello, WorldHello, WorldHello, WorldHello, WorldHello, World", sender: .to)
             MessageView(message: msg)
         }
     }

@@ -9,18 +9,31 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct EmoticonStorageDetailView: View {
-    @EnvironmentObject private var storage: EmoticonStorage
+    @EnvironmentObject private var store: EmoticonStore
+    
+    @Environment(\.dismiss) private var dismiss
     
     let groupName: String
     
+    var group: EmoticonGroup? {
+        store.emoticonGroup(name: groupName)
+    }
+    
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: Array(repeating: GridItem(spacing: 16), count: 3), spacing: 16) {
-                ForEach(storage.groupImages(groupName: groupName)) { image in
-                    EmoticonView(image: image)
+            if let group {
+                LazyVGrid(columns: Array(repeating: GridItem(spacing: 16), count: 3), spacing: 16) {
+                    ForEach(group.emoticons) { emoticon in
+                        EmoticonView(emoticon: emoticon)
+                    }
                 }
+                .padding()
+            } else {
+                Color.clear
+                    .onAppear {
+                        dismiss()
+                    }
             }
-            .padding()
         }
         .background(Color.systemGray6)
         .navigationTitle(groupName)
@@ -29,17 +42,21 @@ struct EmoticonStorageDetailView: View {
 }
 
 struct EmoticonView: View {
-    @EnvironmentObject private var storage: EmoticonStorage
+    @EnvironmentObject private var store: EmoticonStore
     
     @State private var presentActionAlert: Bool = false
     @State private var groupAlert: Bool = false
     @State private var newGroupName: String = ""
     @State private var presentDeleteAlert: Bool = false
     
-    let image: MessageImage
+    let emoticon: Emoticon
+    
+    private var groupNames: [String] {
+        store.groupNames
+    }
     
     var body: some View {
-        WebImage(url: image.asset.fileURL)
+        WebImage(url: emoticon.url)
             .resizable()
             .aspectRatio(1, contentMode: .fit)
             .onTapGesture { /* SCROLLABLE WITH LONG PRESS GESTURE */ }
@@ -62,7 +79,12 @@ struct EmoticonView: View {
                 Button("취소", role: .cancel) { }
             }
             .alert("삭제하시겠습니까?", isPresented: $presentDeleteAlert) {
-                Button("삭제", role: .destructive) { storage.delete(image: image) }
+                Button("삭제", role: .destructive) {
+                    Task {
+                        await emoticon.delete()
+                        await store.fetchEmoticons()
+                    }
+                }
                 Button("취소", role: .cancel) { }
             } message: {
                 Text("삭제된 파일은 복구할 수 없습니다.")
@@ -73,12 +95,15 @@ struct EmoticonView: View {
                         TextField("새 그룹명", text: $newGroupName)
                         
                         Section("그룹 선택") {
-                            ForEach(storage.groupNames, id: \.self) { name in
+                            ForEach(groupNames, id: \.self) { name in
                                 Button(name) {
-                                    storage.update(image: image, groupName: name)
-                                    groupAlert.toggle()
+                                    Task {
+                                        await emoticon.update(groupName: name)
+                                        await store.fetchEmoticons()
+                                        groupAlert.toggle()
+                                    }
                                 }
-                                .disabled(name == image.groupName)
+                                .disabled(name == emoticon.groupName)
                             }
                         }
                     }
@@ -87,10 +112,13 @@ struct EmoticonView: View {
                             let name = newGroupName.trimmingCharacters(in: .whitespaces)
                             
                             Button("수정하기") {
-                                storage.update(image: image, groupName: name)
-                                groupAlert.toggle()
+                                Task {
+                                    await emoticon.update(groupName: name)
+                                    await store.fetchEmoticons()
+                                    groupAlert.toggle()
+                                }
                             }
-                            .disabled(name == image.groupName)
+                            .disabled(name == emoticon.groupName)
                             .disabled(name.count == 0)
                         }
                         

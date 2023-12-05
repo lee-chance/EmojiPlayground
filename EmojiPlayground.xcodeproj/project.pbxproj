@@ -37,10 +37,18 @@
 		2E9517842945B168001E6ED6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517832945B168001E6ED6 /* MainView.swift */; };
 		2E9517892945B38D001E6ED6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517882945B38D001E6ED6 /* Theme.swift */; };
 		2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E832A2A0559AB002A2B90 /* GIFImage.swift */; };
+		2EA7959E2B1CD3300016E49B /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA7959D2B1CD3300016E49B /* AppleLoginButton.swift */; };
 		2EAEF3E82AADB6730098ECAB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2EAEF3E72AADB6730098ECAB /* SDWebImageSwiftUI */; };
 		2EAEF3EE2AADBDCB0098ECAB /* OSLogExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAEF3ED2AADBDCB0098ECAB /* OSLogExtension.swift */; };
 		2EAEF3F02AADBFF90098ECAB /* ChatImageStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAEF3EF2AADBFF90098ECAB /* ChatImageStorageView.swift */; };
 		2EAEF3F22AAF81FD0098ECAB /* KeyboardHeightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAEF3F12AAF81FD0098ECAB /* KeyboardHeightHelper.swift */; };
+		2EBCE17D2B1A2E5700AFF5F8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2EBCE17C2B1A2E5700AFF5F8 /* FirebaseAuth */; };
+		2EBCE17F2B1A301500AFF5F8 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCE17E2B1A301500AFF5F8 /* FirebaseAuthManager.swift */; };
+		2EBCE1812B1A336C00AFF5F8 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCE1802B1A336C00AFF5F8 /* UserStore.swift */; };
+		2EBCE1842B1A3A4C00AFF5F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCE1832B1A3A4C00AFF5F8 /* LoginView.swift */; };
+		2EBCE1872B1A5E7E00AFF5F8 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 2EBCE1862B1A5E7E00AFF5F8 /* GoogleSignIn */; };
+		2EBCE1892B1A5E7E00AFF5F8 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2EBCE1882B1A5E7E00AFF5F8 /* GoogleSignInSwift */; };
+		2EBCE18B2B1A735E00AFF5F8 /* AppleAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCE18A2B1A735E00AFF5F8 /* AppleAuthManager.swift */; };
 		2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE34BB29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld */; };
 		2EBE350B29F2D9E000F30846 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350A29F2D9E000F30846 /* Room.swift */; };
 		2EC3CB192B13772200D2449C /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC3CB182B13772200D2449C /* FirestoreManager.swift */; };
@@ -95,9 +103,14 @@
 		2E9517832945B168001E6ED6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2E9517882945B38D001E6ED6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		2E9E832A2A0559AB002A2B90 /* GIFImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImage.swift; sourceTree = "<group>"; };
+		2EA7959D2B1CD3300016E49B /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
 		2EAEF3ED2AADBDCB0098ECAB /* OSLogExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogExtension.swift; sourceTree = "<group>"; };
 		2EAEF3EF2AADBFF90098ECAB /* ChatImageStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageStorageView.swift; sourceTree = "<group>"; };
 		2EAEF3F12AAF81FD0098ECAB /* KeyboardHeightHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelper.swift; sourceTree = "<group>"; };
+		2EBCE17E2B1A301500AFF5F8 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
+		2EBCE1802B1A336C00AFF5F8 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
+		2EBCE1832B1A3A4C00AFF5F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		2EBCE18A2B1A735E00AFF5F8 /* AppleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthManager.swift; sourceTree = "<group>"; };
 		2EBE34BC29EA5AF600F30846 /* EmojiPlayground.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EmojiPlayground.xcdatamodel; sourceTree = "<group>"; };
 		2EBE350A29F2D9E000F30846 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		2EC3CB182B13772200D2449C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
@@ -121,10 +134,13 @@
 				2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */,
 				2EC4EF3E2AD14D9C003910AC /* FirebaseCrashlytics in Frameworks */,
 				2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */,
+				2EBCE17D2B1A2E5700AFF5F8 /* FirebaseAuth in Frameworks */,
+				2EBCE1872B1A5E7E00AFF5F8 /* GoogleSignIn in Frameworks */,
 				2EC3CB1F2B1643CE00D2449C /* FirebaseStorage in Frameworks */,
 				2EAEF3E82AADB6730098ECAB /* SDWebImageSwiftUI in Frameworks */,
 				2EC3CB1B2B1377CF00D2449C /* FirebaseFirestore in Frameworks */,
 				2EC3CB212B16453C00D2449C /* FirebaseFirestoreSwift in Frameworks */,
+				2EBCE1892B1A5E7E00AFF5F8 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +167,7 @@
 		2E4B794A295344CC00A41030 /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				2EBCE1802B1A336C00AFF5F8 /* UserStore.swift */,
 				2E857A4B2B177A82005945F6 /* MessageStore.swift */,
 				2EF21BAD2B17924500AB42BA /* EmoticonStore.swift */,
 			);
@@ -259,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				2E3A025D2A122611003E8293 /* Navigation */,
+				2EBCE1822B1A3A3F00AFF5F8 /* Login */,
 				2E9517822945B154001E6ED6 /* Main */,
 				2E95178B2945C120001E6ED6 /* Home */,
 				2E95178C2945C153001E6ED6 /* Chat */,
@@ -288,6 +306,7 @@
 				2E07AE702A07961D00674E47 /* ImageCacheManager.swift */,
 				2ECD95892ABEAD8800E99B5A /* Alerts.swift */,
 				2EC4EF632AD16060003910AC /* Version.swift */,
+				2EBCE18A2B1A735E00AFF5F8 /* AppleAuthManager.swift */,
 				2E9517862945B315001E6ED6 /* Extension */,
 				2EC3CB172B1376F000D2449C /* Firebase */,
 			);
@@ -311,6 +330,7 @@
 				2E80979627E5F1AB00E40261 /* ImagePicker.swift */,
 				2E07AE752A079CE300674E47 /* MessageView.swift */,
 				2EAEF3EF2AADBFF90098ECAB /* ChatImageStorageView.swift */,
+				2EA7959D2B1CD3300016E49B /* AppleLoginButton.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -359,11 +379,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2EBCE1822B1A3A3F00AFF5F8 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2EBCE1832B1A3A4C00AFF5F8 /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		2EC3CB172B1376F000D2449C /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
 				2EC3CB182B13772200D2449C /* FirestoreManager.swift */,
 				2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */,
+				2EBCE17E2B1A301500AFF5F8 /* FirebaseAuthManager.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -401,6 +430,9 @@
 				2EC3CB1A2B1377CF00D2449C /* FirebaseFirestore */,
 				2EC3CB1E2B1643CE00D2449C /* FirebaseStorage */,
 				2EC3CB202B16453C00D2449C /* FirebaseFirestoreSwift */,
+				2EBCE17C2B1A2E5700AFF5F8 /* FirebaseAuth */,
+				2EBCE1862B1A5E7E00AFF5F8 /* GoogleSignIn */,
+				2EBCE1882B1A5E7E00AFF5F8 /* GoogleSignInSwift */,
 			);
 			productName = EmojiPlayground;
 			productReference = 2E80977927E5BB4F00E40261 /* Emote.app */;
@@ -433,6 +465,7 @@
 			packageReferences = (
 				2E5F258B27EF4B4F002F21F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2EBCE1852B1A5E7E00AFF5F8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 2E80977A27E5BB4F00E40261 /* Products */;
 			projectDirPath = "";
@@ -465,6 +498,7 @@
 				2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */,
 				2EF21BB02B1793D600AB42BA /* EmoticonGroup.swift in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
+				2EBCE18B2B1A735E00AFF5F8 /* AppleAuthManager.swift in Sources */,
 				2EAEF3F22AAF81FD0098ECAB /* KeyboardHeightHelper.swift in Sources */,
 				2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */,
 				2EF21BAE2B17924500AB42BA /* EmoticonStore.swift in Sources */,
@@ -483,6 +517,8 @@
 				2E80979527E5EA1000E40261 /* Message.swift in Sources */,
 				2E3A025F2A12261D003E8293 /* Sidebar.swift in Sources */,
 				2E6467C62A3636D100EB1F65 /* IconSettingsView.swift in Sources */,
+				2EA7959E2B1CD3300016E49B /* AppleLoginButton.swift in Sources */,
+				2EBCE1812B1A336C00AFF5F8 /* UserStore.swift in Sources */,
 				2E21006B2AB5D919004AF19D /* DropItem.swift in Sources */,
 				2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */,
 				2EF21BAC2B1789F700AB42BA /* DataExtension.swift in Sources */,
@@ -491,6 +527,7 @@
 				2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */,
 				2E857A4C2B177A82005945F6 /* MessageStore.swift in Sources */,
 				2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */,
+				2EBCE1842B1A3A4C00AFF5F8 /* LoginView.swift in Sources */,
 				2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
 				2EC3CB192B13772200D2449C /* FirestoreManager.swift in Sources */,
@@ -498,6 +535,7 @@
 				2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */,
 				2EC4EF642AD16060003910AC /* Version.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
+				2EBCE17F2B1A301500AFF5F8 /* FirebaseAuthManager.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
 				2EAEF3F02AADBFF90098ECAB /* ChatImageStorageView.swift in Sources */,
 				2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */,
@@ -733,6 +771,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		2EBCE1852B1A5E7E00AFF5F8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -748,6 +794,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2E5F258B27EF4B4F002F21F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		2EBCE17C2B1A2E5700AFF5F8 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		2EBCE1862B1A5E7E00AFF5F8 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EBCE1852B1A5E7E00AFF5F8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		2EBCE1882B1A5E7E00AFF5F8 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EBCE1852B1A5E7E00AFF5F8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		2EC3CB1A2B1377CF00D2449C /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;

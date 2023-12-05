@@ -31,7 +31,7 @@ extension Query {
             
             return documents
         } catch {
-            print("error")
+            print("error: \(error)")
             return []
         }
     }
@@ -101,6 +101,7 @@ extension DocumentReference {
 // MARK: FirestoreManager + EmojiPlaygournd
 extension FirestoreManager {
     enum Collection: String {
+        case users
         case rooms
         case emoticons
         case messages

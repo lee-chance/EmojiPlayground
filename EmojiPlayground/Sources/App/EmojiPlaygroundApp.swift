@@ -14,6 +14,7 @@ struct EmojiPlaygroundApp: App {
     @Environment(\.scenePhase) private var scenePhase
     
     @StateObject var mainRouter = MainRouter()
+    @StateObject var userStore = UserStore.shared
     
     @State private var isSuccessedVersionCheck: Bool?
     
@@ -30,6 +31,7 @@ struct EmojiPlaygroundApp: App {
             if isSuccessedVersionCheck == true {
                 MainView()
                     .environmentObject(mainRouter)
+                    .environmentObject(userStore)
                     .environmentObject(Theme.shared)
                     .overlay(mainOverlay)
             } else {

@@ -19,6 +19,8 @@ struct Room: Codable, Identifiable, Hashable {
             guard let id else { return [] }
             
             return await FirestoreManager
+                .reference(path: .users)
+                .reference(path: UserStore.shared.userID)
                 .reference(path: .rooms)
                 .reference(path: id)
                 .reference(path: .messages)
@@ -33,6 +35,8 @@ struct Room: Codable, Identifiable, Hashable {
     
     func add() async {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .rooms)
             .setData(from: self)
     }
@@ -41,6 +45,8 @@ struct Room: Codable, Identifiable, Hashable {
         guard let id else { return }
         
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .rooms)
             .reference(path: id)
             .remove()
@@ -49,7 +55,11 @@ struct Room: Codable, Identifiable, Hashable {
 
 extension Room {
     static func all() async -> [Self] {
-        await FirestoreManager
+        guard let userID = await UserStore.shared.user?.uid else { return [] }
+        
+        return await FirestoreManager
+            .reference(path: .users)
+            .reference(path: userID)
             .reference(path: .rooms)
             .order(by: CodingKeys.timestamp.stringValue)
             .get(type: Self.self)

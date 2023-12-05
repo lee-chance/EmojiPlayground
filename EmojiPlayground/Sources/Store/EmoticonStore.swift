@@ -34,12 +34,16 @@ final class EmoticonStore: ObservableObject {
     
     func add(emoticon: Emoticon) async {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
             .setData(from: emoticon)
     }
     
     func delete(emoticon: Emoticon) async {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
             .reference(path: emoticon.id!)
             .remove()

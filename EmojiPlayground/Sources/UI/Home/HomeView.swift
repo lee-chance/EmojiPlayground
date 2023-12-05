@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject private var userStore: UserStore
+    
     @Binding var navigationSelection: Panel?
     
     @State private var presentNewRoomAlert: Bool = false
@@ -34,6 +36,9 @@ struct HomeView: View {
         .task {
             rooms = await Room.all()
         }
+        .onChange(of: userStore.user?.uid, perform: { value in
+            Task { rooms = await Room.all() }
+        })
         .toolbar {
             Button("새 대화방") {
                 presentNewRoomAlert.toggle()

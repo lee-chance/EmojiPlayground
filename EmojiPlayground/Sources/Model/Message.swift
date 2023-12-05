@@ -44,6 +44,8 @@ struct Message: Codable, Identifiable {
         guard contentType == .image else { return }
                 
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
             .setData(from: Emoticon(urlString: contentValue, groupName: groupName))
     }
@@ -52,6 +54,8 @@ struct Message: Codable, Identifiable {
 extension Message {
     static func getMessages(of room: Room) async -> [Self] {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .rooms)
             .reference(path: room.id!)
             .reference(path: .messages)

@@ -26,6 +26,8 @@ final class MessageStore: ObservableObject {
     
     private func addSnapshot() {
         listener = FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .rooms)
             .reference(path: roomID)
             .reference(path: .messages)
@@ -37,6 +39,8 @@ final class MessageStore: ObservableObject {
     
     func add(message: Message) async {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .rooms)
             .reference(path: roomID)
             .reference(path: .messages)
@@ -45,6 +49,8 @@ final class MessageStore: ObservableObject {
     
     func delete(message: Message) async {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .rooms)
             .reference(path: roomID)
             .reference(path: .messages)

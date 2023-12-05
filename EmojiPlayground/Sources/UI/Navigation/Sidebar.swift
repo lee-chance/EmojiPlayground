@@ -19,6 +19,8 @@ enum Panel: Hashable {
 }
 
 struct Sidebar: View {
+    @EnvironmentObject private var userStore: UserStore
+    
     @Binding var selection: Panel?
     
     var body: some View {
@@ -42,6 +44,23 @@ struct Sidebar: View {
             }
             
             Section("앱 설정") {
+                if userStore.user?.isAnonymous ?? false {
+                    AppleLoginButton {
+                        Label("연동하기/로그인", systemImage: "apple.logo")
+                    }
+                } else {
+                    Button("로그아웃", systemImage: "rectangle.portrait.and.arrow.right") {
+                        Task {
+                            userStore.logout()
+                            await userStore.loginAnonymous()
+                        }
+                    }
+                }
+                
+//                NavigationLink(destination: LoginView()) {
+//                    Label("계정정보", systemImage: "person.circle")
+//                }
+                
                 NavigationLink(destination: IconSettingsView()) {
                     Label {
                         Text("앱 아이콘")
@@ -91,6 +110,7 @@ struct Sidebar_Previews: PreviewProvider {
         @State private var selection: Panel? = Panel.home
         var body: some View {
             Sidebar(selection: $selection)
+                .environmentObject(UserStore.shared)
         }
     }
     

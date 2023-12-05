@@ -36,6 +36,8 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
     
     func delete() async {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
             .reference(path: id!)
             .remove()
@@ -43,6 +45,8 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
     
     func update(groupName: String) async {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
             .reference(path: id!)
             .update([CodingKeys.groupName.stringValue : groupName])
@@ -52,6 +56,8 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
 extension Emoticon {
     static func all() async -> [Self] {
         await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
             .order(by: CodingKeys.timestamp.stringValue)
             .get(type: Self.self)

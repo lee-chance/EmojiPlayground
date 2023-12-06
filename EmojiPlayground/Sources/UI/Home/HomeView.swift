@@ -53,7 +53,6 @@ struct HomeView: View {
             switch panel {
             case .emoticonStorage:
                 EmoticonStorageMainView()
-                    .environmentObject(EmoticonStore())
             case .community:
                 CommunityView()
             default:

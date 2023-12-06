@@ -46,7 +46,6 @@ struct EmoticonStorageMainView: View {
         .navigationTitle("보관함")
         .navigationDestination(for: EmoticonGroup.self) { group in
             EmoticonStorageDetailView(groupName: group.name)
-                .environmentObject(store)
         }
 //        .toolbar {
 //            ToolbarItemGroup {

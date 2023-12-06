@@ -20,7 +20,7 @@ final class UserStore: ObservableObject {
     }
     
     var presentLoginSheet: Bool {
-        user?.isAnonymous ?? false
+        user?.isGuest ?? false
     }
     
     func autoLogin() async {
@@ -56,13 +56,15 @@ final class UserStore: ObservableObject {
         await login(user)
     }
     
-    func login(_ user: User) async {
+    func login(_ firebaseAuthUser: FirebaseAuthUser) async {
+        let user = User(firebaseAuthUser)
+        
         self.user = user
         
         await FirestoreManager
             .reference(path: .users)
             .reference(path: user.uid)
-            .setData(from: EncodableUser(user))
+            .setData(from: user)
     }
     
     func logout() {
@@ -75,35 +77,5 @@ final class UserStore: ObservableObject {
         try await FirebaseAuthManager.delete()
         
         self.user = nil
-    }
-}
-
-private struct EncodableUser: Encodable {
-    let providerID: String
-    let uid: String
-    let displayName: String?
-    let email: String?
-    let isAnonymous: Bool
-    let isEmailVerified: Bool
-    let phoneNumber: String?
-    let photoURL: URL?
-    let refreshToken: String?
-    let tenantID: String?
-    let creationDate: Date?
-    let lastSignInDate: Date?
-    
-    init(_ user: User) {
-        self.providerID = user.providerID
-        self.uid = user.uid
-        self.displayName = user.displayName
-        self.email = user.email
-        self.isAnonymous = user.isAnonymous
-        self.isEmailVerified = user.isEmailVerified
-        self.phoneNumber = user.phoneNumber
-        self.photoURL = user.photoURL
-        self.refreshToken = user.refreshToken
-        self.tenantID = user.tenantID
-        self.creationDate = user.metadata.creationDate
-        self.lastSignInDate = user.metadata.lastSignInDate
     }
 }

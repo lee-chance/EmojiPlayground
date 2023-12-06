@@ -10,13 +10,13 @@ import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 
-typealias User = FirebaseAuth.User
+typealias FirebaseAuthUser = FirebaseAuth.User
 
 @MainActor
 final class FirebaseAuthManager {
     private static let auth = Auth.auth()
     
-    static func fetchUser() -> User? {
+    static func fetchUser() -> FirebaseAuthUser? {
         auth.currentUser
     }
     
@@ -61,7 +61,7 @@ enum AuthError: Error {
 // MARK: - Auth Method (s)
 // MARK: Anonymous
 extension FirebaseAuthManager {
-    static func loginAnonymous() async -> User? {
+    static func loginAnonymous() async -> FirebaseAuthUser? {
         do {
             let result = try await auth.signInAnonymously()
             
@@ -75,7 +75,7 @@ extension FirebaseAuthManager {
 
 // MARK: Apple
 extension FirebaseAuthManager {
-    static func linkWithApple(_ authResult: AppleAuthResult) async throws -> User {
+    static func linkWithApple(_ authResult: AppleAuthResult) async throws -> FirebaseAuthUser {
         let credential = OAuthProvider.credential(withProviderID: authResult.providerID, idToken: authResult.idToken, rawNonce: authResult.rawNonce)
         
         guard let user = auth.currentUser else { throw AuthError.notLoggedIn }
@@ -95,7 +95,7 @@ extension FirebaseAuthManager {
         }
     }
     
-    static func loginWithApple(_ authResult: AppleAuthResult) async throws -> User {
+    static func loginWithApple(_ authResult: AppleAuthResult) async throws -> FirebaseAuthUser {
         let credential = OAuthProvider.credential(withProviderID: authResult.providerID, idToken: authResult.idToken, rawNonce: authResult.rawNonce)
         
         do {
@@ -122,7 +122,7 @@ extension FirebaseAuthManager {
 
 // MARK: Google
 extension FirebaseAuthManager {
-    static func linkWithGoogle() async -> User? {
+    static func linkWithGoogle() async -> FirebaseAuthUser? {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return nil }
         
         let config = GIDConfiguration(clientID: clientID)
@@ -152,7 +152,7 @@ extension FirebaseAuthManager {
         }
     }
     
-    static func loginWithGoogle(withIDToken idToken: String, accessToken: String) async -> User? {
+    static func loginWithGoogle(withIDToken idToken: String, accessToken: String) async -> FirebaseAuthUser? {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         
         do {

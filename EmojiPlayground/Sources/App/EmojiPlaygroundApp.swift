@@ -15,6 +15,7 @@ struct EmojiPlaygroundApp: App {
     
     @StateObject var mainRouter = MainRouter()
     @StateObject var userStore = UserStore.shared
+    @StateObject var emoticonStore = EmoticonStore()
     
     @State private var isSuccessedVersionCheck: Bool?
     
@@ -32,6 +33,7 @@ struct EmojiPlaygroundApp: App {
                 MainView()
                     .environmentObject(mainRouter)
                     .environmentObject(userStore)
+                    .environmentObject(emoticonStore)
                     .environmentObject(Theme.shared)
                     .overlay(mainOverlay)
             } else {

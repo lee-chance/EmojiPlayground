@@ -16,7 +16,6 @@ struct DetailColumn: View {
             HomeView(navigationSelection: $selection)
         case .emoticonStorage:
             EmoticonStorageMainView()
-                .environmentObject(EmoticonStore())
         case .community:
             CommunityView()
         case .settings:

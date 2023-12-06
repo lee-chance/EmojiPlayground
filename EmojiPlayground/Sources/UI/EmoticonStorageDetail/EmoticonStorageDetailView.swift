@@ -46,14 +46,9 @@ struct EmoticonView: View {
     
     @State private var presentActionAlert: Bool = false
     @State private var groupAlert: Bool = false
-    @State private var newGroupName: String = ""
     @State private var presentDeleteAlert: Bool = false
     
     let emoticon: Emoticon
-    
-    private var groupNames: [String] {
-        store.groupNames
-    }
     
     var body: some View {
         WebImage(url: emoticon.url)
@@ -90,45 +85,69 @@ struct EmoticonView: View {
                 Text("삭제된 파일은 복구할 수 없습니다.")
             }
             .sheet(isPresented: $groupAlert) {
-                NavigationView {
-                    Form {
-                        TextField("새 그룹명", text: $newGroupName)
-                        
-                        Section("그룹 선택") {
-                            ForEach(groupNames, id: \.self) { name in
-                                Button(name) {
-                                    Task {
-                                        await emoticon.update(groupName: name)
-                                        await store.fetchEmoticons()
-                                        groupAlert.toggle()
-                                    }
-                                }
-                                .disabled(name == emoticon.groupName)
-                            }
-                        }
+                EmoticonChangeGroupView(emoticon: emoticon)
+            }
+    }
+}
+
+struct EmoticonChangeGroupView: View {
+    @EnvironmentObject private var store: EmoticonStore
+    
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var newGroupName: String = ""
+    
+    @FocusState private var fieldIsFocused: Bool
+    
+    let emoticon: Emoticon
+    
+    private var groupNames: [String] {
+        store.groupNames
+    }
+    
+    var body: some View {
+        NavigationView {
+            Form {
+                TextField("새 그룹명", text: $newGroupName)
+                    .focused($fieldIsFocused)
+                    .onAppear {
+                        fieldIsFocused = true
                     }
-                    .toolbar {
-                        ToolbarItem(placement: .primaryAction) {
-                            let name = newGroupName.trimmingCharacters(in: .whitespaces)
-                            
-                            Button("수정하기") {
-                                Task {
-                                    await emoticon.update(groupName: name)
-                                    await store.fetchEmoticons()
-                                    groupAlert.toggle()
-                                }
-                            }
-                            .disabled(name == emoticon.groupName)
-                            .disabled(name.count == 0)
+                
+                Section("그룹 선택") {
+                    ForEach(groupNames, id: \.self) { name in
+                        Button(name) {
+                            update(name)
                         }
-                        
-//                        ToolbarItem(placement: .cancellationAction) {
-//                            Button("취소", role: .cancel) {
-//                                groupAlert.toggle()
-//                            }
-//                        }
+                        .disabled(name == emoticon.groupName)
                     }
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    let name = newGroupName.trimmingCharacters(in: .whitespaces)
+                    
+                    Button("수정하기") {
+                        update(name)
+                    }
+                    .disabled(name == emoticon.groupName)
+                    .disabled(name.count == 0)
+                }
+                
+//                ToolbarItem(placement: .cancellationAction) {
+//                    Button("취소", role: .cancel) {
+//                        groupAlert.toggle()
+//                    }
+//                }
+            }
+        }
+    }
+    
+    private func update(_ name: String) {
+        Task {
+            await emoticon.update(groupName: name)
+            await store.fetchEmoticons()
+            dismiss()
+        }
     }
 }

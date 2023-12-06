@@ -243,7 +243,6 @@ struct ChatView: View {
                     await messageStore.add(message: message)
                 }
             }
-            .environmentObject(EmoticonStore())
             .frame(height: Screen.height / 3)
             .frame(maxWidth: .infinity)
             .background(Color.white)

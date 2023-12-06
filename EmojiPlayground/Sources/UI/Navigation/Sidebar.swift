@@ -44,7 +44,7 @@ struct Sidebar: View {
             }
             
             Section("앱 설정") {
-                if userStore.user?.isAnonymous ?? false {
+                if userStore.user?.isGuest ?? false {
                     AppleLoginButton {
                         Label("연동하기/로그인", systemImage: "apple.logo")
                     }

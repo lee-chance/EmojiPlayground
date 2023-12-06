@@ -61,6 +61,7 @@
 		2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */; };
 		2EC4EF642AD16060003910AC /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4EF632AD16060003910AC /* Version.swift */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
+		2EEFE0B72B20BE5F0002EDD6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEFE0B62B20BE5F0002EDD6 /* User.swift */; };
 		2EF21BA82B177F2400AB42BA /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */; };
 		2EF21BAA2B17856900AB42BA /* Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BA92B17856900AB42BA /* Emoticon.swift */; };
 		2EF21BAC2B1789F700AB42BA /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BAB2B1789F700AB42BA /* DataExtension.swift */; };
@@ -116,6 +117,7 @@
 		2EC3CB182B13772200D2449C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		2EC4EF632AD16060003910AC /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		2EEFE0B62B20BE5F0002EDD6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 		2EF21BA92B17856900AB42BA /* Emoticon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoticon.swift; sourceTree = "<group>"; };
 		2EF21BAB2B1789F700AB42BA /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				2EF21BAF2B1793D600AB42BA /* EmoticonGroup.swift */,
 				2E9517882945B38D001E6ED6 /* Theme.swift */,
 				2E21006A2AB5D919004AF19D /* DropItem.swift */,
+				2EEFE0B62B20BE5F0002EDD6 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 			files = (
 				2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */,
 				2EF21BB02B1793D600AB42BA /* EmoticonGroup.swift in Sources */,
+				2EEFE0B72B20BE5F0002EDD6 /* User.swift in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
 				2EBCE18B2B1A735E00AFF5F8 /* AppleAuthManager.swift in Sources */,
 				2EAEF3F22AAF81FD0098ECAB /* KeyboardHeightHelper.swift in Sources */,

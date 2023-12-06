@@ -11,16 +11,13 @@ struct LoginView: View {
     @EnvironmentObject private var userStore: UserStore
     
     var body: some View {
-        if userStore.user?.isAnonymous ?? true {
+        if userStore.user?.isGuest ?? true {
             VStack(spacing: 36) {
                 Image(.icon0)
                     .resizable()
                     .frame(width: 200, height: 200)
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    .aspectRatio(1, contentMode: .fit)
                 
                 Text("지금 계정을 연동하여 데이터를 안전하게 보관하고 다양한 기능들을 사용해 보세요.")
-//                    .font(.system(size: 24))
                     .font(.title)
                     .lineSpacing(4)
                     .bold()
@@ -31,9 +28,12 @@ struct LoginView: View {
                     AppleLoginButton()
                         .frame(maxHeight: 56)
                     
-                    Text("현재 계정은 게스트 로그인이며 14일 후 만료됩니다.")
-                        .font(.callout)
-                        .foregroundStyle(.black.opacity(0.7))
+                    // TODO: 만료 후 처리
+                    if let dayOfExpiredDate = userStore.user?.dayOfExpiredDate, dayOfExpiredDate > 0 {
+                        Text("현재 계정은 게스트 로그인이며 \(userStore.user?.dayOfExpiredDate ?? 14)일 후 만료됩니다.")
+                            .font(.callout)
+                            .foregroundStyle(.black.opacity(0.7))
+                    }
                 }
             }
             .padding()

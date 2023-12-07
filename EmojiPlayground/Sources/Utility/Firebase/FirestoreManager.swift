@@ -20,6 +20,12 @@ final class FirestoreManager {
     static func reference(path collection: FirestoreManager.Collection) -> CollectionReference {
         db.collection(collection.rawValue)
     }
+    
+    static func batch(completion: @escaping (WriteBatch) -> Void) {
+        let batch = db.batch()
+        completion(batch)
+        batch.commit()
+    }
 }
 
 extension Query {
@@ -33,6 +39,18 @@ extension Query {
         } catch {
             print("error: \(error)")
             return []
+        }
+    }
+}
+
+extension WriteBatch {
+    func setDataEncodable<T: Encodable>(from: T, forDocument document: DocumentReference, merge: Bool = false) {
+        do {
+            let encoder = Firestore.Encoder()
+            let data = try encoder.encode(from)
+            setData(data, forDocument: document, merge: merge)
+        } catch {
+            print("error")
         }
     }
 }

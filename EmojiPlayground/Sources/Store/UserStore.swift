@@ -54,6 +54,10 @@ final class UserStore: ObservableObject {
         guard let user = await FirebaseAuthManager.loginAnonymous() else { return }
         
         await login(user)
+        
+        Task(priority: .background) {
+            inputEmoticons()
+        }
     }
     
     func login(_ firebaseAuthUser: FirebaseAuthUser) async {
@@ -65,6 +69,26 @@ final class UserStore: ObservableObject {
             .reference(path: .users)
             .reference(path: user.uid)
             .setData(from: user)
+    }
+    
+    func inputEmoticons() {
+        guard let user else { return }
+        
+        FirestoreManager
+            .batch(completion: { batch in
+                let collection = FirestoreManager
+                    .reference(path: .users)
+                    .reference(path: user.uid)
+                    .reference(path: .emoticons)
+                
+                for emoticon in Emoticon.cuteMonsters {
+                    batch.setDataEncodable(from: emoticon, forDocument: collection.document())
+                }
+                
+                for emoticon in Emoticon.tdchs {
+                    batch.setDataEncodable(from: emoticon, forDocument: collection.document())
+                }
+            })
     }
     
     func logout() {

@@ -63,3 +63,17 @@ extension Emoticon {
             .get(type: Self.self)
     }
 }
+
+extension Emoticon {
+    private static var baseURLString: String {
+        "https://firebasestorage.googleapis.com/v0/b/emote-543b9.appspot.com/o"
+    }
+    
+    static var cuteMonsters: [Emoticon] {
+        (1...10).map { Emoticon(urlString: "\(baseURLString)/common%2FCute%20Monsters%2FFrame%20\($0).png?alt=media", groupName: "Cute Monsters") }
+    }
+    
+    static var tdchs: [Emoticon] {
+        (1...46).map { Emoticon(urlString: "\(baseURLString)/common%2FTdch%2FSticker%20\($0).gif?alt=media", groupName: "Tdch") }
+    }
+}

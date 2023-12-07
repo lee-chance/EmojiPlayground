@@ -45,7 +45,7 @@ struct ChatView: View {
                                 let message = Message(plainText: message, sender: sender)
                                 await messageStore.add(message: message)
                             case .data(let data):
-                                guard let url = await FirebaseStorageManager.upload(data: data, to: "test") else {
+                                guard let url = await FirebaseStorageManager.upload(data: data, to: "private/\(UserStore.shared.userID)") else {
                                     isPresentedUploadOverlay = false
                                     return false
                                 }
@@ -148,7 +148,7 @@ struct ChatView: View {
                         for selection in newValue {
                             guard
                                 let data = try await selection.loadTransferable(type: Data.self),
-                                let url = await FirebaseStorageManager.upload(data: data, to: "test")
+                                let url = await FirebaseStorageManager.upload(data: data, to: "private/\(UserStore.shared.userID)")
                             else {
                                 isPresentedUploadOverlay = false
                                 errorAlertMessage = "업로드 중 오류가 발생했습니다."

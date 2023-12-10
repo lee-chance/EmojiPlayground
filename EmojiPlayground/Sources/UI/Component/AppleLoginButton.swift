@@ -70,6 +70,7 @@ struct AppleLoginButton<Content: View>: View {
         } catch {
             errorMessage = error.localizedDescription
             print("error: \(error)")
+            // TODO: 로그 보내기
         }
     }
     
@@ -81,6 +82,7 @@ struct AppleLoginButton<Content: View>: View {
         } catch {
             errorMessage = error.localizedDescription
             print("error: \(error)")
+            // TODO: 로그 보내기
         }
     }
 }

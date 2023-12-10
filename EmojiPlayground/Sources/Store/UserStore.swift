@@ -81,12 +81,10 @@ final class UserStore: ObservableObject {
                     .reference(path: user.uid)
                     .reference(path: .emoticons)
                 
-                for emoticon in Emoticon.cuteMonsters {
-                    batch.setDataEncodable(from: emoticon, forDocument: collection.document())
-                }
-                
-                for emoticon in Emoticon.tdchs {
-                    batch.setDataEncodable(from: emoticon, forDocument: collection.document())
+                for sampleEmoticon in EmoticonSample.allCases {
+                    for emoticon in sampleEmoticon.emoticons {
+                        batch.setDataEncodable(from: emoticon, forDocument: collection.document())
+                    }
                 }
             })
     }
@@ -101,5 +99,9 @@ final class UserStore: ObservableObject {
         try await FirebaseAuthManager.delete()
         
         self.user = nil
+    }
+    
+    func reauthenticate(_ authResult: AppleAuthResult) async throws {
+        try await FirebaseAuthManager.reauthenticate(authResult)
     }
 }

@@ -49,12 +49,9 @@ struct Sidebar: View {
                         Label("연동하기/로그인", systemImage: "apple.logo")
                     }
                 } else {
-                    Button("로그아웃", systemImage: "rectangle.portrait.and.arrow.right") {
-                        Task {
-                            userStore.logout()
-                            await userStore.loginAnonymous()
-                        }
-                    }
+                    SidebarLogoutButton()
+                    
+                    SidebarSignoutButton()
                 }
                 
 //                NavigationLink(destination: LoginView()) {
@@ -119,6 +116,95 @@ struct Sidebar_Previews: PreviewProvider {
             Preview()
         } detail: {
            Text("Detail!")
+        }
+    }
+}
+
+struct SidebarLogoutButton: View {
+    @EnvironmentObject private var userStore: UserStore
+    
+    @State private var presentAlert = false
+    
+    var body: some View {
+        Button("로그아웃", systemImage: "rectangle.portrait.and.arrow.right") {
+            presentAlert.toggle()
+        }
+        .alert("로그아웃을 할까요?", isPresented: $presentAlert, actions: {
+            Button("취소", role: .cancel) { }
+            
+            Button("로그아웃") {
+                Task {
+                    userStore.logout()
+                    await userStore.loginAnonymous()
+                }
+            }
+        }, message: {
+            Text("언제든지 다시 로그인할 수 있습니다.")
+        })
+    }
+}
+
+struct SidebarSignoutButton: View {
+    @EnvironmentObject private var userStore: UserStore
+    
+    @State private var presentAlert = false
+    @State private var errorMessage: String? = nil
+    
+    var body: some View {
+        Button("회원탈퇴", systemImage: "person.crop.circle.badge.xmark") {
+            presentAlert.toggle()
+        }
+        .alert("오류", presenting: $errorMessage, actions: { _ in
+            Button("확인") { errorMessage = nil }
+        }, message: { message in
+            #if DEBUG
+            Text(message)
+            #else
+            Text("알 수 없는 오류가 발생했습니다.")
+            #endif
+        })
+        .alert("정말 탈퇴하시겠어요?", isPresented: $presentAlert, actions: {
+            Button("취소", role: .cancel) { }
+            
+            Button("탈퇴", role: .destructive) {
+                Task { await signout() }
+            }
+        }, message: {
+            Text("회원탈퇴시 계정과 모든 데이터는 삭제되며 복구되지 않습니다.")
+        })
+    }
+    
+    private func signout() async {
+        do {
+            try await userStore.signout()
+            await userStore.loginAnonymous()
+        } catch AuthError.requiresRecentLogin {
+            AppleAuthManager.shared.processLogin { request in
+                AppleAuthManager.shared.makeRequest(request)
+            } onCompletion: { authResult in
+                Task { await reauthenticate(authResult) }
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+            print("error: \(error)")
+        }
+    }
+    
+    private func reauthenticate(_ authResult: AppleAuthResult) async {
+        do {
+            try await userStore.reauthenticate(authResult)
+            await signout()
+        } catch AuthError.notLoggedIn {
+            await userStore.loginAnonymous()
+            errorMessage = "알 수 없는 오류가 발생했습니다.\n잠시 후 다시 시도해 주세요."
+        } catch AuthError.userMismatch {
+            errorMessage = "로그인 되어있는 계정으로 인증을 시도해주세요."
+        } catch AuthError.userDisabled {
+            errorMessage = "해당 계정은 사용 중지되었습니다."
+        } catch {
+            errorMessage = error.localizedDescription
+            print("error: \(error)")
+            // TODO: 로그 보내기
         }
     }
 }

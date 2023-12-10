@@ -20,6 +20,10 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
         URL(string: urlString)!
     }
     
+    var isSample: Bool {
+        EmoticonSample.allGroupNames.contains(groupName)
+    }
+    
     enum CodingKeys: CodingKey {
         case id
         case timestamp
@@ -64,16 +68,68 @@ extension Emoticon {
     }
 }
 
-extension Emoticon {
-    private static var baseURLString: String {
+enum EmoticonSample: CaseIterable {
+    case cuteMonsters, tdchs
+    
+    private var baseURLString: String {
         "https://firebasestorage.googleapis.com/v0/b/emote-543b9.appspot.com/o"
     }
     
-    static var cuteMonsters: [Emoticon] {
-        (1...10).map { Emoticon(urlString: "\(baseURLString)/common%2FCute%20Monsters%2FFrame%20\($0).png?alt=media", groupName: "Cute Monsters") }
+    private var totalCount: Int {
+        switch self {
+        case .cuteMonsters:
+            10
+        case .tdchs:
+            46
+        }
     }
     
-    static var tdchs: [Emoticon] {
-        (1...46).map { Emoticon(urlString: "\(baseURLString)/common%2FTdch%2FSticker%20\($0).gif?alt=media", groupName: "Tdch") }
+    private var groupName: String {
+        switch self {
+        case .cuteMonsters:
+            "Cute Monsters"
+        case .tdchs:
+            "Tdch"
+        }
+    }
+    
+    private var pathName: String {
+        "common/\(groupName)"
+    }
+    
+    private var filePrefixName: String {
+        switch self {
+        case .cuteMonsters:
+            "Frame"
+        case .tdchs:
+            "Sticker"
+        }
+    }
+    
+    private var fileExtension: String {
+        switch self {
+        case .cuteMonsters:
+            "png"
+        case .tdchs:
+            "gif"
+        }
+    }
+    
+    private func fileName(of number: Int) -> String {
+        "\(filePrefixName) \(number).\(fileExtension)"
+    }
+    
+    var emoticons: [Emoticon] {
+        (1...totalCount).map { imageNumber in
+            let firebaseURLString = "\(baseURLString)/"
+            let encodedURLString = "\(pathName)/\(fileName(of: imageNumber))".addingPercentEncoding(withAllowedCharacters: .urlUserAllowed)!
+            let queryString = "?alt=media"
+            let urlString = firebaseURLString + encodedURLString + queryString
+            return Emoticon(urlString: urlString, groupName: groupName)
+        }
+    }
+    
+    static var allGroupNames: [String] {
+        Self.allCases.map { $0.groupName }
     }
 }

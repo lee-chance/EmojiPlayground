@@ -63,8 +63,10 @@ struct EmoticonView: View {
 //                    model.uploadToCommunity(image: image)
 //                }
                 
-                Button("그룹 수정") {
-                    groupAlert.toggle()
+                if !emoticon.isSample {
+                    Button("그룹 수정") {
+                        groupAlert.toggle()
+                    }
                 }
                 
                 Button("삭제", role: .destructive) {

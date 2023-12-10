@@ -54,6 +54,7 @@ enum AuthError: Error {
     case userDisabled
     case wrongPassword
     case requiresRecentLogin
+    case userMismatch
     case unknown(Error)
 }
 
@@ -76,7 +77,7 @@ extension FirebaseAuthManager {
 // MARK: Apple
 extension FirebaseAuthManager {
     static func linkWithApple(_ authResult: AppleAuthResult) async throws -> FirebaseAuthUser {
-        let credential = OAuthProvider.credential(withProviderID: authResult.providerID, idToken: authResult.idToken, rawNonce: authResult.rawNonce)
+        let credential = makeCredential(authResult)
         
         guard let user = auth.currentUser else { throw AuthError.notLoggedIn }
         
@@ -96,7 +97,7 @@ extension FirebaseAuthManager {
     }
     
     static func loginWithApple(_ authResult: AppleAuthResult) async throws -> FirebaseAuthUser {
-        let credential = OAuthProvider.credential(withProviderID: authResult.providerID, idToken: authResult.idToken, rawNonce: authResult.rawNonce)
+        let credential = makeCredential(authResult)
         
         do {
             let result = try await auth.signIn(with: credential)
@@ -117,6 +118,36 @@ extension FirebaseAuthManager {
         } catch {
             throw AuthError.unknown(error)
         }
+    }
+    
+    static func reauthenticate(_ authResult: AppleAuthResult) async throws {
+        let credential = makeCredential(authResult)
+        
+        guard let user = auth.currentUser else { throw AuthError.notLoggedIn }
+        
+        do {
+            try await user.reauthenticate(with: credential)
+        } catch AuthErrorCode.invalidCredential {
+            throw AuthError.invalidCredential
+        } catch AuthErrorCode.invalidEmail {
+            throw AuthError.invalidEmail
+        } catch AuthErrorCode.wrongPassword {
+            throw AuthError.wrongPassword
+        } catch AuthErrorCode.userMismatch {
+            throw AuthError.userMismatch
+        } catch AuthErrorCode.operationNotAllowed {
+            throw AuthError.operationNotAllowed
+        } catch AuthErrorCode.emailAlreadyInUse {
+            throw AuthError.emailAlreadyInUse
+        } catch AuthErrorCode.userDisabled {
+            throw AuthError.userDisabled
+        } catch {
+            throw AuthError.unknown(error)
+        }
+    }
+    
+    private static func makeCredential(_ authResult: AppleAuthResult) -> OAuthCredential {
+        OAuthProvider.credential(withProviderID: authResult.providerID, idToken: authResult.idToken, rawNonce: authResult.rawNonce)
     }
 }
 

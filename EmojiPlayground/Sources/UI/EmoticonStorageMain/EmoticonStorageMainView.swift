@@ -111,12 +111,12 @@ struct EmoticonGroupView: View {
                             )
                     }
                 }
-                .cornerRadius(4)
+                .clipShape(.rect(cornerRadius: 4))
             }
         }
         .padding(8)
         .background(.ultraThickMaterial)
-        .cornerRadius(8)
+        .clipShape(.rect(cornerRadius: 8))
     }
     
     @ViewBuilder

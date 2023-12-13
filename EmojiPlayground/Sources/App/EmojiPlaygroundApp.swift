@@ -85,7 +85,7 @@ struct EmojiPlaygroundApp: App {
                     content
                         .padding()
                         .background(Color.white)
-                        .cornerRadius(8)
+                        .clipShape(.rect(cornerRadius: 8))
                 )
         }
     }

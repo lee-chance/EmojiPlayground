@@ -27,7 +27,7 @@ struct DisplaySettingsView: View {
                 .padding(20)
                 .padding(.vertical, 13)
                 .background(theme.roomBackgoundColor)
-                .cornerRadius(8)
+                .clipShape(.rect(cornerRadius: 8))
                 .padding(.horizontal, 20)
 //                .padding(.top, 26)
         }

@@ -55,7 +55,7 @@ struct IconSettingsView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(minHeight: 125, maxHeight: 1024)
-                            .cornerRadius(4)
+                            .clipShape(.rect(cornerRadius: 4))
                             .shadow(radius: 3)
                         
                         if icon.appIconName == currentIcon {

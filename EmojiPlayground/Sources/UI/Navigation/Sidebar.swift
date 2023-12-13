@@ -67,7 +67,7 @@ struct Sidebar: View {
                         Image(uiImage: .init(named: icon.iconName)!)
                             .resizable()
                             .frame(width: 25, height: 25)
-                            .cornerRadius(4)
+                            .clipShape(.rect(cornerRadius: 4))
                     }
                 }
                 

@@ -47,7 +47,7 @@ struct ChatImageStorageView: View {
                         
                         Text(String(tab.firstCharacterOfName))
                             .font(.body)
-                            .foregroundColor(internalIndex == index ? .black : .gray)
+                            .foregroundStyle(internalIndex == index ? .black : .gray)
                             .padding()
                             .background(internalIndex == index ? Color.systemGray5 : nil)
                             .id(index)

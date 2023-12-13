@@ -136,7 +136,7 @@ struct ChatView: View {
                 matching: .images) {
                     Image(systemName: "plus.app")
                         .buttonModifier
-                        .foregroundColor(Color.gray)
+                        .foregroundStyle(.gray)
                 }
                 .onChange(of: photoSelections) { newValue in
                     guard !newValue.isEmpty else { return }
@@ -187,7 +187,7 @@ struct ChatView: View {
                     }) {
                         Image(systemName: "face.smiling")
                             .buttonModifier
-                            .foregroundColor(Color.gray)
+                            .foregroundStyle(.gray)
                     }
                     
                     if text.count > 0 {
@@ -200,7 +200,7 @@ struct ChatView: View {
                         }) {
                             Image(systemName: "arrow.up")
                                 .buttonModifier
-                                .foregroundColor(sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
+                                .foregroundStyle(sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
                                 .background(
                                     Circle()
                                         .stroke(Color.black.opacity(0.1))
@@ -214,7 +214,7 @@ struct ChatView: View {
                         }) {
                             Image(systemName: sender == .to ? "hand.point.right" : "hand.point.left")
                                 .buttonModifier
-                                .foregroundColor(Color.gray)
+                                .foregroundStyle(.gray)
                                 .animation(nil, value: sender)
                         }
                     }

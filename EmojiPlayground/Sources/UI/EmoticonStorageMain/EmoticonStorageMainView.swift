@@ -35,7 +35,7 @@ struct EmoticonStorageMainView: View {
                     VStack(alignment: .leading) {
                         Text("이모티콘은 1:1 비율의 사이즈를 권장합니다.")
                             .font(.callout)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                             .padding(.horizontal)
                         
                         gridView
@@ -107,7 +107,7 @@ struct EmoticonGroupView: View {
                             .opacity(0.5)
                             .overlay(
                                 Text("+\(emoticons.count - 3)")
-                                    .foregroundColor(.white)
+                                    .foregroundStyle(.white)
                             )
                     }
                 }

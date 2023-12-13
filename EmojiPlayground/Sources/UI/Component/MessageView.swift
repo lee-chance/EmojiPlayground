@@ -65,91 +65,26 @@ extension MessageView {
         
         var body: some View {
             Text(message.contentValue)
-                .foregroundColor(message.sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
+                .foregroundStyle(message.sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
                 .padding(12)
                 .background(message.sender == .to ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor)
-                .cornerRadius(12)
+                .clipShape(.rect(cornerRadius: 12))
         }
     }
     
-    // FIXME: CloudKit -> 파이어베이스로 바꾸면서 이미지 불러오기 성공확률이 높아졌으므로 좀더 심플하게 수정하자!
     struct ImageMessageView: View {
         let message: Message
         
-        @State private var imageState: ImageState = .loading
-        @State private var retryCount: Int = 0
-        
         var body: some View {
-            switch imageState {
-            case .loading:
-                loadingView()
-            case .success(let url):
-                imageLoadedView(url: url)
-            case .failure:
-                failureView()
-            }
-        }
-        
-        private func loadingView() -> some View {
-            commonMaterialView
-                .overlay(
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .tint(.white)
-                )
-                .task {
-                    if let url = message.imageURL {
-                        imageState = .success(url)
-                    } else {
-                        imageState = .failure()
-                    }
-                }
-        }
-        
-        private func imageLoadedView(url: URL) -> some View {
-            WebImage(url: url)
+            WebImage(url: message.imageURL)
                 .resizable()
-//                .scaledToFit()
-//                .frame(maxWidth: 200)
+                .placeholder {
+                    Rectangle()
+                        .foregroundStyle(.black.opacity(0.3))
+                        .clipShape(.rect(cornerRadius: 12))
+                }
                 .frame(width: 150, height: 150)
                 .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
-        }
-        
-        private func failureView() -> some View {
-            commonMaterialView
-                .overlay(
-                    VStack {
-                        Image(systemName: "arrow.triangle.2.circlepath")
-                        
-                        Text("Tap to retry")
-                    }
-                        .foregroundColor(.white)
-                )
-                .onTapGesture {
-                    imageState = .loading
-                }
-        }
-        
-        private var commonMaterialView: some View {
-            Rectangle()
-                .frame(width: 150, height: 150)
-                .foregroundColor(.black.opacity(0.5))
-                .background(
-                    Group {
-//                        if let imageData = message.imageData, let uiImage = UIImage(data: imageData) {
-//                            Image(uiImage: uiImage)
-//                                .resizable()
-//                                .scaledToFill()
-//                        }
-                    }
-                )
-                .cornerRadius(12)
-        }
-        
-        enum ImageState {
-            case loading
-            case success(URL)
-            case failure(Error? = nil)
         }
     }
 }

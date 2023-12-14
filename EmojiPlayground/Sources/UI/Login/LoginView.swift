@@ -10,6 +10,8 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject private var userStore: UserStore
     
+    @State private var presentAlert = false
+    
     var body: some View {
         if userStore.user?.isGuest ?? true {
             VStack(spacing: 36) {
@@ -28,11 +30,27 @@ struct LoginView: View {
                     AppleLoginButton()
                         .frame(maxHeight: 56)
                     
-                    // TODO: 만료 후 처리
-                    if let dayOfExpiredDate = userStore.user?.dayOfExpiredDate, dayOfExpiredDate > 0 {
-                        Text("현재 계정은 게스트 로그인이며 \(userStore.user?.dayOfExpiredDate ?? 14)일 후 만료됩니다.")
-                            .font(.callout)
-                            .foregroundStyle(.black.opacity(0.7))
+                    if let dayOfExpiredDate = userStore.user?.dayOfExpiredDate {
+                        if dayOfExpiredDate > 0 {
+                            Text("현재 계정은 게스트 로그인이며 \(dayOfExpiredDate)일 후 만료됩니다.")
+                                .font(.callout)
+                                .foregroundStyle(.black.opacity(0.7))
+                        } else {
+                            Text("")
+                                .onAppear {
+                                    presentAlert = true
+                                }
+                                .alert("이전 계정이 만료되었습니다.", isPresented: $presentAlert, actions: {
+                                    Button("게스트 로그인") {
+                                        Task {
+                                            userStore.logout()
+                                            await userStore.loginAnonymous()
+                                        }
+                                    }
+                                }, message: {
+                                    Text("이전 계정에 있던 모든 데이터는 삭제되며 새로운 게스트 계정으로 앱을 계속 사용하실 수 있습니다.")
+                                })
+                        }
                     }
                 }
             }

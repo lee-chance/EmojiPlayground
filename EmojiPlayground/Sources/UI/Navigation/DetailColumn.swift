@@ -20,6 +20,8 @@ struct DetailColumn: View {
             CommunityView()
         case .settings:
             SettingsView()
+        case .canvas:
+            CanvasView()
         }
     }
 }

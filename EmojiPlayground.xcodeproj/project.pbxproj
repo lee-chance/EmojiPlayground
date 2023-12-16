@@ -51,6 +51,8 @@
 		2EBCE18B2B1A735E00AFF5F8 /* AppleAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCE18A2B1A735E00AFF5F8 /* AppleAuthManager.swift */; };
 		2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE34BB29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld */; };
 		2EBE350B29F2D9E000F30846 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE350A29F2D9E000F30846 /* Room.swift */; };
+		2EC080EE2B2B3347005DFBF8 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC080ED2B2B3347005DFBF8 /* CanvasView.swift */; };
+		2EC080F02B2B3366005DFBF8 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC080EF2B2B3366005DFBF8 /* Canvas.swift */; };
 		2EC3CB192B13772200D2449C /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC3CB182B13772200D2449C /* FirestoreManager.swift */; };
 		2EC3CB1B2B1377CF00D2449C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC3CB1A2B1377CF00D2449C /* FirebaseFirestore */; };
 		2EC3CB1F2B1643CE00D2449C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC3CB1E2B1643CE00D2449C /* FirebaseStorage */; };
@@ -61,6 +63,7 @@
 		2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */; };
 		2EC4EF642AD16060003910AC /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4EF632AD16060003910AC /* Version.swift */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
+		2EDDAB432B2DA0A300BFD1A6 /* IdentifiableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDDAB422B2DA0A300BFD1A6 /* IdentifiableData.swift */; };
 		2EEFE0B72B20BE5F0002EDD6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEFE0B62B20BE5F0002EDD6 /* User.swift */; };
 		2EF21BA82B177F2400AB42BA /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */; };
 		2EF21BAA2B17856900AB42BA /* Emoticon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BA92B17856900AB42BA /* Emoticon.swift */; };
@@ -114,9 +117,12 @@
 		2EBCE18A2B1A735E00AFF5F8 /* AppleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthManager.swift; sourceTree = "<group>"; };
 		2EBE34BC29EA5AF600F30846 /* EmojiPlayground.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EmojiPlayground.xcdatamodel; sourceTree = "<group>"; };
 		2EBE350A29F2D9E000F30846 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		2EC080ED2B2B3347005DFBF8 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		2EC080EF2B2B3366005DFBF8 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		2EC3CB182B13772200D2449C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		2EC4EF632AD16060003910AC /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		2EDDAB422B2DA0A300BFD1A6 /* IdentifiableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableData.swift; sourceTree = "<group>"; };
 		2EEFE0B62B20BE5F0002EDD6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 		2EF21BA92B17856900AB42BA /* Emoticon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoticon.swift; sourceTree = "<group>"; };
@@ -277,6 +283,7 @@
 		2E9517812945B147001E6ED6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2EC080EC2B2B333D005DFBF8 /* Canvas */,
 				2E3A025D2A122611003E8293 /* Navigation */,
 				2EBCE1822B1A3A3F00AFF5F8 /* Login */,
 				2E9517822945B154001E6ED6 /* Main */,
@@ -308,6 +315,7 @@
 				2E07AE702A07961D00674E47 /* ImageCacheManager.swift */,
 				2ECD95892ABEAD8800E99B5A /* Alerts.swift */,
 				2EC4EF632AD16060003910AC /* Version.swift */,
+				2EDDAB422B2DA0A300BFD1A6 /* IdentifiableData.swift */,
 				2EBCE18A2B1A735E00AFF5F8 /* AppleAuthManager.swift */,
 				2E9517862945B315001E6ED6 /* Extension */,
 				2EC3CB172B1376F000D2449C /* Firebase */,
@@ -388,6 +396,15 @@
 				2EBCE1832B1A3A4C00AFF5F8 /* LoginView.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		2EC080EC2B2B333D005DFBF8 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				2EC080ED2B2B3347005DFBF8 /* CanvasView.swift */,
+				2EC080EF2B2B3366005DFBF8 /* Canvas.swift */,
+			);
+			path = Canvas;
 			sourceTree = "<group>";
 		};
 		2EC3CB172B1376F000D2449C /* Firebase */ = {
@@ -500,6 +517,7 @@
 			files = (
 				2EBE34BD29EA5AF600F30846 /* EmojiPlayground.xcdatamodeld in Sources */,
 				2EF21BB02B1793D600AB42BA /* EmoticonGroup.swift in Sources */,
+				2EC080EE2B2B3347005DFBF8 /* CanvasView.swift in Sources */,
 				2EEFE0B72B20BE5F0002EDD6 /* User.swift in Sources */,
 				2E9517842945B168001E6ED6 /* MainView.swift in Sources */,
 				2EBCE18B2B1A735E00AFF5F8 /* AppleAuthManager.swift in Sources */,
@@ -518,6 +536,7 @@
 				2EF21BAA2B17856900AB42BA /* Emoticon.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
 				2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */,
+				2EC080F02B2B3366005DFBF8 /* Canvas.swift in Sources */,
 				2E80979527E5EA1000E40261 /* Message.swift in Sources */,
 				2E3A025F2A12261D003E8293 /* Sidebar.swift in Sources */,
 				2E6467C62A3636D100EB1F65 /* IconSettingsView.swift in Sources */,
@@ -527,6 +546,7 @@
 				2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */,
 				2EF21BAC2B1789F700AB42BA /* DataExtension.swift in Sources */,
 				2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */,
+				2EDDAB432B2DA0A300BFD1A6 /* IdentifiableData.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
 				2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */,
 				2E857A4C2B177A82005945F6 /* MessageStore.swift in Sources */,

@@ -103,10 +103,6 @@ struct EmoticonChangeGroupView: View {
     
     let emoticon: Emoticon
     
-    private var groupNames: [String] {
-        store.groupNames
-    }
-    
     var body: some View {
         NavigationView {
             Form {
@@ -116,14 +112,7 @@ struct EmoticonChangeGroupView: View {
                         fieldIsFocused = true
                     }
                 
-                Section("그룹 선택") {
-                    ForEach(groupNames, id: \.self) { name in
-                        Button(name) {
-                            update(name)
-                        }
-                        .disabled(name == emoticon.groupName)
-                    }
-                }
+                EmoticonGroupListView(groupName: emoticon.groupName, onTap: update)
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -132,6 +121,7 @@ struct EmoticonChangeGroupView: View {
                     Button("수정하기") {
                         update(name)
                     }
+                    .disabled(EmoticonSample.allGroupNames.contains(name))
                     .disabled(name == emoticon.groupName)
                     .disabled(name.count == 0)
                 }
@@ -151,5 +141,29 @@ struct EmoticonChangeGroupView: View {
             await store.fetchEmoticons()
             dismiss()
         }
+    }
+}
+
+struct EmoticonGroupListView: View {
+    @EnvironmentObject private var store: EmoticonStore
+    
+    let groupName: String
+    let onTap: (String) -> Void
+    
+    private var groupNames: [String] {
+        store.groupNames
+    }
+    
+    var body: some View {
+        Section("그룹 선택") {
+            ForEach(groupNames, id: \.self) { name in
+                Button(name) {
+                    onTap(name)
+                }
+                .disabled(EmoticonSample.allGroupNames.contains(name))
+                .disabled(name == groupName)
+            }
+        }
+        .task { await store.fetchEmoticons() }
     }
 }

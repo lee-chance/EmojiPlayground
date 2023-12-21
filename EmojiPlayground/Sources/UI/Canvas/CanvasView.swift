@@ -14,6 +14,7 @@ struct CanvasView: View {
     @State private var rect: CGRect = .zero
     @State private var imageData: IdentifiableData?
     @State private var presentSuccessAlert: Bool = false
+    @State private var value: CGFloat = 1
     
     private let canvas: PKCanvasView = PKCanvasView()
     private let toolPicker: PKToolPicker = PKToolPicker()
@@ -22,6 +23,9 @@ struct CanvasView: View {
     
     var body: some View {
         VStack {
+            Slider(value: $value, in: 0.3...1)
+                .padding(.horizontal)
+            
             Canvas(canvas: canvas, toolPicker: toolPicker)
                 .background(
                     Color.white
@@ -29,20 +33,18 @@ struct CanvasView: View {
                 )
                 .padding(16)
                 .aspectRatio(1, contentMode: .fit)
+                .scaleEffect(value)
                 .onAppear {
                     isDrawing.toggle()
                 }
                 .padding(.bottom, toolPickerHeight)
                 .background {
-                    Color.clear
-                        .background(
-                            GeometryReader { geometry in
-                                Color.clear
-                                    .onAppear {
-                                        rect = geometry.frame(in: .local)
-                                    }
+                    GeometryReader { geometry in
+                        Color.clear
+                            .onAppear {
+                                rect = geometry.frame(in: .local)
                             }
-                        )
+                    }
                 }
             
 //            ColorPicker("배경", selection: $selectedBackgroundColor)

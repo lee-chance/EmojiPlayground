@@ -13,6 +13,8 @@ struct EmoticonStorageDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
     
+    @State private var presentActionAlert: Bool = false
+    
     let groupName: String
     
     var group: EmoticonGroup? {
@@ -24,7 +26,7 @@ struct EmoticonStorageDetailView: View {
             if let group {
                 LazyVGrid(columns: Array(repeating: GridItem(spacing: 16), count: 3), spacing: 16) {
                     ForEach(group.emoticons) { emoticon in
-                        EmoticonView(emoticon: emoticon)
+                        EmoticonView(isPresentedActionAlert: $presentActionAlert, emoticon: emoticon)
                     }
                 }
                 .padding()
@@ -44,7 +46,9 @@ struct EmoticonStorageDetailView: View {
 struct EmoticonView: View {
     @EnvironmentObject private var store: EmoticonStore
     
-    @State private var presentActionAlert: Bool = false
+    // MEMO: 이게 @State면 뷰가 렌더링할 때 alert가 뜨지 않는 버그가 있다.
+    @Binding var isPresentedActionAlert: Bool
+    
     @State private var groupAlert: Bool = false
     @State private var presentDeleteAlert: Bool = false
     
@@ -56,9 +60,9 @@ struct EmoticonView: View {
             .aspectRatio(1, contentMode: .fit)
             .onTapGesture { /* SCROLLABLE WITH LONG PRESS GESTURE */ }
             .onLongPressGesture {
-                presentActionAlert = true
+                isPresentedActionAlert = true
             }
-            .confirmationDialog("", isPresented: $presentActionAlert) {
+            .confirmationDialog("", isPresented: $isPresentedActionAlert) {
 //                Button("자랑하기 👏") {
 //                    model.uploadToCommunity(image: image)
 //                }

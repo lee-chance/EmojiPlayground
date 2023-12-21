@@ -7,10 +7,12 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseAnalytics
 import FirebaseRemoteConfig
 
 @main
 struct EmojiPlaygroundApp: App {
+//    @UIApplicationDelegateAdaptor var delegate: MyAppDelegate
     @Environment(\.scenePhase) private var scenePhase
     
     @StateObject var mainRouter = MainRouter()
@@ -25,6 +27,14 @@ struct EmojiPlaygroundApp: App {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 0
         RemoteConfig.remoteConfig().configSettings = settings
+        
+        let title = "hi"
+        
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: "id-\(title)",
+            AnalyticsParameterItemName: title,
+            AnalyticsParameterContentType: "cont",
+        ])
     }
     
     var body: some Scene {
@@ -103,3 +113,61 @@ final class MainRouter: ObservableObject {
         self.content = nil
     }
 }
+
+//class MyAppDelegate: NSObject, UIApplicationDelegate {
+//    func application(
+//        _ application: UIApplication,
+//        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+//    ) -> Bool {
+//        FirebaseApp.configure()
+//        let settings = RemoteConfigSettings()
+//        settings.minimumFetchInterval = 0
+//        RemoteConfig.remoteConfig().configSettings = settings
+//        
+//        let title = "hi"
+//        
+//        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+//            AnalyticsParameterItemID: "id-\(title)",
+//            AnalyticsParameterItemName: title,
+//            AnalyticsParameterContentType: "cont",
+//        ])
+//        return true
+//    }
+//    func application(
+//        _ application: UIApplication,
+//        configurationForConnecting connectingSceneSession: UISceneSession,
+//        options: UIScene.ConnectionOptions
+//    ) -> UISceneConfiguration {
+//        let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+//        sceneConfig.delegateClass = MySceneDelegate.self
+//        return sceneConfig
+//    }
+//}
+//
+//class MySceneDelegate: NSObject, UIWindowSceneDelegate {
+//    var window: UIWindow?
+//    
+//    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+//        guard let _ = (scene as? UIWindowScene) else { return }
+//    }
+//    
+//    func sceneDidDisconnect(_ scene: UIScene) {
+//        
+//    }
+//    
+//    func sceneDidBecomeActive(_ scene: UIScene) {
+//        
+//    }
+//    
+//    func sceneWillResignActive(_ scene: UIScene) {
+//        
+//    }
+//    
+//    func sceneWillEnterForeground(_ scene: UIScene) {
+//        
+//    }
+//    
+//    func sceneDidEnterBackground(_ scene: UIScene) {
+//        
+//    }
+//}

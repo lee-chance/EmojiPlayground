@@ -23,9 +23,6 @@ struct CanvasView: View {
     
     var body: some View {
         VStack {
-            Slider(value: $value, in: 0.3...1)
-                .padding(.horizontal)
-            
             Canvas(canvas: canvas, toolPicker: toolPicker)
                 .background(
                     Color.white
@@ -37,7 +34,6 @@ struct CanvasView: View {
                 .onAppear {
                     isDrawing.toggle()
                 }
-                .padding(.bottom, toolPickerHeight)
                 .background {
                     GeometryReader { geometry in
                         Color.clear
@@ -47,6 +43,9 @@ struct CanvasView: View {
                     }
                 }
             
+            Slider(value: $value, in: 0.3...1)
+                .padding(.horizontal)
+            
 //            ColorPicker("배경", selection: $selectedBackgroundColor)
 //                .fixedSize()
 //
@@ -54,6 +53,7 @@ struct CanvasView: View {
 //                isDrawing.toggle()
 //            }
         }
+        .padding(.bottom, toolPickerHeight)
         .navigationTitle("캔버스")
         .toolbar {
             Button("저장") {

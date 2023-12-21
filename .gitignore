@@ -1,3 +1,5 @@
+*.xcuserstate
+
 # Created by https://www.toptal.com/developers/gitignore/api/swift,xcode,firebase,cocoapods,swiftpackagemanager
 # Edit at https://www.toptal.com/developers/gitignore?templates=swift,xcode,firebase,cocoapods,swiftpackagemanager
 

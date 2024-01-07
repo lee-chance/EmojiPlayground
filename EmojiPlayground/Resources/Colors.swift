@@ -19,4 +19,6 @@ extension Color {
     static var limeMyBubble: Color = Color("lime_primary")
     static var limeOtherBubble: Color = Color("lime_other_bubble")
     static var limeFont: Color = Color("lime_font")
+    
+    static var defaultImageBackgroundColor: Color = .black.opacity(0.3)
 }

@@ -35,7 +35,7 @@
 		2E857A4C2B177A82005945F6 /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E857A4B2B177A82005945F6 /* MessageStore.swift */; };
 		2E86F8362AD25021009BD12D /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86F8352AD25021009BD12D /* AppInfo.swift */; };
 		2E9517842945B168001E6ED6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517832945B168001E6ED6 /* MainView.swift */; };
-		2E9517892945B38D001E6ED6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517882945B38D001E6ED6 /* Theme.swift */; };
+		2E9517892945B38D001E6ED6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9517882945B38D001E6ED6 /* Settings.swift */; };
 		2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9E832A2A0559AB002A2B90 /* GIFImage.swift */; };
 		2EA7959E2B1CD3300016E49B /* AppleLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA7959D2B1CD3300016E49B /* AppleLoginButton.swift */; };
 		2EAEF3E82AADB6730098ECAB /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2EAEF3E72AADB6730098ECAB /* SDWebImageSwiftUI */; };
@@ -105,7 +105,7 @@
 		2E857A4B2B177A82005945F6 /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 		2E86F8352AD25021009BD12D /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		2E9517832945B168001E6ED6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		2E9517882945B38D001E6ED6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		2E9517882945B38D001E6ED6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2E9E832A2A0559AB002A2B90 /* GIFImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFImage.swift; sourceTree = "<group>"; };
 		2EA7959D2B1CD3300016E49B /* AppleLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginButton.swift; sourceTree = "<group>"; };
 		2EAEF3ED2AADBDCB0098ECAB /* OSLogExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogExtension.swift; sourceTree = "<group>"; };
@@ -368,7 +368,7 @@
 				2EBE350A29F2D9E000F30846 /* Room.swift */,
 				2EF21BA92B17856900AB42BA /* Emoticon.swift */,
 				2EF21BAF2B1793D600AB42BA /* EmoticonGroup.swift */,
-				2E9517882945B38D001E6ED6 /* Theme.swift */,
+				2E9517882945B38D001E6ED6 /* Settings.swift */,
 				2E21006A2AB5D919004AF19D /* DropItem.swift */,
 				2EEFE0B62B20BE5F0002EDD6 /* User.swift */,
 			);
@@ -560,7 +560,7 @@
 				2EC4EF642AD16060003910AC /* Version.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2EBCE17F2B1A301500AFF5F8 /* FirebaseAuthManager.swift in Sources */,
-				2E9517892945B38D001E6ED6 /* Theme.swift in Sources */,
+				2E9517892945B38D001E6ED6 /* Settings.swift in Sources */,
 				2EAEF3F02AADBFF90098ECAB /* ChatImageStorageView.swift in Sources */,
 				2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */,
 				2EF21BA82B177F2400AB42BA /* FirebaseStorageManager.swift in Sources */,

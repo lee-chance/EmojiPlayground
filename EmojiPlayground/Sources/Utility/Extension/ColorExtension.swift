@@ -7,26 +7,23 @@
 
 import SwiftUI
 
+/**
+ AppStorage에서 사용하기 위해 RawRepresentable 프로토콜을 채택하여 사용
+ */
 extension Color: RawRepresentable {
-    public init?(rawValue: Int) {
-        let red = Double((rawValue & 0xFF0000) >> 16) / 0xFF
-        let green = Double((rawValue & 0x00FF00) >> 8) / 0xFF
-        let blue = Double(rawValue & 0x0000FF) / 0xFF
-        self = Color(red: red, green: green, blue: blue)
+    public init?(rawValue: String) {
+        guard 
+            let data = Data(base64Encoded: rawValue),
+            let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)
+        else { return nil }
+        
+        self = Color(color)
     }
-    
-    public var rawValue: Int {
-        guard let coreImageColor = coreImageColor else {
-            return 0
-        }
-        let red = Int(coreImageColor.red * 255 + 0.5)
-        let green = Int(coreImageColor.green * 255 + 0.5)
-        let blue = Int(coreImageColor.blue * 255 + 0.5)
-        return (red << 16) | (green << 8) | blue
-    }
-    
-    private var coreImageColor: CIColor? {
-        CIColor(color: .init(self))
+
+    public var rawValue: String {
+        let data = try? NSKeyedArchiver.archivedData(withRootObject: UIColor(self), requiringSecureCoding: false)
+        
+        return data?.base64EncodedString() ?? ""
     }
 }
 

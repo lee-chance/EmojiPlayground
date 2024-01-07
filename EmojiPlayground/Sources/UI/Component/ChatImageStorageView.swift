@@ -10,6 +10,7 @@ import SDWebImageSwiftUI
 
 struct ChatImageStorageView: View {
     @EnvironmentObject private var store: EmoticonStore
+    @EnvironmentObject private var settings: Settings
     
     @State private var internalIndex: Int = 0
     

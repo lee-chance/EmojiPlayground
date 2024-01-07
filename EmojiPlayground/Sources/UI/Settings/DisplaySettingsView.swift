@@ -8,44 +8,73 @@
 import SwiftUI
 
 struct DisplaySettingsView: View {
-    @EnvironmentObject private var theme: Theme
+    @EnvironmentObject private var settings: Settings
+    
+    @State private var isFoldedMockView = false
     
     var body: some View {
         ZStack(alignment: .top) {
             Form {
                 mockChatView
+                    .padding(-20)
+                    .padding(.vertical, -13)
                     .opacity(0)
                     .hidden()
                     .listRowBackground(Color.clear)
+                    .padding(.bottom, 24)
                 
-                themeSection
+                ChatSettingSection
+                
+                imageSettingSection
                 
 //                resetSection
             }
             
-            mockChatView
-                .padding(20)
-                .padding(.vertical, 13)
-                .background(theme.roomBackgoundColor)
-                .clipShape(.rect(cornerRadius: 8))
-                .padding(.horizontal, 20)
-//                .padding(.top, 26)
+            VStack(spacing: 0, content: {
+                mockChatView
+                
+                Button(action: {
+                    withAnimation(.easeOut) {
+                        isFoldedMockView.toggle()
+                    }
+                }, label: {
+                    Image(systemName: "chevron.up")
+                        .rotationEffect(isFoldedMockView ? .degrees(180) : .zero)
+                        .frame(height: 24)
+                        .frame(maxWidth: .infinity)
+                })
+            })
+            .background(.white)
+            .clipShape(.rect(cornerRadius: 8))
+            .padding(.horizontal, 20)
+//            .padding(.top, 26)
         }
         .navigationTitle("화면 설정")
         .navigationBarTitleDisplayMode(.inline)
     }
     
     private var mockChatView: some View {
-        VStack {
-            MessageView(message: Message(plainText: "내가 보낸 메시지", sender: .to))
-            
-            MessageView(message: Message(plainText: "상대방이 보낸 메시지", sender: .from))
+        ScrollView {
+            VStack {
+                MockMessageView(message: Message(plainText: "내가 보낸 메시지", sender: .to))
+                
+                MockMessageView(message: Message(plainText: "상대방이 보낸 메시지", sender: .from))
+                
+                MockMessageView(message: Message(imageURLString: "https://fakeimg.pl/300x200", sender: .to))
+                
+                MockMessageView(message: Message(imageURLString: "https://fakeimg.pl/200x300", sender: .from))
+            }
+            .padding(20)
+            .padding(.vertical, 13)
+            .background(settings.roomBackgoundColor)
         }
+        .frame(maxHeight: isFoldedMockView ? 200 : .infinity)
+        .fixedSize(horizontal: false, vertical: true)
     }
     
-    private var themeSection: some View {
+    private var ChatSettingSection: some View {
         Section {
-            Picker("테마", selection: $theme.selectedThemeName) {
+            Picker("테마", selection: $settings.selectedThemeName) {
                 ForEach(ThemeName.allCases, id: \.rawValue) { name in
                     Text(name.displayedName)
                         .tag(name)
@@ -53,20 +82,38 @@ struct DisplaySettingsView: View {
             }
             
             Group {
-                ColorPicker("배경 색상", selection: $theme.roomBackgoundColor)
+                ColorPicker("배경 색상", selection: $settings.roomBackgoundColor)
                 
-                ColorPicker("내 채팅 색상", selection: $theme.myMessageBubbleColor)
+                ColorPicker("내 채팅 색상", selection: $settings.myMessageBubbleColor)
                 
-                ColorPicker("내 채팅 폰트 색상", selection: $theme.myMessageFontColor)
+                ColorPicker("내 채팅 폰트 색상", selection: $settings.myMessageFontColor)
                 
-                ColorPicker("상대 채팅 색상", selection: $theme.otherMessageBubbleColor)
+                ColorPicker("상대 채팅 색상", selection: $settings.otherMessageBubbleColor)
                 
-                ColorPicker("상대 채팅 폰트 색상", selection: $theme.otherMessageFontColor)
+                ColorPicker("상대 채팅 폰트 색상", selection: $settings.otherMessageFontColor)
             }
-            .disabled(theme.selectedThemeName != .custom)
-            .opacity(theme.selectedThemeName != .custom ? 0.5 : 1.0)
+            .settingDisabled(settings.selectedThemeName != .custom)
         } header: {
             Text("채팅방")
+        }
+    }
+    
+    private var imageSettingSection: some View {
+        Section {
+            Picker("비율", selection: $settings.imageRatioType) {
+                ForEach(ImageRatioType.allCases, id: \.rawValue) { type in
+                    Text(type.displayedName)
+                        .tag(type)
+                }
+            }
+            
+            Toggle("배경 숨기기", isOn: $settings.imageIsClearBackgroundColor)
+                .settingEnabled(settings.imageRatioType == .original)
+            
+            ColorPicker("배경 색상", selection: $settings.imageBackgroundColor)
+                .settingDisabled(settings.imageIsClearBackgroundColor)
+        } header: {
+            Text("이미지")
         }
     }
     
@@ -84,6 +131,18 @@ struct DisplaySettingsView: View {
 struct DisplaySettingsView_Previews: PreviewProvider {
     static var previews: some View {
         DisplaySettingsView()
-            .environmentObject(Theme.shared)
+            .environmentObject(Settings())
+    }
+}
+
+private extension View {
+    func settingDisabled(_ disabled: Bool) -> some View {
+        self
+            .disabled(disabled)
+            .opacity(disabled ? 0.5 : 1.0)
+    }
+    
+    func settingEnabled(_ enabled: Bool) -> some View {
+        settingDisabled(!enabled)
     }
 }

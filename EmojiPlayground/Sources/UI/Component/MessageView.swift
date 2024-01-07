@@ -8,7 +8,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct MessageView: View {
+struct MessageView: CoreMessageView {
     @EnvironmentObject private var messageStore: MessageStore
     @EnvironmentObject private var mainRounter: MainRouter
     
@@ -17,6 +17,39 @@ struct MessageView: View {
     @State private var presentAlert = false
     
     var body: some View {
+        messageRow
+            .onTapGesture { /* SCROLLABLE WITH LONG PRESS GESTURE */ }
+            .onLongPressGesture {
+                presentAlert = true
+            }
+            .confirmationDialog("", isPresented: $presentAlert) {
+                Button("메시지 삭제", role: .destructive) {
+                    Task {
+                        await messageStore.delete(message: message)
+                    }
+                }
+                
+                Button("취소", role: .cancel) { }
+            }
+            .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
+    }
+}
+
+struct MockMessageView: CoreMessageView {
+    let message: Message
+    
+    var body: some View {
+        messageRow
+            .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
+    }
+}
+
+fileprivate protocol CoreMessageView: View {
+    var message: Message { get }
+}
+
+extension CoreMessageView {
+    var messageRow: some View {
         HStack {
             if message.sender == .to {
                 emptySpacer
@@ -33,22 +66,6 @@ struct MessageView: View {
                 emptySpacer
             }
         }
-        .onTapGesture { /* SCROLLABLE WITH LONG PRESS GESTURE */ }
-        .onLongPressGesture {
-            if message.sender == .to {
-                presentAlert = true
-            }
-        }
-        .confirmationDialog("", isPresented: $presentAlert) {
-            Button("메시지 삭제", role: .destructive) {
-                Task {
-                    await messageStore.delete(message: message)
-                }
-            }
-            
-            Button("취소", role: .cancel) { }
-        }
-        .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
     }
     
     private var emptySpacer: some View {
@@ -57,35 +74,49 @@ struct MessageView: View {
     }
 }
 
-extension MessageView {
-    struct PlainTextMessageView: View {
-        @EnvironmentObject private var theme: Theme
-        
-        let message: Message
-        
-        var body: some View {
-            Text(message.contentValue)
-                .foregroundStyle(message.sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
-                .padding(12)
-                .background(message.sender == .to ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor)
-                .clipShape(.rect(cornerRadius: 12))
-        }
-    }
+
+fileprivate struct PlainTextMessageView: View {
+    @EnvironmentObject private var settings: Settings
     
-    struct ImageMessageView: View {
-        let message: Message
-        
-        var body: some View {
-            WebImage(url: message.imageURL)
-                .resizable()
-                .placeholder {
+    let message: Message
+    
+    var body: some View {
+        Text(message.contentValue)
+            .foregroundStyle(message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
+            .padding(12)
+            .background(message.sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor)
+            .clipShape(.rect(cornerRadius: 12))
+    }
+}
+
+fileprivate struct ImageMessageView: View {
+    @EnvironmentObject private var settings: Settings
+    
+    @State private var isLoadSuccessed = false
+    
+    let message: Message
+    
+    var body: some View {
+        WebImage(url: message.imageURL)
+            .resizable()
+            .placeholder {
+                Rectangle()
+                    .foregroundStyle(.black.opacity(0.3))
+                    .clipShape(.rect(cornerRadius: 12))
+            }
+            .onSuccess { _, _, _ in
+                isLoadSuccessed = true
+            }
+            .aspectRatio(settings.imageRatioType.ratio, contentMode: .fit)
+            .frame(width: 150, height: 150)
+            .background {
+                if isLoadSuccessed {
                     Rectangle()
-                        .foregroundStyle(.black.opacity(0.3))
+                        .foregroundStyle(settings.imageBackgroundColor)
                         .clipShape(.rect(cornerRadius: 12))
                 }
-                .frame(width: 150, height: 150)
-                .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
-        }
+            }
+            .frame(maxWidth: .infinity, alignment: message.sender.messageAlignment)
     }
 }
 

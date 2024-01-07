@@ -43,7 +43,7 @@ struct EmojiPlaygroundApp: App {
                     .environmentObject(mainRouter)
                     .environmentObject(userStore)
                     .environmentObject(emoticonStore)
-                    .environmentObject(Theme.shared)
+                    .environmentObject(Settings())
                     .overlay(mainOverlay)
             } else {
                 Color(uiColor: .systemBackground)

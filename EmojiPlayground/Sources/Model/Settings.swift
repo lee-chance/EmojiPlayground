@@ -1,5 +1,5 @@
 //
-//  Theme.swift
+//  Settings.swift
 //  EmojiPlayground
 //
 //  Created by Changsu Lee on 2022/12/11.
@@ -7,14 +7,18 @@
 
 import SwiftUI
 
-public class Theme: ObservableObject {
-    enum ThemeKey {
+@MainActor
+public class Settings: ObservableObject {
+    private enum SettingsKey {
         case selectedTheme
         case roomBackgoundColor
         case myMessageBubbleColor
         case myMessageFontColor
         case otherMessageBubbleColor
         case otherMessageFontColor
+        case imageRatioType
+        case imageIsClearBackgroundColor
+        case imageBackgroundColor
         
         var key: String {
             switch self {
@@ -30,11 +34,17 @@ public class Theme: ObservableObject {
                 return "THEME_OTHER_MESSAGE_BUBBLE_COLOR"
             case .otherMessageFontColor:
                 return "THEME_OTHER_MESSAGE_FONT_COLOR"
+            case .imageRatioType:
+                return "IMAGE_RATIO_TYPE"
+            case .imageIsClearBackgroundColor:
+                return "IMAGE_IS_Clear_BACKGROUND_COLOR"
+            case .imageBackgroundColor:
+                return "IMAGE_BACKGROUND_COLOR"
             }
         }
     }
     
-    @AppStorage(ThemeKey.selectedTheme.key) public var selectedThemeName: ThemeName = .cocoa {
+    @AppStorage(SettingsKey.selectedTheme.key) public var selectedThemeName: ThemeName = .cocoa {
         didSet {
             switch selectedThemeName {
             case .cocoa:
@@ -54,15 +64,28 @@ public class Theme: ObservableObject {
             }
         }
     }
-    @AppStorage(ThemeKey.roomBackgoundColor.key) public var roomBackgoundColor: Color = .cacaoRoomBackground
-    @AppStorage(ThemeKey.myMessageBubbleColor.key) public var myMessageBubbleColor: Color = .cacaoMyBubble
-    @AppStorage(ThemeKey.myMessageFontColor.key) public var myMessageFontColor: Color = .cacaoFont
-    @AppStorage(ThemeKey.otherMessageBubbleColor.key) public var otherMessageBubbleColor: Color = .cacaoOtherBubble
-    @AppStorage(ThemeKey.otherMessageFontColor.key) public var otherMessageFontColor: Color = .cacaoFont
+    @AppStorage(SettingsKey.roomBackgoundColor.key) public var roomBackgoundColor: Color = .cacaoRoomBackground
+    @AppStorage(SettingsKey.myMessageBubbleColor.key) public var myMessageBubbleColor: Color = .cacaoMyBubble
+    @AppStorage(SettingsKey.myMessageFontColor.key) public var myMessageFontColor: Color = .cacaoFont
+    @AppStorage(SettingsKey.otherMessageBubbleColor.key) public var otherMessageBubbleColor: Color = .cacaoOtherBubble
+    @AppStorage(SettingsKey.otherMessageFontColor.key) public var otherMessageFontColor: Color = .cacaoFont
     
-    public static let shared = Theme()
-    
-    private init() { }
+    @AppStorage(SettingsKey.imageRatioType.key) public var imageRatioType: ImageRatioType = .square {
+        didSet {
+            switch imageRatioType {
+            case .original:
+                imageIsClearBackgroundColor = false
+            case .square:
+                imageIsClearBackgroundColor = true
+            }
+        }
+    }
+    @AppStorage(SettingsKey.imageIsClearBackgroundColor.key) public var imageIsClearBackgroundColor: Bool = false {
+        didSet {
+            imageBackgroundColor = imageIsClearBackgroundColor ? .clear : .defaultImageBackgroundColor
+        }
+    }
+    @AppStorage(SettingsKey.imageBackgroundColor.key) public var imageBackgroundColor: Color = .clear
 }
 
 public enum ThemeName: String, CaseIterable {
@@ -107,4 +130,22 @@ struct LimeTheme: ThemeStyle {
     var myFontColor: Color = .limeFont
     var otherBubbleColor: Color = .limeOtherBubble
     var otherFontColor: Color = .limeFont
+}
+
+public enum ImageRatioType: String, CaseIterable {
+    case original
+    case square
+    
+    var displayedName: String {
+        switch self {
+        case .original:
+            "원본"
+        case .square:
+            "1:1"
+        }
+    }
+    
+    var ratio: CGFloat? {
+        self == .square ? 1 : nil
+    }
 }

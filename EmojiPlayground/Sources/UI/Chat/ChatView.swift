@@ -11,7 +11,7 @@ import PhotosUI
 
 struct ChatView: View {
     @EnvironmentObject private var messageStore: MessageStore
-    @EnvironmentObject private var theme: Theme
+    @EnvironmentObject private var settings: Settings
     
     @State private var text = ""
     @State private var showsEmojiLibrary = false
@@ -68,7 +68,7 @@ struct ChatView: View {
             
             bottomEmojiView
         }
-        .background(theme.roomBackgoundColor)
+        .background(settings.roomBackgoundColor)
         .overlay {
             if isPresentedUploadOverlay {
                 Color.black.opacity(0.5)
@@ -200,11 +200,11 @@ struct ChatView: View {
                         }) {
                             Image(systemName: "arrow.up")
                                 .buttonModifier
-                                .foregroundStyle(sender == .to ? theme.myMessageFontColor : theme.otherMessageFontColor)
+                                .foregroundStyle(sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
                                 .background(
                                     Circle()
                                         .stroke(Color.black.opacity(0.1))
-                                        .background(Circle().fill(sender == .to ? theme.myMessageBubbleColor : theme.otherMessageBubbleColor))
+                                        .background(Circle().fill(sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor))
                                 )
                         }
                     } else {
@@ -255,7 +255,7 @@ struct ChatView: View {
 //struct ChatView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ChatView(chatting: MockChatStore())
-//            .environment(\.theme, .cocoa)
+//            .environment(\.settings, .cocoa)
 //    }
 //}
 

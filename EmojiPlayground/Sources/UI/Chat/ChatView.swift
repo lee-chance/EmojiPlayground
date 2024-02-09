@@ -132,7 +132,6 @@ struct ChatView: View {
         HStack(spacing: 8) {
             PhotosPicker(
                 selection: $photoSelections,
-                maxSelectionCount: 3, // MEMO: 너무 많아지면 오류가 발생하므로 안전하게 3개씩만 하기로
                 matching: .images) {
                     Image(systemName: "plus.app")
                         .buttonModifier

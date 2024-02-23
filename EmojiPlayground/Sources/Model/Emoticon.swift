@@ -14,6 +14,7 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
     
     let urlString: String
     let memo: String?
+    let tag: String?
     let groupName: String
     
     var url: URL {
@@ -29,12 +30,14 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
         case timestamp
         case urlString
         case memo
+        case tag
         case groupName
     }
     
-    init(urlString: String, memo: String? = nil, groupName: String) {
+    init(urlString: String, memo: String? = nil, tag: String? = nil, groupName: String) {
         self.urlString = urlString
         self.memo = memo
+        self.tag = tag
         self.groupName = groupName
     }
     

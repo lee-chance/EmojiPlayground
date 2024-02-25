@@ -9,19 +9,25 @@ import Foundation
 
 @MainActor
 final class EmoticonStore: ObservableObject {
-    @Published private(set) var emoticons: [Emoticon] = []
-    
-    private var listener: FirestoreListener?
-    
-    var emoticonGroups: [EmoticonGroup] {
-        Dictionary(grouping: emoticons, by: { $0.groupName })
-            .sorted(by: { $0.key > $1.key })
-            .map { EmoticonGroup(name: $0.key, emoticons: $0.value) }
+    @Published private(set) var emoticons: [Emoticon] = [] {
+        didSet {
+            let dict = Dictionary(grouping: emoticons, by: { $0.groupName })
+            
+            var result = [EmoticonGroup]()
+            for groupName in groupNames {
+                result.append(EmoticonGroup(name: groupName, emoticons: dict[groupName] ?? []))
+            }
+            
+            emoticonGroups =  result
+        }
     }
+    var emoticonGroups: [EmoticonGroup] = []
     
     var groupNames: [String] {
         Array(Set(emoticons.compactMap { $0.groupName }))
             .sorted()
+            .filter { !EmoticonSample.allGroupNames.contains($0) }
+        + EmoticonSample.groupNames
     }
     
     func emoticonGroup(name: String) -> EmoticonGroup? {
@@ -29,7 +35,10 @@ final class EmoticonStore: ObservableObject {
     }
     
     func fetchEmoticons() async {
-        emoticons = await Emoticon.all()
+        let fetchedEmoticons = await Emoticon.all()
+        if (fetchedEmoticons != emoticons) {
+            emoticons = fetchedEmoticons
+        }
     }
     
     func add(emoticon: Emoticon) async {

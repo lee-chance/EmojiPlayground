@@ -197,7 +197,7 @@ struct EmoticonEditView: View {
                                     // TODO: 태그 수정하기
                                 }) {
                                     Text("# \(tag)")
-                                        .modifier(TagModifier())
+                                        .modifier(TagModifier(color: .black))
                                 }
                                 .buttonStyle(.plain)
                             } else {
@@ -205,7 +205,7 @@ struct EmoticonEditView: View {
                                     // TODO: 태그 추가하기
                                 }) {
                                     Text("+ 태그 추가하기")
-                                        .modifier(TagModifier())
+                                        .modifier(TagModifier(color: .gray))
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -223,8 +223,6 @@ struct EmoticonEditView: View {
                 withAnimation(.easeOut) {
                     isPresented.toggle()
                 }
-                
-                UIApplication.topViewController()?.view.backgroundColor = .black.withAlphaComponent(0.8)
             }
             
             ZStack {
@@ -237,6 +235,7 @@ struct EmoticonEditView: View {
                 }
             }
         }
+        .background(Color.black.opacity(0.8))
     }
     
     private var confirmationButtonsView: some View {
@@ -302,13 +301,15 @@ struct EmoticonEditView: View {
 }
 
 private struct TagModifier: ViewModifier {
+    let color: Color
+    
     func body(content: Content) -> some View {
         content
             .font(.headline)
             .foregroundStyle(.white)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-            .background(.gray)
+            .background(color)
             .clipShape(.capsule)
     }
 }

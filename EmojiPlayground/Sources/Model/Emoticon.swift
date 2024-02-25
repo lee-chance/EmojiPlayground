@@ -73,6 +73,10 @@ extension Emoticon {
 enum EmoticonSample: CaseIterable {
     case cuteMonsters, tdchs
     
+    static var groupNames: [String] {
+        [EmoticonSample.cuteMonsters.groupName, EmoticonSample.tdchs.groupName]
+    }
+    
     private var baseURLString: String {
         "https://firebasestorage.googleapis.com/v0/b/emote-543b9.appspot.com/o"
     }

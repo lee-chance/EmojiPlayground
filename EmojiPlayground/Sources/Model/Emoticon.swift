@@ -13,9 +13,9 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
     @ServerTimestamp var timestamp: Date?
     
     let urlString: String
-    let memo: String?
-    let tag: String?
+    let filename: String
     let groupName: String
+    let tag: String?
     
     var url: URL {
         URL(string: urlString)!
@@ -25,20 +25,11 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
         EmoticonSample.allGroupNames.contains(groupName)
     }
     
-    enum CodingKeys: CodingKey {
-        case id
-        case timestamp
-        case urlString
-        case memo
-        case tag
-        case groupName
-    }
-    
-    init(urlString: String, memo: String? = nil, tag: String? = nil, groupName: String) {
+    init(urlString: String, filename: String? = nil, groupName: String, tag: String? = nil) {
         self.urlString = urlString
-        self.memo = memo
-        self.tag = tag
+        self.filename = filename ?? URL(string: urlString)?.lastPathComponent ?? ""
         self.groupName = groupName
+        self.tag = tag
     }
     
     func delete() async {
@@ -67,6 +58,14 @@ extension Emoticon {
             .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
             .order(by: CodingKeys.timestamp.stringValue)
+            .get(type: Self.self)
+    }
+    
+    static func loadSamplesFromOrigin() async -> [Self] {
+        await FirestoreManager
+            .reference(path: .samples)
+            .reference(path: "emoticons")
+            .reference(path: .emoticons)
             .get(type: Self.self)
     }
 }
@@ -128,7 +127,7 @@ enum EmoticonSample: CaseIterable {
             let encodedURLString = "\(pathName)/\(fileName(of: imageNumber))".addingPercentEncoding(withAllowedCharacters: .urlUserAllowed)!
             let queryString = "?alt=media"
             let urlString = firebaseURLString + encodedURLString + queryString
-            return Emoticon(urlString: urlString, groupName: groupName)
+            return Emoticon(urlString: urlString, filename: fileName(of: imageNumber), groupName: groupName)
         }
     }
     

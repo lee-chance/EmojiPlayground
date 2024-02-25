@@ -120,8 +120,11 @@ extension DocumentReference {
 extension FirestoreManager {
     enum Collection: String {
         case users
+        case samples
+        
         case rooms
         case emoticons
+        case groups
         case messages
     }
 }

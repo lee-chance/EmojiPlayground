@@ -209,8 +209,6 @@ struct EmoticonEditView: View {
                                 }
                                 .buttonStyle(.plain)
                             }
-                                
-                            Text(emoticon.memo ?? "-")
                         }
                         .padding()
                     }

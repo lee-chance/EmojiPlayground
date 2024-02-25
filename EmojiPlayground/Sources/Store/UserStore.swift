@@ -74,19 +74,19 @@ final class UserStore: ObservableObject {
     func inputEmoticons() {
         guard let user else { return }
         
-        FirestoreManager
-            .batch(completion: { batch in
-                let collection = FirestoreManager
-                    .reference(path: .users)
-                    .reference(path: user.uid)
-                    .reference(path: .emoticons)
-                
-                for sampleEmoticon in EmoticonSample.allCases {
-                    for emoticon in sampleEmoticon.emoticons {
-                        batch.setDataEncodable(from: emoticon, forDocument: collection.document())
-                    }
-                }
-            })
+        let collection = FirestoreManager
+            .reference(path: .users)
+            .reference(path: user.uid)
+            .reference(path: .emoticons)
+        
+        Task {
+            let samples = await Emoticon.loadSamplesFromOrigin()
+            for sample in samples {
+                guard let id = sample.id else { continue }
+                let path = "~\(id)" // 앞에 '~'는 리스트에서 가장 뒤에 보여지기 위해
+                await collection.document(path).setData(from: sample)
+            }
+        }
     }
     
     func logout() {

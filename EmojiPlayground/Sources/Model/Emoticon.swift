@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Emoticon: Codable, Identifiable, Hashable, Equatable {
@@ -48,6 +49,15 @@ struct Emoticon: Codable, Identifiable, Hashable, Equatable {
             .reference(path: .emoticons)
             .reference(path: id!)
             .update([CodingKeys.groupName.stringValue : groupName])
+    }
+    
+    func update(tagName: String?) async {
+        await FirestoreManager
+            .reference(path: .users)
+            .reference(path: UserStore.shared.userID)
+            .reference(path: .emoticons)
+            .reference(path: id!)
+            .update([CodingKeys.tag.stringValue : tagName ?? FieldValue.delete()])
     }
 }
 

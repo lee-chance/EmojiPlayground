@@ -45,13 +45,8 @@ struct EmoticonStorageMainView: View {
         }
         .navigationTitle("보관함")
         .navigationDestination(for: EmoticonGroup.self) { group in
-            EmoticonStorageDetailView(groupName: group.name)
+            EmoticonStorageTabView(groupName: group.name)
         }
-//        .toolbar {
-//            ToolbarItemGroup {
-//                toolbarItems
-//            }
-//        }
         .task {
             isLoading = true
             await store.fetchEmoticons()
@@ -74,22 +69,6 @@ struct EmoticonStorageMainView: View {
         }
         .padding()
     }
-    
-//    @ViewBuilder
-//    private var toolbarItems: some View {
-//        Menu {
-//            Picker("Layout", selection: $layout) {
-//                ForEach(BrowserLayout.allCases) { option in
-//                    Label(option.title, systemImage: option.imageName)
-//                        .tag(option)
-//                }
-//            }
-//            .pickerStyle(.inline)
-//        } label: {
-//            Label("Layout Options", systemImage: layout.imageName)
-//                .labelStyle(.iconOnly)
-//        }
-//    }
 }
 
 struct EmoticonGroupView: View {

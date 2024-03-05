@@ -106,7 +106,7 @@ struct EmoticonAddGroupView: View {
                         fieldIsFocused = true
                     }
                 
-                EmoticonGroupListView(groupName: "", onTap: update)
+                EmoticonGroupListView(onTap: update)
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

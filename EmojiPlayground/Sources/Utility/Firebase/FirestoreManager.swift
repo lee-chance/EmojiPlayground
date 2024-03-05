@@ -121,6 +121,7 @@ extension FirestoreManager {
     enum Collection: String {
         case users
         case samples
+        case tags
         
         case rooms
         case emoticons

@@ -15,6 +15,7 @@
 		2E3A56EB2A234FE60081C546 /* EmoticonStorageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */; };
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
+		2E56B2F22B9E196900FBDE8E /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56B2F12B9E196900FBDE8E /* NavigationManager.swift */; };
 		2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */; };
 		2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C12A3609C200EB1F65 /* Colors.swift */; };
 		2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */; };
@@ -73,6 +74,7 @@
 		2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */; };
 		2EC4EF642AD16060003910AC /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4EF632AD16060003910AC /* Version.swift */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
+		2ED158CF2B9B833C0027D4C8 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED158CE2B9B833C0027D4C8 /* ImageSaver.swift */; };
 		2EDDAB432B2DA0A300BFD1A6 /* IdentifiableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDDAB422B2DA0A300BFD1A6 /* IdentifiableData.swift */; };
 		2EEFE0B72B20BE5F0002EDD6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EEFE0B62B20BE5F0002EDD6 /* User.swift */; };
 		2EF21BA82B177F2400AB42BA /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */; };
@@ -93,6 +95,7 @@
 		2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageDetailView.swift; sourceTree = "<group>"; };
 		2E4B79482953447A00A41030 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		2E4B794B2953493F00A41030 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		2E56B2F12B9E196900FBDE8E /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2E6467C12A3609C200EB1F65 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsView.swift; sourceTree = "<group>"; };
@@ -142,6 +145,7 @@
 		2EC3CB182B13772200D2449C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		2EC4EF632AD16060003910AC /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		2ED158CE2B9B833C0027D4C8 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		2EDDAB422B2DA0A300BFD1A6 /* IdentifiableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableData.swift; sourceTree = "<group>"; };
 		2EEFE0B62B20BE5F0002EDD6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2EF21BA72B177F2400AB42BA /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
@@ -193,6 +197,14 @@
 				2E909D472B9456FA0020A842 /* TagStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		2E56B2F02B9E195100FBDE8E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				2E56B2F12B9E196900FBDE8E /* NavigationManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		2E6467BC2A35AAA600EB1F65 /* Settings */ = {
@@ -318,6 +330,7 @@
 				2E95177E2945B0D8001E6ED6 /* App */,
 				2E9517812945B147001E6ED6 /* UI */,
 				2E4B794A295344CC00A41030 /* Store */,
+				2E56B2F02B9E195100FBDE8E /* Manager */,
 				2EABF5C727E798180017D685 /* Model */,
 			);
 			path = Sources;
@@ -371,6 +384,7 @@
 				2E909D4B2B9488680020A842 /* FlowLayout.swift */,
 				2E9517862945B315001E6ED6 /* Extension */,
 				2EC3CB172B1376F000D2449C /* Firebase */,
+				2ED158CE2B9B833C0027D4C8 /* ImageSaver.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -604,6 +618,7 @@
 				2EBCE18B2B1A735E00AFF5F8 /* AppleAuthManager.swift in Sources */,
 				2EAEF3F22AAF81FD0098ECAB /* KeyboardHeightHelper.swift in Sources */,
 				2E80977F27E5BB4F00E40261 /* HomeView.swift in Sources */,
+				2E56B2F22B9E196900FBDE8E /* NavigationManager.swift in Sources */,
 				2EF21BAE2B17924500AB42BA /* EmoticonStore.swift in Sources */,
 				2E07AE762A079CE300674E47 /* MessageView.swift in Sources */,
 				2E80979727E5F1AB00E40261 /* ImagePicker.swift in Sources */,
@@ -647,6 +662,7 @@
 				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
 				2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */,
 				2EC4EF642AD16060003910AC /* Version.swift in Sources */,
+				2ED158CF2B9B833C0027D4C8 /* ImageSaver.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2EBCE17F2B1A301500AFF5F8 /* FirebaseAuthManager.swift in Sources */,
 				2E9517892945B38D001E6ED6 /* Settings.swift in Sources */,
@@ -793,6 +809,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EmojiPlayground/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "테스티콘";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "내 이모티콘을 앨범에 저장하기 위해 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -831,6 +848,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EmojiPlayground/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "테스티콘";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "내 이모티콘을 앨범에 저장하기 위해 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

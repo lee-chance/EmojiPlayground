@@ -86,7 +86,7 @@ private struct TagManagementView: View {
     }
 }
 
-private struct TagManagementListView: View {
+struct TagManagementListView: View {
     @EnvironmentObject private var store: TagStore
 
     @Environment(\.emoticon) private var emoticon

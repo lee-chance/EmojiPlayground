@@ -10,7 +10,6 @@ import SDWebImageSwiftUI
 
 struct MessageView: CoreMessageView {
     @EnvironmentObject private var messageStore: MessageStore
-    @EnvironmentObject private var mainRounter: MainRouter
     
     let message: Message
     

@@ -69,7 +69,7 @@ private struct EmoticonChangeGroupView: View {
     }
 }
 
-private struct EmoticonGroupListView: View {
+struct EmoticonGroupListView: View {
     @EnvironmentObject private var store: EmoticonStore
     
     @Environment(\.emoticon) private var emoticon

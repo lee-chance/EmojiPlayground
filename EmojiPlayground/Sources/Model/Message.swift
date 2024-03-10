@@ -40,14 +40,14 @@ struct Message: Codable, Identifiable {
         self.sender = sender
     }
     
-    func setEmoticon(groupName: String) async {
+    func setEmoticon(groupName: String, tag: String? = nil) async {
         guard contentType == .image else { return }
                 
         await FirestoreManager
             .reference(path: .users)
             .reference(path: UserStore.shared.userID)
             .reference(path: .emoticons)
-            .setData(from: Emoticon(urlString: contentValue, groupName: groupName))
+            .setData(from: Emoticon(urlString: contentValue, groupName: groupName, tag: tag))
     }
 }
 

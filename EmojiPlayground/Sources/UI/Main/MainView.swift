@@ -10,20 +10,21 @@ import SwiftUI
 struct MainView: View {
     @EnvironmentObject private var userStore: UserStore
     
+    @StateObject private var navigation = NavigationManager()
+    
     @State private var selection: Panel? = Panel.home
-    @State private var path = NavigationPath()
     @State private var presentLoginSheet: Bool = false
     
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $selection)
         } detail: {
-            NavigationStack(path: $path) {
+            NavigationStack(path: $navigation.path) {
                 DetailColumn(selection: $selection)
             }
         }
         .onChange(of: selection) { _ in
-            path.removeLast(path.count)
+            navigation.path.removeLast(navigation.path.count)
         }
         .task {
             await userStore.autoLogin()
@@ -34,6 +35,7 @@ struct MainView: View {
         .sheet(isPresented: $presentLoginSheet) {
             LoginView()
         }
+        .environmentObject(navigation)
     }
 }
 

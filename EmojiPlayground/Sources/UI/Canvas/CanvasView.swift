@@ -9,12 +9,15 @@ import SwiftUI
 import PencilKit
 
 struct CanvasView: View {
+    @EnvironmentObject private var navigation: NavigationManager
+    
     @State private var isDrawing: Bool = false
-    @State private var groupAlert: Bool = false
     @State private var rect: CGRect = .zero
     @State private var imageData: IdentifiableData?
+    @State private var selectedGroup: String?
+    @State private var isSuccessfullySaved: Bool = false
     @State private var presentSuccessAlert: Bool = false
-    @State private var value: CGFloat = 1
+    @State private var scale: CGFloat = 1
     
     private let canvas: PKCanvasView = PKCanvasView()
     private let toolPicker: PKToolPicker = PKToolPicker()
@@ -30,7 +33,7 @@ struct CanvasView: View {
                 )
                 .padding(16)
                 .aspectRatio(1, contentMode: .fit)
-                .scaleEffect(value)
+                .scaleEffect(scale)
                 .onAppear {
                     isDrawing.toggle()
                 }
@@ -43,7 +46,7 @@ struct CanvasView: View {
                     }
                 }
             
-            Slider(value: $value, in: 0.3...1)
+            Slider(value: $scale, in: 0.3...1)
                 .padding(.horizontal)
             
 //            ColorPicker("배경", selection: $selectedBackgroundColor)
@@ -58,20 +61,35 @@ struct CanvasView: View {
         .toolbar {
             Button("저장") {
                 let image = canvas.drawing.image(from: rect, scale: 1)
-                guard let imageData = image.pngData() else { return }
+                guard let pngData = image.pngData() else { return }
                 
-                self.imageData = IdentifiableData(imageData)
+                imageData = IdentifiableData(pngData)
             }
         }
-        .sheet(item: $imageData, content: { imageData in
-            EmoticonAddGroupView(data: imageData.rawValue) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.38) {
-                    presentSuccessAlert = true
+        .sheet(item: $imageData, onDismiss: {
+            if isSuccessfullySaved {
+                isSuccessfullySaved = false
+                presentSuccessAlert = true
+            }
+        }) { data in
+            AddEmoticonSheet(data: data.rawValue) { groupName in
+                selectedGroup = groupName
+                isSuccessfullySaved = true
+                imageData = nil
+            }
+        }
+        .alert("저장완료", isPresented: $presentSuccessAlert, actions: {
+            Button("확인") {
+//                if let imageData, let uiImage = UIImage(data: imageData) {
+//                    ImageSaver().writeToPhotoAlbum(image: uiImage)
+//                }
+                
+                navigation.path.append(Panel.emoticonStorage)
+                if let selectedGroup {
+                    // Group name으로 EmoticonStorageTabView를 보여준다.
+                    navigation.path.append(EmoticonGroup(name: selectedGroup, emoticons: []))
                 }
             }
-        })
-        .alert("저장완료", isPresented: $presentSuccessAlert, actions: {
-            Button("확인") {}
         }, message: {
             Text("내 이모티콘이 보관함에 저장되었습니다.")
         })
@@ -84,10 +102,10 @@ struct CanvasView: View {
     }
 }
 
-struct EmoticonAddGroupView: View {
-    @EnvironmentObject private var store: EmoticonStore
-    
-    @Environment(\.dismiss) private var dismiss
+struct AddEmoticonSheet: View {
+    @State private var newTagName: String = ""
+    @State private var tag: String? = nil
+    @State private var presentAddGroup: Bool = false
     
     @State private var newGroupName: String = ""
     @State private var isProcessing: Bool = false
@@ -95,53 +113,94 @@ struct EmoticonAddGroupView: View {
     @FocusState private var fieldIsFocused: Bool
     
     let data: Data
-    let onSave: () -> Void
+    let onSave: (String) -> Void
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
-                TextField("새 그룹명", text: $newGroupName)
-                    .focused($fieldIsFocused)
-                    .onAppear {
-                        fieldIsFocused = true
+                Section {
+                    TextField("새 태그", text: $newTagName.max(10))
+                        .focused($fieldIsFocused)
+                        .onAppear {
+                            fieldIsFocused = true
+                        }
+                } footer: {
+                    if let tag {
+                        Button(action: {
+                            self.tag = nil
+                        }) {
+                            Text("# \(tag)")
+                                .modifier(TagModifier())
+                        }
                     }
+                }
                 
-                EmoticonGroupListView(onTap: update)
+                TagManagementListView(onTap: perform)
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    let name = newGroupName.trimmingCharacters(in: .whitespaces)
-                    
-                    Button("추가하기") {
-                        update(name)
+                    Button("건너뛰기") {
+                        perform(nil)
                     }
-                    .disabled(EmoticonSample.allGroupNames.contains(name))
-                    .disabled(name.count == 0)
                 }
                 
-//                ToolbarItem(placement: .cancellationAction) {
-//                    Button("취소", role: .cancel) {
-//                        groupAlert.toggle()
-//                    }
-//                }
+                ToolbarItem(placement: .confirmationAction) {
+                    let name = newTagName.trimmingCharacters(in: .whitespaces)
+                    
+                    Button("추가하기") {
+                        perform(name)
+                    }
+                    .disabled(name.count == 0)
+                    .disabled(name.count > 10)
+                }
+            }
+            .navigationDestination(isPresented: $presentAddGroup) {
+                Form {
+                    TextField("새 그룹명", text: $newGroupName)
+                        .focused($fieldIsFocused)
+                        .onAppear {
+                            fieldIsFocused = true
+                        }
+                    
+                    EmoticonGroupListView(onTap: update)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        let name = newGroupName.trimmingCharacters(in: .whitespaces)
+                        
+                        Button("추가하기") {
+                            update(name)
+                        }
+                        .disabled(EmoticonSample.allGroupNames.contains(name))
+                        .disabled(name.count == 0)
+                    }
+                }
             }
         }
         .disabled(isProcessing)
     }
     
-    private func update(_ name: String) {
+    private func perform(_ tag: String?) {
+        presentAddGroup = true
+        self.tag = tag
+        self.newTagName = ""
+    }
+    
+    private func update(_ groupName: String) {
         isProcessing = true
         Task {
-            guard let url = await FirebaseStorageManager.upload(data: data, to: "private/\(UserStore.shared.userID)") else {
+            guard let url = await FirebaseStorageManager.upload(data: data, to: "private/\(UserStore.shared.userID)")
+            else {
                 isProcessing = false
                 return
             }
             
             let message = Message(imageURLString: url.absoluteString, sender: .to)
-            await message.setEmoticon(groupName: name)
+            await message.setEmoticon(groupName: groupName, tag: tag)
             
-            dismiss()
-            onSave()
+            // TODO: 여기서 태그 저장소에 추가하기
+            
+            onSave(groupName)
         }
     }
 }

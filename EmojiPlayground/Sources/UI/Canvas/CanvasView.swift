@@ -10,6 +10,7 @@ import PencilKit
 
 struct CanvasView: View {
     @EnvironmentObject private var navigation: NavigationManager
+    @EnvironmentObject private var store: EmoticonStore
     
     @State private var isDrawing: Bool = false
     @State private var rect: CGRect = .zero
@@ -84,10 +85,13 @@ struct CanvasView: View {
 //                    ImageSaver().writeToPhotoAlbum(image: uiImage)
 //                }
                 
-                navigation.path.append(Panel.emoticonStorage)
-                if let selectedGroup {
-                    // Group name으로 EmoticonStorageTabView를 보여준다.
-                    navigation.path.append(EmoticonGroup(name: selectedGroup, emoticons: []))
+                Task {
+                    await store.fetchEmoticons()
+                    navigation.path.append(Panel.emoticonStorage)
+                    if let selectedGroup {
+                        // Group name으로 EmoticonStorageTabView를 보여준다.
+                        navigation.path.append(EmoticonGroup(name: selectedGroup, emoticons: []))
+                    }
                 }
             }
         }, message: {
@@ -103,6 +107,8 @@ struct CanvasView: View {
 }
 
 struct AddEmoticonSheet: View {
+    @EnvironmentObject private var tagStore: TagStore
+    
     @State private var newTagName: String = ""
     @State private var tag: String? = nil
     @State private var presentAddGroup: Bool = false
@@ -198,7 +204,9 @@ struct AddEmoticonSheet: View {
             let message = Message(imageURLString: url.absoluteString, sender: .to)
             await message.setEmoticon(groupName: groupName, tag: tag)
             
-            // TODO: 여기서 태그 저장소에 추가하기
+            if let tag {
+                await tagStore.upsert(id: tag)
+            }
             
             onSave(groupName)
         }

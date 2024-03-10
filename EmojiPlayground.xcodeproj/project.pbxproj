@@ -16,6 +16,7 @@
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
 		2E56B2F22B9E196900FBDE8E /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56B2F12B9E196900FBDE8E /* NavigationManager.swift */; };
+		2E56B2F62B9E1E5E00FBDE8E /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56B2F52B9E1E5E00FBDE8E /* SaveButton.swift */; };
 		2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */; };
 		2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C12A3609C200EB1F65 /* Colors.swift */; };
 		2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */; };
@@ -96,6 +97,7 @@
 		2E4B79482953447A00A41030 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		2E4B794B2953493F00A41030 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		2E56B2F12B9E196900FBDE8E /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		2E56B2F52B9E1E5E00FBDE8E /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2E6467C12A3609C200EB1F65 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2E6467C32A3612A500EB1F65 /* DisplaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsView.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			children = (
 				2E909D502B9774180020A842 /* GroupManagement.swift */,
 				2E909D522B9774AA0020A842 /* TagManagement.swift */,
+				2E56B2F52B9E1E5E00FBDE8E /* SaveButton.swift */,
 				2E909D542B9775490020A842 /* DeleteButton.swift */,
 			);
 			path = Component;
@@ -659,6 +662,7 @@
 				2E909D532B9774AA0020A842 /* TagManagement.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
 				2EC3CB192B13772200D2449C /* FirestoreManager.swift in Sources */,
+				2E56B2F62B9E1E5E00FBDE8E /* SaveButton.swift in Sources */,
 				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
 				2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */,
 				2EC4EF642AD16060003910AC /* Version.swift in Sources */,

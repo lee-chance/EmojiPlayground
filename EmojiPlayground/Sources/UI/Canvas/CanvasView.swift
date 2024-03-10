@@ -81,10 +81,6 @@ struct CanvasView: View {
         }
         .alert("저장완료", isPresented: $presentSuccessAlert, actions: {
             Button("확인") {
-//                if let imageData, let uiImage = UIImage(data: imageData) {
-//                    ImageSaver().writeToPhotoAlbum(image: uiImage)
-//                }
-                
                 Task {
                     await store.fetchEmoticons()
                     navigation.path.append(Panel.emoticonStorage)

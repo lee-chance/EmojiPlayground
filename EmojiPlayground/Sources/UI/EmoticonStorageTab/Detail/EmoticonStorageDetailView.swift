@@ -23,6 +23,7 @@ struct EmoticonStorageDetailView: View {
     @EnvironmentObject private var store: EmoticonStore
     
     @State private var tagAlert: Bool = false
+    @State private var uiImage: UIImage?
     
     private var emoticon: Emoticon {
         store.emoticons.first(where: { $0.id == selectedEmoticonID }) ?? emoticons.first!
@@ -39,6 +40,9 @@ struct EmoticonStorageDetailView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         WebImage(url: emoticon.url)
                             .resizable()
+                            .onSuccess(perform: { image, data, cacheType in
+                                uiImage = image
+                            })
                             .aspectRatio(1, contentMode: .fit)
                         
                         Button(action: {
@@ -87,6 +91,10 @@ struct EmoticonStorageDetailView: View {
                 
                 // 태그 관리
                 ItemTagManagementButton(isPresented: $tagAlert)
+                
+                // 저장
+//                SaveButton(uiImage: uiImage ?? UIImage())
+//                    .disabled(uiImage == nil)
                 
                 // 삭제
                 ItemDeleteButton()

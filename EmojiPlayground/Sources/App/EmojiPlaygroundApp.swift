@@ -13,6 +13,7 @@ import FirebaseRemoteConfig
 @main
 struct EmojiPlaygroundApp: App {
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.font) private var font
     
     @StateObject var mainRouter = MainRouter()
     @StateObject var userStore = UserStore.shared
@@ -45,6 +46,7 @@ struct EmojiPlaygroundApp: App {
                     .environmentObject(TagStore())
                     .environmentObject(Settings())
                     .overlay(mainOverlay)
+                    .font(.body)
             } else {
                 Color(uiColor: .systemBackground)
                     .alert("업데이트가 필요합니다.", presenting: $isSuccessedVersionCheck, actions: { _ in

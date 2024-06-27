@@ -13,6 +13,7 @@ struct ChatImageStorageView: View {
     @EnvironmentObject private var settings: Settings
     
     @State private var internalIndex: Int = 0
+    @State private var isMini: Bool = false
     
     private var tabs: [EmoticonGroup] {
         store.emoticonGroups
@@ -20,7 +21,8 @@ struct ChatImageStorageView: View {
     
     private let leftOffset: CGFloat = 0.1
     
-    let onTapEmoticon: (Emoticon) -> Void
+    let onTapEmoticon: (Emoticon, Bool) -> Void
+    let delete: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -40,33 +42,43 @@ struct ChatImageStorageView: View {
     }
     
     private var tabHeader: some View {
-        ScrollViewReader { proxy in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 0) {
-                    ForEach(tabs.indices, id: \.self) { index in
-                        let tab = tabs[index]
-                        
-                        Text(String(tab.firstCharacterOfName))
-                            .font(.body)
-                            .foregroundStyle(internalIndex == index ? .black : .gray)
-                            .padding()
-                            .background(internalIndex == index ? Color.systemGray5 : nil)
-                            .id(index)
-                            .onTapGesture {
-                                withAnimation {
-                                    internalIndex = index
+        HStack(spacing: 0) {
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 0) {
+                        ForEach(tabs.indices, id: \.self) { index in
+                            let tab = tabs[index]
+                            
+                            Text(String(tab.firstCharacterOfName))
+                                .font(.body)
+                                .foregroundStyle(internalIndex == index ? .black : .gray)
+                                .padding()
+                                .background(internalIndex == index ? Color.systemGray5 : nil)
+                                .id(index)
+                                .onTapGesture {
+                                    withAnimation {
+                                        internalIndex = index
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
-            }
-            .border(Color.systemGray5)
-            .onChange(of: internalIndex) { value in
-                withAnimation {
-                    proxy.scrollTo(value, anchor: UnitPoint(x: UnitPoint.leading.x + leftOffset, y: UnitPoint.leading.y))
+                .border(Color.systemGray5)
+                .onChange(of: internalIndex) { value in
+                    withAnimation {
+                        proxy.scrollTo(value, anchor: UnitPoint(x: UnitPoint.leading.x + leftOffset, y: UnitPoint.leading.y))
+                    }
                 }
+                .animation(.easeInOut, value: internalIndex)
             }
-            .animation(.easeInOut, value: internalIndex)
+            
+            Text("<")
+                .font(.body)
+                .foregroundStyle(.gray)
+                .padding()
+                .onTapGesture {
+                    delete()
+                }
         }
     }
     
@@ -77,8 +89,13 @@ struct ChatImageStorageView: View {
                 
                 ScrollView {
                     VStack {
-                        Text(tab.name)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        HStack {
+                            Text(tab.name)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Toggle("Mini", isOn: $isMini)
+                                .fixedSize()
+                        }
                         
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 4)) {
                             ForEach(tab.emoticons) { emoticon in
@@ -87,7 +104,7 @@ struct ChatImageStorageView: View {
                                     .customLoopCount(4)
                                     .aspectRatio(1, contentMode: .fit)
                                     .onTapGesture {
-                                        onTapEmoticon(emoticon)
+                                        onTapEmoticon(emoticon, isMini)
                                     }
                             }
                         }
@@ -103,6 +120,8 @@ struct ChatImageStorageView: View {
 
 struct ChatImageStorageView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatImageStorageView { _ in }
+        ChatImageStorageView { _, _ in } delete: { }
+            .environmentObject(EmoticonStore())
+            .environmentObject(Settings())
     }
 }

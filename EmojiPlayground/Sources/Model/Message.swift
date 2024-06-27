@@ -40,6 +40,18 @@ struct Message: Codable, Identifiable {
         self.sender = sender
     }
     
+    init(miniItems: [MiniItem], sender: MessageSender) {
+        self.contentValue = miniItems.contentValue
+        self.contentType = .mini
+        self.sender = sender
+    }
+    
+    init(attributedString: NSAttributedString, sender: MessageSender) {
+        self.contentValue = (try! attributedString.data()).base64EncodedString()
+        self.contentType = .attributed
+        self.sender = sender
+    }
+    
     func setEmoticon(groupName: String, tag: String? = nil) async {
         guard contentType == .image else { return }
                 
@@ -76,5 +88,63 @@ enum MessageSender: String, Codable {
 }
 
 enum MessageContentType: String, Codable {
-    case plainText, image
+    case plainText, image, mini, attributed
+}
+
+enum MiniItem: Hashable {
+    case plain(String)
+    case image(String)
+    
+    var value: String {
+        switch self {
+        case .plain(let string):
+            "plain(\(string))"
+        case .image(let string):
+            "image(\(string))"
+        }
+    }
+    
+    var contentValue: String {
+        switch self {
+        case .plain(let string):
+            string
+        case .image(let string):
+            string
+        }
+    }
+    
+    var isPlain: Bool {
+        switch self {
+        case .plain(_):
+            true
+        case .image(_):
+            false
+        }
+    }
+}
+
+extension [MiniItem] {
+    var contentValue: String {
+        map { $0.value }.joined(separator: ",")
+    }
+}
+
+extension NSAttributedString {
+    func data() throws -> Data {
+        try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+    }
+}
+
+extension Data {
+    func topLevelObject() throws -> Any? {
+        try NSKeyedUnarchiver.unarchivedObject(ofClass: NSAttributedString.self, from: self)
+    }
+    
+    func unarchive<T>() throws -> T? {
+        try topLevelObject() as? T
+    }
+    
+    func attributedString() throws -> NSAttributedString? {
+        try unarchive()
+    }
 }

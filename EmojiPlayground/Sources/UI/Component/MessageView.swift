@@ -278,6 +278,7 @@ private struct WrappingHStack: Layout {
 
 private struct AttributedMessageView: View {
     @EnvironmentObject private var settings: Settings
+    @Environment(\.font) private var font
     
     @State private var isLoadSuccessed = false
     @State private var includedText = false
@@ -287,55 +288,96 @@ private struct AttributedMessageView: View {
     
     let message: Message
     
-    private var attr: NSAttributedString {
-        let data = Data(base64Encoded: message.contentValue)!
-        let attr = try? data.attributedString()
-        return attr ?? NSAttributedString()
-    }
+    @State private var attr: NSAttributedString? = nil
+    
+//    private var attr: NSAttributedString {
+//        let data = Data(base64Encoded: message.contentValue)!
+//        let attr = try? data.attributedString()
+//        return attr ?? NSAttributedString()
+//    }
     
     var body: some View {
-        if includedText {
-            RichTextMessageView(attributedText: attr)
-                .foregroundStyle(message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
-                .padding(12)
-                .background(message.sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor)
-                .clipShape(.rect(cornerRadius: 12))
-        } else if lotsOfData {
-            RichTextMessageView(attributedText: attr)
-                .foregroundStyle(message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
-                .padding(12)
-                .background(message.sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor)
-                .clipShape(.rect(cornerRadius: 12))
-        } else if showImage {
-            RichTextMessageView(attributedText: attr)
-                .background(Color.blue)
-        } else if showMiniImage {
-            RichTextMessageView(attributedText: attr)
-                .background(Color.green)
-        } else {
-            Text("Hmm..")
-                .background(Color.orange)
-                .onAppear {
-                    if attr.length > 6 {
-                        lotsOfData = true
-                        return
-                    }
-                    
-                    let range = NSRange(location: 0, length: attr.length)
-                    attr.enumerateAttribute(.attachment, in: range) { value, range, _ in
-                        if value == nil {
-                            includedText = true
+        if let attr {
+            if includedText {
+                RichTextMessageView(attributedText: attr)
+                    .foregroundStyle(message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
+                    .padding(12)
+                    .background(message.sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor)
+                    .clipShape(.rect(cornerRadius: 12))
+            } else if lotsOfData {
+                RichTextMessageView(attributedText: attr)
+                    .foregroundStyle(message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
+                    .padding(12)
+                    .background(message.sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor)
+                    .clipShape(.rect(cornerRadius: 12))
+            } else if showImage {
+                RichTextMessageView(attributedText: attr)
+                    .padding(12)
+            } else if showMiniImage {
+                RichTextMessageView(attributedText: attr)
+                    .padding(12)
+            } else {
+                Text("Hmm..")
+                    .background(Color.orange)
+                    .onAppear {
+                        if attr.length > 6 {
+                            lotsOfData = true
                             return
                         }
                         
-                        if attr.length == 1 {
-                            showImage = true
-                            return
-                        } else {
-                            showMiniImage = true
-                            return
+                        var newMultipleImageAttr = NSMutableAttributedString()
+                        let range = NSRange(location: 0, length: attr.length)
+                        attr.enumerateAttribute(.attachment, in: range) { value, range, _ in
+                            if value == nil {
+                                includedText = true
+                                return
+                            }
+                            
+                            if attr.length == 1 {
+                                if let attachment = value as? GIFTextAttachment {
+                                    let textAttachment = GIFTextAttachment(data: attachment.gifData, fontSize: 80)
+                                    let newAttr = NSMutableAttributedString()
+                                    let newGIFString = NSAttributedString(attachment: textAttachment)
+                                    newAttr.append(newGIFString)
+                                    self.attr = newAttr
+                                } else if let attachment = value as? IMGTextAttachment {
+                                    let textAttachment = IMGTextAttachment(urlString: attachment.urlString, height: 80)
+                                    let newAttr = NSMutableAttributedString()
+                                    let newIMGString = NSAttributedString(attachment: textAttachment)
+                                    newAttr.append(newIMGString)
+                                    self.attr = newAttr
+                                }
+                                showImage = true
+                                return
+                            } else {
+                                if let attachment = value as? GIFTextAttachment {
+                                    let textAttachment = GIFTextAttachment(data: attachment.gifData, fontSize: 40)
+                                    let newAttr = NSMutableAttributedString(attributedString: newMultipleImageAttr)
+                                    let newGIFString = NSAttributedString(attachment: textAttachment)
+                                    newAttr.append(newGIFString)
+                                    newMultipleImageAttr = newAttr
+                                } else if let attachment = value as? IMGTextAttachment {
+                                    let textAttachment = IMGTextAttachment(urlString: attachment.urlString, height: 40)
+                                    let newAttr = NSMutableAttributedString(attributedString: newMultipleImageAttr)
+                                    let newIMGString = NSAttributedString(attachment: textAttachment)
+                                    newAttr.append(newIMGString)
+                                    newMultipleImageAttr = newAttr
+                                }
+                                showMiniImage = true
+                            }
+                        }
+                        
+                        if !includedText, showMiniImage {
+                            self.attr = newMultipleImageAttr
                         }
                     }
+            }
+        } else {
+            Text("hmm")
+                .onAppear {
+                    let data = Data(base64Encoded: message.contentValue)!
+                    let attr = try? data.attributedString()
+                    self.attr = attr ?? NSAttributedString()
                 }
         }
 //        .border(Color.black)
@@ -388,51 +430,51 @@ struct MessageView_Previews: PreviewProvider {
             return Message(attributedString: attr, sender: .to)
         }
         
-//        var attr3: Message {
-//            var attr = NSAttributedString()
-//            
-//            loadGIF(from: gifURL, attr: &attr)
-//            
-//            return Message(attributedString: attr, sender: .to)
-//        }
-//        
-//        var attr4: Message {
-//            var attr = NSAttributedString("Hello")
-//            
-//            loadGIF(from: photoURL, attr: &attr)
-//            
-//            return Message(attributedString: attr, sender: .to)
-//        }
-//        
-//        var attr5: Message {
-//            var attr = NSAttributedString("Hello")
-//            
-//            loadGIF(from: gifURL, attr: &attr)
-//            
-//            return Message(attributedString: attr, sender: .to)
-//        }
-//        
-//        var attr6: Message {
-//            var attr = NSAttributedString("jKf")
-//            
-//            loadGIF(from: photoURL, attr: &attr)
-//            loadGIF(from: gifURL, attr: &attr)
-//            
-//            return Message(attributedString: attr, sender: .to)
-//        }
-//        
-//        var attr7: Message {
-//            var attr = NSAttributedString()
-//            
-//            loadGIF(from: photoURL, attr: &attr)
-//            loadGIF(from: gifURL, attr: &attr)
-//            loadGIF(from: photoURL, attr: &attr)
-//            loadGIF(from: gifURL, attr: &attr)
-//            loadGIF(from: photoURL, attr: &attr)
-//            loadGIF(from: gifURL, attr: &attr)
-//            
-//            return Message(attributedString: attr, sender: .to)
-//        }
+        var attr3: Message {
+            var attr = NSAttributedString()
+            
+            loadGIF(from: gifURL, attr: &attr)
+            
+            return Message(attributedString: attr, sender: .to)
+        }
+        
+        var attr4: Message {
+            var attr = NSAttributedString("Hello")
+            
+            loadGIF(from: photoURL, attr: &attr)
+            
+            return Message(attributedString: attr, sender: .to)
+        }
+        
+        var attr5: Message {
+            var attr = NSAttributedString("Hello")
+            
+            loadGIF(from: gifURL, attr: &attr)
+            
+            return Message(attributedString: attr, sender: .to)
+        }
+        
+        var attr6: Message {
+            var attr = NSAttributedString("jKf")
+            
+            loadGIF(from: photoURL, attr: &attr)
+            loadGIF(from: gifURL, attr: &attr)
+            
+            return Message(attributedString: attr, sender: .to)
+        }
+        
+        var attr7: Message {
+            var attr = NSAttributedString()
+            
+            loadGIF(from: photoURL, attr: &attr)
+            loadGIF(from: gifURL, attr: &attr)
+            loadGIF(from: photoURL, attr: &attr)
+            loadGIF(from: gifURL, attr: &attr)
+            loadGIF(from: photoURL, attr: &attr)
+            loadGIF(from: gifURL, attr: &attr)
+            
+            return Message(attributedString: attr, sender: .to)
+        }
         
         var attr8: Message {
             var attr = NSAttributedString()
@@ -484,10 +526,10 @@ struct MessageView_Previews: PreviewProvider {
             let font = UIFont.preferredFont(from: font ?? .body)
             let fontSize = font.lineHeight
             
-            let textAttachment = IMGTextAttachment(data: data, fontSize: fontSize)
+//            let textAttachment = IMGTextAttachment(data: data, fontSize: fontSize)
             let oldText = NSMutableAttributedString(attributedString: attr)
-            let newIMGString = NSAttributedString(attachment: textAttachment)
-            oldText.append(newIMGString)
+//            let newIMGString = NSAttributedString(attachment: textAttachment)
+//            oldText.append(newIMGString)
             return oldText
         }
         
@@ -502,13 +544,13 @@ struct MessageView_Previews: PreviewProvider {
 //                MockMessageView(message: mini3)
                 
                 MockMessageView(message: attr1)
-                MockMessageView(message: attr2)
-//                MockMessageView(message: attr3)
-//                MockMessageView(message: attr4)
+//                MockMessageView(message: attr2)
+                MockMessageView(message: attr3)
+                MockMessageView(message: attr4)
 //                MockMessageView(message: attr5)
 //                MockMessageView(message: attr6)
 //                MockMessageView(message: attr7)
-                MockMessageView(message: attr8)
+//                MockMessageView(message: attr8)
                 MockMessageView(message: attr9)
             }
         }

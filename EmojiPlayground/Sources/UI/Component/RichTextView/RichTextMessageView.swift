@@ -13,12 +13,12 @@ struct RichTextMessageView: UIViewRepresentable {
     
     let attributedText: NSAttributedString
     
-    var uiFont: UIFont {
+    private var uiFont: UIFont {
         UIFont.preferredFont(from: font ?? .body)
     }
     
     func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
+        let textView = UITextView(usingTextLayoutManager: false)
         textView.isSelectable = false
         textView.isEditable = false
         textView.isScrollEnabled = false
@@ -32,12 +32,6 @@ struct RichTextMessageView: UIViewRepresentable {
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.attributedText = attributedText
         uiView.font = uiFont
-        
-        // Remove old subviews (GIFs)
-        uiView.subviews.forEach { if $0 is FLAnimatedImageView { $0.removeFromSuperview() } }
-        
-        // Add new GIF views
-        addGIFViews(to: uiView)
     }
     
     private func addGIFViews(to textView: UITextView) {
@@ -52,7 +46,7 @@ struct RichTextMessageView: UIViewRepresentable {
                 gifView.frame.origin.y += (boundingRect.height - gifView.frame.height).rounded() / 2
                 textView.addSubview(gifView)
             } else if let attachment = value as? IMGTextAttachment {
-                let imgView = attachment.createImageView()
+                let imgView = attachment.createView().view!
                 let glyphRange = textView.layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
                 let boundingRect = textView.layoutManager.boundingRect(forGlyphRange: glyphRange, in: textView.textContainer)
                 imgView.frame.origin = boundingRect.origin
@@ -70,6 +64,13 @@ struct RichTextMessageView: UIViewRepresentable {
                 height: CGFloat.greatestFiniteMagnitude
             )
         )
+        
+        // Remove old subviews (GIFs)
+        uiView.subviews.forEach { if $0 is FLAnimatedImageView { $0.removeFromSuperview() } }
+        uiView.subviews.forEach { if $0 is _UIHostingView<AnyView> { $0.removeFromSuperview() } }
+        
+        // Add new GIF views
+        addGIFViews(to: uiView)
         
         return uiView.sizeThatFits(dimensions)
     }

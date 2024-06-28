@@ -53,7 +53,7 @@ class GIFTextAttachment: NSTextAttachment {
         let imageView = FLAnimatedImageView()
         imageView.animatedImage = FLAnimatedImage(animatedGIFData: gifData)
         imageView.frame = bounds
-        imageView.backgroundColor = .cyan
+//        imageView.backgroundColor = .cyan
         return imageView
     }
 }

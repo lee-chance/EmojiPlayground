@@ -50,7 +50,7 @@ extension WriteBatch {
             let data = try encoder.encode(from)
             setData(data, forDocument: document, merge: merge)
         } catch {
-            print("error")
+            print("setDataEncodable error")
         }
     }
 }
@@ -82,7 +82,7 @@ extension DocumentReference {
             
             return data
         } catch {
-            print("error")
+            print("get error")
             return nil
         }
     }
@@ -93,7 +93,7 @@ extension DocumentReference {
             let data = try encoder.encode(from)
             try await setData(data, merge: merge)
         } catch {
-            print("error")
+            print("setData error", error.localizedDescription)
         }
     }
     
@@ -101,7 +101,7 @@ extension DocumentReference {
         do {
             try await delete()
         } catch {
-            print("error")
+            print("remove error")
         }
     }
     
@@ -109,7 +109,7 @@ extension DocumentReference {
         do {
             try await updateData(fields)
         } catch {
-            print("error")
+            print("update error")
         }
     }
 }

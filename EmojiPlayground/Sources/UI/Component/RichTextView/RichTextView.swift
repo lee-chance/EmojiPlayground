@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 import FLAnimatedImage
 
 struct RichTextView: UIViewRepresentable {
@@ -14,13 +13,16 @@ struct RichTextView: UIViewRepresentable {
     
     @Binding var attributedText: NSAttributedString
     
+    private var uiFont: UIFont {
+        UIFont.preferredFont(from: font ?? .body)
+    }
+    
     func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
+        let textView = UITextView(usingTextLayoutManager: false)
         textView.isEditable = true
         textView.isScrollEnabled = false
         textView.delegate = context.coordinator
-//        textView.font = UIFont.systemFont(ofSize: fontSize)
-        textView.font = UIFont.preferredFont(from: font ?? .body)
+        textView.font = uiFont
         textView.backgroundColor = .clear
         textView.textContainer.lineFragmentPadding = 0
         textView.textContainerInset = .zero
@@ -29,11 +31,11 @@ struct RichTextView: UIViewRepresentable {
     
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.attributedText = attributedText
-//        uiView.font = UIFont.systemFont(ofSize: fontSize)
-        uiView.font = UIFont.preferredFont(from: font ?? .body)
+        uiView.font = uiFont
         
-        // Remove old subviews (GIFs)
+        // Remove old subviews (GIFs and IMGs)
         uiView.subviews.forEach { if $0 is FLAnimatedImageView { $0.removeFromSuperview() } }
+        uiView.subviews.forEach { if $0 is _UIHostingView<AnyView> { $0.removeFromSuperview() } }
         
         // Add new GIF views
         addGIFViews(to: uiView)
@@ -52,51 +54,45 @@ struct RichTextView: UIViewRepresentable {
                 let boundingRect = textView.layoutManager.boundingRect(forGlyphRange: glyphRange, in: textView.textContainer)
                 gifView.frame.origin = boundingRect.origin
                 gifView.frame.origin.y += textView.textContainerInset.top
+                gifView.frame.origin.y += (boundingRect.height - gifView.frame.height).rounded() / 2
                 textView.addSubview(gifView)
+            } else if let attachment = value as? IMGTextAttachment {
+                let imgView = attachment.createView().view!
+                let glyphRange = textView.layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+                let boundingRect = textView.layoutManager.boundingRect(forGlyphRange: glyphRange, in: textView.textContainer)
+                imgView.frame.origin = boundingRect.origin
+                imgView.frame.origin.y += textView.textContainerInset.top
+                imgView.frame.origin.y += (boundingRect.height - imgView.frame.height).rounded() / 2
+                textView.addSubview(imgView)
             }
         }
     }
     
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context: Context) -> CGSize? {
         let dimensions = proposal.replacingUnspecifiedDimensions(
-            by: .init(
+            by: CGSize(
                 width: 0,
                 height: CGFloat.greatestFiniteMagnitude
             )
         )
-                
-        let calculatedHeight = calculateTextViewHeight(
-            containerSize: dimensions,
-            attributedString: uiView.attributedText
-        )
         
-        return .init(
-            width: dimensions.width,
-            height: calculatedHeight + 0
-        )
+        return CGSize(width: dimensions.width, height: uiView.sizeThatFits(dimensions).height)
     }
-    
-    private func calculateTextViewHeight(containerSize: CGSize,
-                                         attributedString: NSAttributedString) -> CGFloat {
-        let boundingRect = attributedString.boundingRect(
-            with: .init(width: containerSize.width, height: .greatestFiniteMagnitude),
-            options: [.usesLineFragmentOrigin, .usesFontLeading],
-            context: nil
-        )
-        
-        return boundingRect.height + 0
-    }
-    
-    class Coordinator: NSObject, UITextViewDelegate {
+}
+
+extension RichTextView {
+    final class Coordinator: NSObject {
         var parent: RichTextView
         
         init(_ parent: RichTextView) {
             self.parent = parent
         }
-        
-        func textViewDidChange(_ textView: UITextView) {
-            parent.attributedText = textView.attributedText
-        }
+    }
+}
+
+extension RichTextView.Coordinator: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        parent.attributedText = textView.attributedText
     }
 }
 

@@ -181,32 +181,6 @@ struct ChatView: View {
                     .onTapGesture {
                         showsEmojiLibrary = false
                     }
-//                if miniItems.isEmpty {
-//                    TextEditor(text: $text)
-//                        .scrollContentBackground(.hidden)
-//                        .background(.clear)
-//                        .frame(height: 36) // 36으로해야 글자의 높이가 중앙에 위치한다.
-//                        .onTapGesture {
-//                            showsEmojiLibrary = false
-//                        }
-//                } else {
-//                    HStack(spacing: 0) {
-//                        ForEach(miniItems, id: \.self) { item in
-//                            switch item {
-//                            case .image(let contentValue):
-//                                ImageView(url: URL(string: contentValue), size: .mini)
-//                            case .plain(let contentValue):
-//                                Text(contentValue)
-//                            }
-//                        }
-//                    }
-//                    .padding(.horizontal, 6)
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                    .frame(height: 36)
-//                    .onTapGesture {
-//                        showsEmojiLibrary = false
-//                    }
-//                }
                 
                 HStack(spacing: 8) {
                     Button(action: {
@@ -292,7 +266,7 @@ struct ChatView: View {
                         guard let imageURL = URL(string: url) else { return }
                         
                         if let data = try? Data(contentsOf: imageURL) {
-                            data.isGIF ? await insertGIF(data) : await insertImage(data)
+                            data.isGIF ? await insertGIF(data) : await insertImage(url)
                         }
                     }
                     
@@ -306,8 +280,8 @@ struct ChatView: View {
                     }
                     
                     @MainActor
-                    func insertImage(_ data: Data) {
-                        let textAttachment = IMGTextAttachment(data: data, fontSize: fontSize)
+                    func insertImage(_ urlString: String) {
+                        let textAttachment = IMGTextAttachment(urlString: urlString, height: fontSize)
                         let oldText = NSMutableAttributedString(attributedString: message)
                         let newIMGString = NSAttributedString(attachment: textAttachment)
                         oldText.append(newIMGString)
@@ -353,64 +327,4 @@ private extension Image {
             .padding(6)
             .frame(width: 32, height: 32)
     }
-}
-
-
-
-
-
-
-extension UIFont {
-    class func preferredFont(from font: Font) -> UIFont {
-        let uiFont: UIFont
-        
-        switch font {
-        case .largeTitle:
-            uiFont = UIFont.preferredFont(forTextStyle: .largeTitle)
-        case .title:
-            uiFont = UIFont.preferredFont(forTextStyle: .title1)
-        case .title2:
-            uiFont = UIFont.preferredFont(forTextStyle: .title2)
-        case .title3:
-            uiFont = UIFont.preferredFont(forTextStyle: .title3)
-        case .headline:
-            uiFont = UIFont.preferredFont(forTextStyle: .headline)
-        case .subheadline:
-            uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
-        case .callout:
-            uiFont = UIFont.preferredFont(forTextStyle: .callout)
-        case .caption:
-            uiFont = UIFont.preferredFont(forTextStyle: .caption1)
-        case .caption2:
-            uiFont = UIFont.preferredFont(forTextStyle: .caption2)
-        case .footnote:
-            uiFont = UIFont.preferredFont(forTextStyle: .footnote)
-        case .body:
-            fallthrough
-        default:
-            uiFont = UIFont.preferredFont(forTextStyle: .body)
-        }
-        
-        return uiFont
-    }
-}
-
-
-
-
-extension UIImage {
-  func withBackground(color: UIColor, opaque: Bool = true) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
-        
-    guard let ctx = UIGraphicsGetCurrentContext(), let image = cgImage else { return self }
-    defer { UIGraphicsEndImageContext() }
-        
-    let rect = CGRect(origin: .zero, size: size)
-    ctx.setFillColor(color.cgColor)
-    ctx.fill(rect)
-    ctx.concatenate(CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: size.height))
-    ctx.draw(image, in: rect)
-        
-    return UIGraphicsGetImageFromCurrentImageContext() ?? self
-  }
 }

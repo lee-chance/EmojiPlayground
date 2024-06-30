@@ -85,6 +85,23 @@ struct ChatView: View {
         .navigationTitle(room.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarRole(.editor)
+        .toolbar { // TODO: 메뉴버튼으로 바꾸기
+            Button {
+                if settings.selectedThemeName == .dark {
+                    settings.selectedThemeName = .cocoa
+                }
+                else {
+                    settings.selectedThemeName = .dark
+                }
+            } label: {
+                if settings.selectedThemeName == .dark {
+                    Label("Light", systemImage: "sun.max.fill")
+                } else {
+                    Label("Dakr", systemImage: "moon.stars.fill")
+                }
+                
+            }
+        }
     }
     
     private var chatListView: some View {

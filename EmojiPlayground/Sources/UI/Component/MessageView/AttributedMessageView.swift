@@ -27,8 +27,7 @@ struct AttributedMessageView: View {
     var body: some View {
         switch style {
         case .text(let attr):
-            RichTextMessageView(attributedText: attr)
-                .foregroundStyle(message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
+            RichTextMessageView(attributedText: attr, fontColor: message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
                 .padding(12)
                 .background(message.sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor)
                 .clipShape(.rect(cornerRadius: 12))
@@ -44,8 +43,7 @@ struct AttributedMessageView: View {
             }
             
         case .textWithImage(let attr):
-            RichTextMessageView(attributedText: attr)
-                .foregroundStyle(message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
+            RichTextMessageView(attributedText: attr, fontColor: message.sender == .to ? settings.myMessageFontColor : settings.otherMessageFontColor)
                 .padding(12)
                 .background(message.sender == .to ? settings.myMessageBubbleColor : settings.otherMessageBubbleColor)
                 .clipShape(.rect(cornerRadius: 12))
@@ -56,10 +54,11 @@ struct AttributedMessageView: View {
                 .onAppear {
                     let data = Data(base64Encoded: message.contentValue)!
                     let attr = (try? data.attributedString()) ?? NSAttributedString()
-                    
+                    let newAttr = NSMutableAttributedString(attributedString: attr)
                     let range = NSRange(location: 0, length: attr.length)
+                    
                     if !attr.containsAttachments(in: range) {
-                        style = .text(attr)
+                        style = .text(newAttr)
                         return
                     }
                     
@@ -76,7 +75,7 @@ struct AttributedMessageView: View {
                     }
                     
                     if hasText, urlStringList.count > 0 {
-                        style = .textWithImage(attr)
+                        style = .textWithImage(newAttr)
                         return
                     }
                     
@@ -84,7 +83,7 @@ struct AttributedMessageView: View {
                         style = .image(urlStringList[0].value)
                         return
                     } else if urlStringList.count > 6 {
-                        style = .text(attr)
+                        style = .text(newAttr)
                         return
                     }
                     

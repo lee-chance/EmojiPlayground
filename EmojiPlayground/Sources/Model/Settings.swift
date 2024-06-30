@@ -59,6 +59,12 @@ public class Settings: ObservableObject {
                 myMessageFontColor = .limeFont
                 otherMessageBubbleColor = .limeOtherBubble
                 otherMessageFontColor = .limeFont
+            case .dark:
+                roomBackgoundColor = Color(white: 43 / 255)
+                myMessageBubbleColor = .white
+                myMessageFontColor = .black
+                otherMessageBubbleColor = Color(white: 69 / 255)
+                otherMessageFontColor = .white
             case .custom:
                 break
             }
@@ -91,6 +97,7 @@ public class Settings: ObservableObject {
 public enum ThemeName: String, CaseIterable {
     case cocoa
     case lime
+    case dark
     case custom
     
     var displayedName: String {
@@ -99,6 +106,8 @@ public enum ThemeName: String, CaseIterable {
             return "코코아"
         case .lime:
             return "라임"
+        case .dark:
+            return "다크"
         case .custom:
             return "커스텀"
         }

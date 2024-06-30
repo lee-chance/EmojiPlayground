@@ -29,20 +29,15 @@ struct Message: Codable, Identifiable {
     }
     
     init(plainText: String, sender: MessageSender) {
-        self.contentValue = plainText
-        self.contentType = .plainText
+        // MEMO: plainText는 사용하지 않지만 Firebase에는 plainText로 저장되어 있기때문에 삭제하지 않는다.
+        self.contentValue = (try! NSAttributedString(string: plainText).data()).base64EncodedString()
+        self.contentType = .attributed
         self.sender = sender
     }
     
     init(imageURLString: String, sender: MessageSender) {
         self.contentValue = imageURLString
         self.contentType = .image
-        self.sender = sender
-    }
-    
-    init(miniItems: [MiniItem], sender: MessageSender) {
-        self.contentValue = miniItems.contentValue
-        self.contentType = .mini
         self.sender = sender
     }
     
@@ -88,45 +83,7 @@ enum MessageSender: String, Codable {
 }
 
 enum MessageContentType: String, Codable {
-    case plainText, image, mini, attributed
-}
-
-enum MiniItem: Hashable {
-    case plain(String)
-    case image(String)
-    
-    var value: String {
-        switch self {
-        case .plain(let string):
-            "plain(\(string))"
-        case .image(let string):
-            "image(\(string))"
-        }
-    }
-    
-    var contentValue: String {
-        switch self {
-        case .plain(let string):
-            string
-        case .image(let string):
-            string
-        }
-    }
-    
-    var isPlain: Bool {
-        switch self {
-        case .plain(_):
-            true
-        case .image(_):
-            false
-        }
-    }
-}
-
-extension [MiniItem] {
-    var contentValue: String {
-        map { $0.value }.joined(separator: ",")
-    }
+    case plainText, image, attributed
 }
 
 extension NSAttributedString {

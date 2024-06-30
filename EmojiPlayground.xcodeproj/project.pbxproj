@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2E07AE712A07961D00674E47 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07AE702A07961D00674E47 /* ImageCacheManager.swift */; };
 		2E07AE762A079CE300674E47 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07AE752A079CE300674E47 /* MessageView.swift */; };
-		2E0D066B2C2DA32D008AEA76 /* IMGTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0D066A2C2DA32D008AEA76 /* IMGTextAttachment.swift */; };
 		2E0D066E2C2DADEE008AEA76 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0D066D2C2DADEE008AEA76 /* Util.swift */; };
 		2E21006B2AB5D919004AF19D /* DropItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E21006A2AB5D919004AF19D /* DropItem.swift */; };
 		2E3A025F2A12261D003E8293 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A025E2A12261D003E8293 /* Sidebar.swift */; };
@@ -17,6 +16,14 @@
 		2E3A56EB2A234FE60081C546 /* EmoticonStorageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */; };
 		2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4B79482953447A00A41030 /* UIApplicationExtension.swift */; };
 		2E4B794C2953493F00A41030 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4B794B2953493F00A41030 /* Colors.xcassets */; };
+		2E4E29D82C2FE2390039570F /* ImageTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29D72C2FE2390039570F /* ImageTextAttachment.swift */; };
+		2E4E29DA2C30FDC30039570F /* CachedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29D92C30FDC30039570F /* CachedImage.swift */; };
+		2E4E29DC2C3143F00039570F /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29DB2C3143F00039570F /* ImageView.swift */; };
+		2E4E29DE2C31490E0039570F /* RichTextViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29DD2C31490E0039570F /* RichTextViewRepresentable.swift */; };
+		2E4E29E02C314D180039570F /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29DF2C314D180039570F /* UIFontExtension.swift */; };
+		2E4E29E32C314DA30039570F /* PlainTextMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29E22C314DA30039570F /* PlainTextMessageView.swift */; };
+		2E4E29E52C314DF00039570F /* ImageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29E42C314DF00039570F /* ImageMessageView.swift */; };
+		2E4E29E72C314E160039570F /* AttributedMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E29E62C314E160039570F /* AttributedMessageView.swift */; };
 		2E56B2F22B9E196900FBDE8E /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56B2F12B9E196900FBDE8E /* NavigationManager.swift */; };
 		2E56B2F62B9E1E5E00FBDE8E /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E56B2F52B9E1E5E00FBDE8E /* SaveButton.swift */; };
 		2E6467C02A35AAC800EB1F65 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */; };
@@ -76,9 +83,7 @@
 		2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF592AD14D9C003910AC /* FirebasePerformance */; };
 		2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2EC4EF5B2AD14D9C003910AC /* FirebaseRemoteConfig */; };
 		2EC4EF642AD16060003910AC /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4EF632AD16060003910AC /* Version.swift */; };
-		2ECCA3792C2308A7009DD188 /* GIFTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECCA3782C2308A7009DD188 /* GIFTextAttachment.swift */; };
-		2ECCA37C2C2308D5009DD188 /* FLAnimatedImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2ECCA37B2C2308D5009DD188 /* FLAnimatedImage */; };
-		2ECCA37E2C23091D009DD188 /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECCA37D2C23091D009DD188 /* RichTextView.swift */; };
+		2ECCA37E2C23091D009DD188 /* RichTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECCA37D2C23091D009DD188 /* RichTextInputView.swift */; };
 		2ECCA3822C230AA8009DD188 /* RichTextMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECCA3812C230AA8009DD188 /* RichTextMessageView.swift */; };
 		2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD95892ABEAD8800E99B5A /* Alerts.swift */; };
 		2ED158CF2B9B833C0027D4C8 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED158CE2B9B833C0027D4C8 /* ImageSaver.swift */; };
@@ -96,7 +101,6 @@
 /* Begin PBXFileReference section */
 		2E07AE702A07961D00674E47 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		2E07AE752A079CE300674E47 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
-		2E0D066A2C2DA32D008AEA76 /* IMGTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMGTextAttachment.swift; sourceTree = "<group>"; };
 		2E0D066D2C2DADEE008AEA76 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		2E21006A2AB5D919004AF19D /* DropItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropItem.swift; sourceTree = "<group>"; };
 		2E3A025E2A12261D003E8293 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
@@ -104,6 +108,14 @@
 		2E3A56EA2A234FE60081C546 /* EmoticonStorageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoticonStorageDetailView.swift; sourceTree = "<group>"; };
 		2E4B79482953447A00A41030 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		2E4B794B2953493F00A41030 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		2E4E29D72C2FE2390039570F /* ImageTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTextAttachment.swift; sourceTree = "<group>"; };
+		2E4E29D92C30FDC30039570F /* CachedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedImage.swift; sourceTree = "<group>"; };
+		2E4E29DB2C3143F00039570F /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		2E4E29DD2C31490E0039570F /* RichTextViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextViewRepresentable.swift; sourceTree = "<group>"; };
+		2E4E29DF2C314D180039570F /* UIFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
+		2E4E29E22C314DA30039570F /* PlainTextMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextMessageView.swift; sourceTree = "<group>"; };
+		2E4E29E42C314DF00039570F /* ImageMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageView.swift; sourceTree = "<group>"; };
+		2E4E29E62C314E160039570F /* AttributedMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedMessageView.swift; sourceTree = "<group>"; };
 		2E56B2F12B9E196900FBDE8E /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		2E56B2F52B9E1E5E00FBDE8E /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		2E6467BF2A35AAC800EB1F65 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -154,8 +166,7 @@
 		2EC080EF2B2B3366005DFBF8 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		2EC3CB182B13772200D2449C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		2EC4EF632AD16060003910AC /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
-		2ECCA3782C2308A7009DD188 /* GIFTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFTextAttachment.swift; sourceTree = "<group>"; };
-		2ECCA37D2C23091D009DD188 /* RichTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextView.swift; sourceTree = "<group>"; };
+		2ECCA37D2C23091D009DD188 /* RichTextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextInputView.swift; sourceTree = "<group>"; };
 		2ECCA3812C230AA8009DD188 /* RichTextMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextMessageView.swift; sourceTree = "<group>"; };
 		2ECD95892ABEAD8800E99B5A /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		2ED158CE2B9B833C0027D4C8 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
@@ -178,7 +189,6 @@
 				2EC4EF2E2AD14D9C003910AC /* FirebaseAnalytics in Frameworks */,
 				2EC4EF5A2AD14D9C003910AC /* FirebasePerformance in Frameworks */,
 				2EC4EF3E2AD14D9C003910AC /* FirebaseCrashlytics in Frameworks */,
-				2ECCA37C2C2308D5009DD188 /* FLAnimatedImage in Frameworks */,
 				2EC4EF5C2AD14D9C003910AC /* FirebaseRemoteConfig in Frameworks */,
 				2EBCE17D2B1A2E5700AFF5F8 /* FirebaseAuth in Frameworks */,
 				2EBCE1872B1A5E7E00AFF5F8 /* GoogleSignIn in Frameworks */,
@@ -196,10 +206,10 @@
 		2E0D066C2C2DAC79008AEA76 /* RichTextView */ = {
 			isa = PBXGroup;
 			children = (
-				2ECCA37D2C23091D009DD188 /* RichTextView.swift */,
+				2E4E29DD2C31490E0039570F /* RichTextViewRepresentable.swift */,
+				2ECCA37D2C23091D009DD188 /* RichTextInputView.swift */,
 				2ECCA3812C230AA8009DD188 /* RichTextMessageView.swift */,
-				2ECCA3782C2308A7009DD188 /* GIFTextAttachment.swift */,
-				2E0D066A2C2DA32D008AEA76 /* IMGTextAttachment.swift */,
+				2E4E29D72C2FE2390039570F /* ImageTextAttachment.swift */,
 				2E0D066D2C2DADEE008AEA76 /* Util.swift */,
 			);
 			path = RichTextView;
@@ -223,6 +233,17 @@
 				2E909D472B9456FA0020A842 /* TagStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		2E4E29E12C314D860039570F /* MessageView */ = {
+			isa = PBXGroup;
+			children = (
+				2E07AE752A079CE300674E47 /* MessageView.swift */,
+				2E4E29E22C314DA30039570F /* PlainTextMessageView.swift */,
+				2E4E29E42C314DF00039570F /* ImageMessageView.swift */,
+				2E4E29E62C314E160039570F /* AttributedMessageView.swift */,
+			);
+			path = MessageView;
 			sourceTree = "<group>";
 		};
 		2E56B2F02B9E195100FBDE8E /* Manager */ = {
@@ -412,6 +433,7 @@
 				2E9517862945B315001E6ED6 /* Extension */,
 				2EC3CB172B1376F000D2449C /* Firebase */,
 				2ED158CE2B9B833C0027D4C8 /* ImageSaver.swift */,
+				2E4E29D92C30FDC30039570F /* CachedImage.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -424,6 +446,7 @@
 				2EAEF3ED2AADBDCB0098ECAB /* OSLogExtension.swift */,
 				2EF21BAB2B1789F700AB42BA /* DataExtension.swift */,
 				2E909D4D2B9488A70020A842 /* BindingExtension.swift */,
+				2E4E29DF2C314D180039570F /* UIFontExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -431,9 +454,10 @@
 		2E9517872945B32D001E6ED6 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				2E4E29E12C314D860039570F /* MessageView */,
 				2E0D066C2C2DAC79008AEA76 /* RichTextView */,
 				2E80979627E5F1AB00E40261 /* ImagePicker.swift */,
-				2E07AE752A079CE300674E47 /* MessageView.swift */,
+				2E4E29DB2C3143F00039570F /* ImageView.swift */,
 				2EAEF3EF2AADBFF90098ECAB /* ChatImageStorageView.swift */,
 				2EA7959D2B1CD3300016E49B /* AppleLoginButton.swift */,
 			);
@@ -550,7 +574,6 @@
 				2EBCE17C2B1A2E5700AFF5F8 /* FirebaseAuth */,
 				2EBCE1862B1A5E7E00AFF5F8 /* GoogleSignIn */,
 				2EBCE1882B1A5E7E00AFF5F8 /* GoogleSignInSwift */,
-				2ECCA37B2C2308D5009DD188 /* FLAnimatedImage */,
 			);
 			productName = EmojiPlayground;
 			productReference = 2E80977927E5BB4F00E40261 /* Emote.app */;
@@ -584,7 +607,6 @@
 				2E5F258B27EF4B4F002F21F5 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2EBCE1852B1A5E7E00AFF5F8 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-				2ECCA37A2C2308D5009DD188 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */,
 			);
 			productRefGroup = 2E80977A27E5BB4F00E40261 /* Products */;
 			projectDirPath = "";
@@ -651,6 +673,7 @@
 				2E56B2F22B9E196900FBDE8E /* NavigationManager.swift in Sources */,
 				2EF21BAE2B17924500AB42BA /* EmoticonStore.swift in Sources */,
 				2E07AE762A079CE300674E47 /* MessageView.swift in Sources */,
+				2E4E29DC2C3143F00039570F /* ImageView.swift in Sources */,
 				2E80979727E5F1AB00E40261 /* ImagePicker.swift in Sources */,
 				2E3A56EB2A234FE60081C546 /* EmoticonStorageDetailView.swift in Sources */,
 				2E80979927E60CB100E40261 /* Screen.swift in Sources */,
@@ -658,12 +681,14 @@
 				2EAEF3EE2AADBDCB0098ECAB /* OSLogExtension.swift in Sources */,
 				2E86F8362AD25021009BD12D /* AppInfo.swift in Sources */,
 				2EBE350B29F2D9E000F30846 /* Room.swift in Sources */,
+				2E4E29DA2C30FDC30039570F /* CachedImage.swift in Sources */,
 				2E9E832B2A0559AB002A2B90 /* GIFImage.swift in Sources */,
 				2EF21BAA2B17856900AB42BA /* Emoticon.swift in Sources */,
 				2E909D512B9774180020A842 /* GroupManagement.swift in Sources */,
 				2E80978B27E5BCDF00E40261 /* ChatView.swift in Sources */,
 				2E0D066E2C2DADEE008AEA76 /* Util.swift in Sources */,
 				2E909D422B943E8A0020A842 /* EmoticonStorageTabView.swift in Sources */,
+				2E4E29E02C314D180039570F /* UIFontExtension.swift in Sources */,
 				2E909D4C2B9488680020A842 /* FlowLayout.swift in Sources */,
 				2E80979D27E628F500E40261 /* DefaultCharacter.swift in Sources */,
 				2EC080F02B2B3366005DFBF8 /* Canvas.swift in Sources */,
@@ -680,15 +705,19 @@
 				2EF21BAC2B1789F700AB42BA /* DataExtension.swift in Sources */,
 				2E7C8F672A15056A00B3B3A0 /* Community.swift in Sources */,
 				2EDDAB432B2DA0A300BFD1A6 /* IdentifiableData.swift in Sources */,
+				2E4E29D82C2FE2390039570F /* ImageTextAttachment.swift in Sources */,
 				2E80979B27E60F1C00E40261 /* NavigationBarColor.swift in Sources */,
+				2E4E29E72C314E160039570F /* AttributedMessageView.swift in Sources */,
+				2E4E29E52C314DF00039570F /* ImageMessageView.swift in Sources */,
 				2E6467C42A3612A500EB1F65 /* DisplaySettingsView.swift in Sources */,
 				2E857A4C2B177A82005945F6 /* MessageStore.swift in Sources */,
 				2E3A02612A1226E5003E8293 /* DetailColumn.swift in Sources */,
 				2EBCE1842B1A3A4C00AFF5F8 /* LoginView.swift in Sources */,
 				2E6467C22A3609C200EB1F65 /* Colors.swift in Sources */,
-				2ECCA37E2C23091D009DD188 /* RichTextView.swift in Sources */,
+				2ECCA37E2C23091D009DD188 /* RichTextInputView.swift in Sources */,
 				2E909D552B9775490020A842 /* DeleteButton.swift in Sources */,
 				2E909D532B9774AA0020A842 /* TagManagement.swift in Sources */,
+				2E4E29E32C314DA30039570F /* PlainTextMessageView.swift in Sources */,
 				2E4B79492953447A00A41030 /* UIApplicationExtension.swift in Sources */,
 				2ECCA3822C230AA8009DD188 /* RichTextMessageView.swift in Sources */,
 				2EC3CB192B13772200D2449C /* FirestoreManager.swift in Sources */,
@@ -696,8 +725,7 @@
 				2E7C8F612A14CF5D00B3B3A0 /* CommunityView.swift in Sources */,
 				2ECD958A2ABEAD8800E99B5A /* Alerts.swift in Sources */,
 				2EC4EF642AD16060003910AC /* Version.swift in Sources */,
-				2ECCA3792C2308A7009DD188 /* GIFTextAttachment.swift in Sources */,
-				2E0D066B2C2DA32D008AEA76 /* IMGTextAttachment.swift in Sources */,
+				2E4E29DE2C31490E0039570F /* RichTextViewRepresentable.swift in Sources */,
 				2ED158CF2B9B833C0027D4C8 /* ImageSaver.swift in Sources */,
 				2E80977D27E5BB4F00E40261 /* EmojiPlaygroundApp.swift in Sources */,
 				2EBCE17F2B1A301500AFF5F8 /* FirebaseAuthManager.swift in Sources */,
@@ -955,14 +983,6 @@
 				minimumVersion = 10.16.0;
 			};
 		};
-		2ECCA37A2C2308D5009DD188 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Flipboard/FLAnimatedImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.17;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1020,11 +1040,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2EC4EF2C2AD14D9C003910AC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
-		};
-		2ECCA37B2C2308D5009DD188 /* FLAnimatedImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2ECCA37A2C2308D5009DD188 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */;
-			productName = FLAnimatedImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 

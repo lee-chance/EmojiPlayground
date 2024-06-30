@@ -14,8 +14,6 @@ struct ChatView: View {
     @EnvironmentObject private var settings: Settings
     @Environment(\.font) private var font
     
-//    @State private var text = ""
-//    @State private var miniItems: [MiniItem] = []
     @State private var message = NSAttributedString()
     @State private var showsEmojiLibrary = false
     @State private var sender: MessageSender = .to
@@ -23,11 +21,7 @@ struct ChatView: View {
     @State private var errorAlertMessage: String?
     @State private var isPresentedUploadOverlay = false
     
-    let room: Room
-    
-    private var fontSize: CGFloat {
-        UIFont.preferredFont(from: font ?? .body).lineHeight
-    }
+    private let room: Room
     
     init(room: Room) {
         self.room = room
@@ -175,9 +169,11 @@ struct ChatView: View {
                     Text(message)
                 }
             
+            let textInputViewMinimumHeight: CGFloat = 36
             HStack(spacing: 0) {
-                RichTextView(attributedText: $message)
-                    .frame(minHeight: 36)
+                RichTextInputView(attributedText: $message)
+                    .padding(.horizontal, 8)
+                    .frame(minHeight: textInputViewMinimumHeight)
                     .onTapGesture {
                         showsEmojiLibrary = false
                     }
@@ -194,22 +190,12 @@ struct ChatView: View {
                             .foregroundStyle(.gray)
                     }
                     
-//                    if text.count > 0 || !miniItems.isEmpty {
                     if message.length > 0 {
                         Button(action: {
                             Task {
-                                let message = {
-//                                    if !miniItems.isEmpty {
-//                                        return Message(miniItems: miniItems, sender: sender)
-//                                    } else {
-//                                        return Message(plainText: text, sender: sender)
-//                                    }
-                                    return Message(attributedString: self.message, sender: sender)
-                                }()
-                                self.message = NSAttributedString()
-//                                text = ""
-//                                miniItems = []
-                                await messageStore.add(message: message)
+                                let sendingMessage = Message(attributedString: message, sender: sender)
+                                message = NSAttributedString()
+                                await messageStore.add(message: sendingMessage)
                             }
                         }) {
                             Image(systemName: "arrow.up")
@@ -235,12 +221,13 @@ struct ChatView: View {
                 }
             }
             .padding(4)
+            .background(Color.gray.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: textInputViewMinimumHeight, style: .circular))
             .background(
-                Capsule()
+                RoundedRectangle(cornerRadius: textInputViewMinimumHeight, style: .circular)
                     .stroke(Color.black.opacity(0.1))
-                    .background(Capsule().fill(Color.gray.opacity(0.1)))
-                    .padding(.vertical, 2)
             )
+            .padding(.vertical, 2)
         }
         .padding(.horizontal, 12)
         .padding(.bottom, Screen.bottomSafeArea > 0 ? 1 : 0) // Solid Bottom SafeArea
@@ -253,40 +240,13 @@ struct ChatView: View {
         if showsEmojiLibrary {
             ChatImageStorageView { emoticon, isMini in
                 if isMini {
-//                    if miniItems.isEmpty, !text.isEmpty {
-//                        miniItems = [.plain(text)]
-//                        text = ""
-//                    }
-//                    miniItems.append(.image(emoticon.urlString))
-                    
-                    Task { await loadGIF(from: emoticon.urlString) }
-                    
-                    // TODO: throws 추가하기
-                    func loadGIF(from url: String) async {
-                        guard let imageURL = URL(string: url) else { return }
-                        
-                        if let data = try? Data(contentsOf: imageURL) {
-                            data.isGIF ? await insertGIF(data) : await insertImage(url)
-                        }
-                    }
-                    
-                    @MainActor
-                    func insertGIF(_ data: Data) {
-                        let textAttachment = GIFTextAttachment(data: data, fontSize: fontSize)
-                        let oldText = NSMutableAttributedString(attributedString: message)
-                        let newGIFString = NSAttributedString(attachment: textAttachment)
-                        oldText.append(newGIFString)
-                        message = oldText
-                    }
-                    
-                    @MainActor
-                    func insertImage(_ urlString: String) {
-                        let textAttachment = IMGTextAttachment(urlString: urlString, height: fontSize)
-                        let oldText = NSMutableAttributedString(attributedString: message)
-                        let newIMGString = NSAttributedString(attachment: textAttachment)
-                        oldText.append(newIMGString)
-                        message = oldText
-                    }
+                    let urlString = emoticon.urlString
+                    let height = font.uiFont.lineHeight
+                    let textAttachment = ImageTextAttachment(urlString: urlString, height: height)
+                    let oldText = NSMutableAttributedString(attributedString: message)
+                    let newString = NSAttributedString(attachment: textAttachment)
+                    oldText.append(newString)
+                    message = oldText
                 } else {
                     Task {
                         let message = Message(imageURLString: emoticon.urlString, sender: sender)

@@ -6,16 +6,11 @@
 //
 
 import SwiftUI
-import FLAnimatedImage
 
-struct RichTextMessageView: UIViewRepresentable {
-    @Environment(\.font) private var font
+struct RichTextMessageView: RichTextViewRepresentable {
+    @Environment(\.font) var font
     
     let attributedText: NSAttributedString
-    
-    private var uiFont: UIFont {
-        UIFont.preferredFont(from: font ?? .body)
-    }
     
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView(usingTextLayoutManager: false)
@@ -34,29 +29,6 @@ struct RichTextMessageView: UIViewRepresentable {
         uiView.font = uiFont
     }
     
-    private func addGIFViews(to textView: UITextView) {
-        let attributedString = textView.attributedText!
-        attributedString.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attributedString.length)) { (value, range, _) in
-            if let attachment = value as? GIFTextAttachment {
-                let gifView = attachment.createAnimatedImageView()
-                let glyphRange = textView.layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
-                let boundingRect = textView.layoutManager.boundingRect(forGlyphRange: glyphRange, in: textView.textContainer)
-                gifView.frame.origin = boundingRect.origin
-                gifView.frame.origin.y += textView.textContainerInset.top
-                gifView.frame.origin.y += (boundingRect.height - gifView.frame.height).rounded() / 2
-                textView.addSubview(gifView)
-            } else if let attachment = value as? IMGTextAttachment {
-                let imgView = attachment.createView().view!
-                let glyphRange = textView.layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
-                let boundingRect = textView.layoutManager.boundingRect(forGlyphRange: glyphRange, in: textView.textContainer)
-                imgView.frame.origin = boundingRect.origin
-                imgView.frame.origin.y += textView.textContainerInset.top
-                imgView.frame.origin.y += (boundingRect.height - imgView.frame.height).rounded() / 2
-                textView.addSubview(imgView)
-            }
-        }
-    }
-    
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context: Context) -> CGSize? {
         let dimensions = proposal.replacingUnspecifiedDimensions(
             by: CGSize(
@@ -65,12 +37,11 @@ struct RichTextMessageView: UIViewRepresentable {
             )
         )
         
-        // Remove old subviews (GIFs)
-        uiView.subviews.forEach { if $0 is FLAnimatedImageView { $0.removeFromSuperview() } }
-        uiView.subviews.forEach { if $0 is _UIHostingView<AnyView> { $0.removeFromSuperview() } }
-        
-        // Add new GIF views
-        addGIFViews(to: uiView)
+        // MEMO: UITextView의 사이즈가 완전히 리사이징 된 이후에만 실행
+        if dimensions.height == uiView.sizeThatFits(dimensions).height {
+            // MEMO: Task 블럭으로 감싸면 sizeThatFits 이후에 동작하는 큐가 추가되어 실행된다.
+            Task { setImages(of: uiView) }
+        }
         
         return uiView.sizeThatFits(dimensions)
     }

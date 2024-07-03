@@ -22,7 +22,7 @@ struct ChatImageStorageView: View {
     private let leftOffset: CGFloat = 0.1
     
     let onTapEmoticon: (Emoticon, Bool) -> Void
-    let delete: () -> Void
+//    let delete: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -72,13 +72,13 @@ struct ChatImageStorageView: View {
                 .animation(.easeInOut, value: internalIndex)
             }
             
-            Text("<")
-                .font(.body)
-                .foregroundStyle(.gray)
-                .padding()
-                .onTapGesture {
-                    delete()
-                }
+//            Text("<")
+//                .font(.body)
+//                .foregroundStyle(.gray)
+//                .padding()
+//                .onTapGesture {
+//                    delete()
+//                }
         }
     }
     
@@ -120,7 +120,7 @@ struct ChatImageStorageView: View {
 
 struct ChatImageStorageView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatImageStorageView { _, _ in } delete: { }
+        ChatImageStorageView { _, _ in }
             .environmentObject(EmoticonStore())
             .environmentObject(Settings())
     }

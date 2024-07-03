@@ -41,11 +41,8 @@ struct RichTextMessageView: RichTextViewRepresentable {
             )
         )
         
-        // MEMO: UITextView의 사이즈가 완전히 리사이징 된 이후에만 실행
-        if dimensions.height == uiView.sizeThatFits(dimensions).height {
-            // MEMO: Task 블럭으로 감싸면 sizeThatFits 이후에 동작하는 큐가 추가되어 실행된다.
-            Task { setImages(of: uiView) }
-        }
+        // MEMO: Task 블럭으로 감싸면 sizeThatFits 이후에 동작하는 큐가 추가되어 실행된다.
+        Task { setImages(of: uiView) }
         
         return uiView.sizeThatFits(dimensions)
     }

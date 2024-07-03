@@ -270,15 +270,6 @@ struct ChatView: View {
                         await messageStore.add(message: message)
                     }
                 }
-            } delete: {
-//                if let last = miniItems.last {
-//                    let _ = miniItems.popLast()
-//                    if last.isPlain {
-//                        miniItems.append(MiniItem.plain(String(last.contentValue.dropLast())))
-//                    }
-//                } else {
-//                    let _ = text.popLast()
-//                }
             }
             .frame(height: Screen.height / 3)
             .frame(maxWidth: .infinity)

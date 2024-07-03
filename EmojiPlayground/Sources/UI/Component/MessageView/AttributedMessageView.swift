@@ -196,6 +196,17 @@ struct AttributedMessageView: View {
         return Message(attributedString: attr, sender: .to)
     }
     
+    var attr_text_100_images: Message {
+        var attr = NSAttributedString("Hmm..")
+        
+        for i in 0..<50 {
+            load(from: photoURL, attr: &attr)
+            load(from: gifURL, attr: &attr)
+        }
+        
+        return Message(attributedString: attr, sender: .to)
+    }
+    
     func load(from url: String, attr: inout NSAttributedString) {
         let fontSize = font.uiFont.lineHeight
         
@@ -208,16 +219,17 @@ struct AttributedMessageView: View {
     }
     
     return ScrollView {
-        AttributedMessageView(message: attr_text)
-        AttributedMessageView(message: attr_photo)
-        AttributedMessageView(message: attr_gif)
-        AttributedMessageView(message: attr_text_photo)
-        AttributedMessageView(message: attr_text_gif)
-        AttributedMessageView(message: attr_images)
-        AttributedMessageView(message: attr_text_images)
-        AttributedMessageView(message: attr_6_images)
-        AttributedMessageView(message: attr_7_images)
-        AttributedMessageView(message: attr_text_7_images)
+//        AttributedMessageView(message: attr_text)
+//        AttributedMessageView(message: attr_photo)
+//        AttributedMessageView(message: attr_gif)
+//        AttributedMessageView(message: attr_text_photo)
+//        AttributedMessageView(message: attr_text_gif)
+//        AttributedMessageView(message: attr_images)
+//        AttributedMessageView(message: attr_text_images)
+//        AttributedMessageView(message: attr_6_images)
+//        AttributedMessageView(message: attr_7_images)
+//        AttributedMessageView(message: attr_text_7_images)
+        AttributedMessageView(message: attr_text_100_images)
     }
     .font(.largeTitle)
     .environmentObject(Settings())

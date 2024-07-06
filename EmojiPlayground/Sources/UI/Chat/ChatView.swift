@@ -85,21 +85,44 @@ struct ChatView: View {
         .navigationTitle(room.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarRole(.editor)
-        .toolbar { // TODO: 메뉴버튼으로 바꾸기
-            Button {
-                if settings.selectedThemeName == .dark {
-                    settings.selectedThemeName = .cocoa
-                }
-                else {
-                    settings.selectedThemeName = .dark
-                }
-            } label: {
-                if settings.selectedThemeName == .dark {
-                    Label("Light", systemImage: "sun.max.fill")
-                } else {
-                    Label("Dakr", systemImage: "moon.stars.fill")
+        .toolbar {
+            ToolbarItemGroup {
+                switch settings.selectedThemeName {
+                case .dark:
+                    Button {
+                        settings.selectedThemeName = .cocoa
+                    } label: {
+                        Label("Light", systemImage: "sun.max.fill")
+                    }
+                default:
+                    Button {
+                        settings.selectedThemeName = .dark
+                    } label: {
+                        Label("Dark", systemImage: "moon.fill")
+                    }
                 }
                 
+                Menu {
+                    Picker("비율", selection: $settings.imageRatioType) {
+                        ForEach(ImageRatioType.allCases, id: \.rawValue) { type in
+                            Text(type.displayedName + "비율")
+                                .tag(type)
+                        }
+                    }
+                    
+                    if settings.imageRatioType == .original {
+                        Toggle("배경 숨기기", isOn: $settings.imageIsClearBackgroundColor)
+                        
+                        if !settings.imageIsClearBackgroundColor {
+                            NavigationLink(destination: DisplaySettingsView()) {
+                                Label("배경색 설정하러 가기", systemImage: "paintpalette")
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Settings", systemImage: "ellipsis.circle")
+                        .labelStyle(.iconOnly)
+                }
             }
         }
     }
@@ -116,7 +139,12 @@ struct ChatView: View {
                     HStack { Spacer() }
                         .id(emptyScrollToString)
                 }
-                .onChange(of: messageStore.messages.count) { _ in
+                .onChange(
+                    of: ChangeDependency(
+                        messageCount: messageStore.messages.count,
+                        showsEmojiLibrary: showsEmojiLibrary
+                    )
+                ) { _ in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         moveToBottom(of: proxy)
                     }
@@ -294,5 +322,12 @@ private extension Image {
             .scaledToFit()
             .padding(6)
             .frame(width: 32, height: 32)
+    }
+}
+
+private extension ChatView {
+    struct ChangeDependency: Equatable {
+        let messageCount: Int
+        let showsEmojiLibrary: Bool
     }
 }

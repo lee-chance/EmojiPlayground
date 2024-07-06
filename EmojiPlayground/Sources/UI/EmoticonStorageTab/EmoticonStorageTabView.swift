@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EmoticonStorageTabView: View {
+    @EnvironmentObject private var navigation: NavigationManager
+    @EnvironmentObject private var settings: Settings
     @EnvironmentObject private var store: EmoticonStore
     
     @State private var selectedEmoticon: Emoticon?
@@ -46,6 +48,29 @@ struct EmoticonStorageTabView: View {
             }
             .navigationTitle(groupName)
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Menu {
+                    Picker("비율", selection: $settings.imageRatioType) {
+                        ForEach(ImageRatioType.allCases, id: \.rawValue) { type in
+                            Text(type.displayedName + "비율")
+                                .tag(type)
+                        }
+                    }
+                    
+                    if settings.imageRatioType == .original {
+                        Toggle("배경 숨기기", isOn: $settings.imageIsClearBackgroundColor)
+                        
+                        if !settings.imageIsClearBackgroundColor {
+                            NavigationLink(destination: DisplaySettingsView()) {
+                                Label("배경색 설정하러 가기", systemImage: "paintpalette")
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Settings", systemImage: "ellipsis.circle")
+                        .labelStyle(.iconOnly)
+                }
+            }
         } else {
             DismissActionView()
         }

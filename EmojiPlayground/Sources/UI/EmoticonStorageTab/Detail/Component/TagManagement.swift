@@ -61,6 +61,8 @@ private struct TagManagementView: View {
                 
                 TagManagementListView(onTap: update)
             }
+            .navigationTitle("태그 \(emoticon?.tag != nil ? "수정" : "추가")")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     let name = newTagName.trimmingCharacters(in: .whitespaces)

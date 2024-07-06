@@ -101,11 +101,7 @@ struct EmoticonGroupView: View {
     @ViewBuilder
     func thumbnail(of index: Int) -> some View {
         if 0 <= index && index < emoticons.count {
-            let emoticon = emoticons[index]
-            
-            WebImage(url: emoticon.url)
-                .resizable()
-                .aspectRatio(1, contentMode: .fit)
+            ImageView(url: emoticons[index].url)
         } else {
             Rectangle()
                 .aspectRatio(1, contentMode: .fit)

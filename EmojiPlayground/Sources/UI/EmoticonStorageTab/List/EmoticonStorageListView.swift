@@ -25,28 +25,7 @@ struct EmoticonStorageListView: View {
             .padding()
         }
         .background(Color.systemGray6)
-//        .toolbar {
-//            ToolbarItemGroup {
-//                toolbarItems
-//            }
-//        }
     }
-    
-//    @ViewBuilder
-//    private var toolbarItems: some View {
-//        Menu {
-//            Picker("Layout", selection: $layout) {
-//                ForEach(BrowserLayout.allCases) { option in
-//                    Label(option.title, systemImage: option.imageName)
-//                        .tag(option)
-//                }
-//            }
-//            .pickerStyle(.inline)
-//        } label: {
-//            Label("Layout Options", systemImage: layout.imageName)
-//                .labelStyle(.iconOnly)
-//        }
-//    }
 }
 
 extension EmoticonStorageListView: Equatable {
@@ -59,9 +38,7 @@ struct EmoticonView: View {
     let emoticon: Emoticon
     
     var body: some View {
-        WebImage(url: emoticon.url)
-            .resizable()
-            .aspectRatio(1, contentMode: .fit)
+        ImageView(url: emoticon.url)
             .overlay(alignment: .bottomTrailing) {
                 if let tag = emoticon.tag {
                     Text("# \(tag)")

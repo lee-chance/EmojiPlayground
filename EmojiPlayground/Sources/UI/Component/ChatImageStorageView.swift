@@ -10,7 +10,6 @@ import SDWebImageSwiftUI
 
 struct ChatImageStorageView: View {
     @EnvironmentObject private var store: EmoticonStore
-    @EnvironmentObject private var settings: Settings
     
     @State private var internalIndex: Int = 0
     @State private var isMini: Bool = false
@@ -93,16 +92,13 @@ struct ChatImageStorageView: View {
                             Text(tab.name)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            Toggle("Mini", isOn: $isMini)
+                            Toggle("미니", isOn: $isMini)
                                 .fixedSize()
                         }
                         
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 4)) {
                             ForEach(tab.emoticons) { emoticon in
-                                WebImage(url: emoticon.url)
-                                    .resizable()
-                                    .customLoopCount(4)
-                                    .aspectRatio(1, contentMode: .fit)
+                                ImageView(url: emoticon.url)
                                     .onTapGesture {
                                         onTapEmoticon(emoticon, isMini)
                                     }

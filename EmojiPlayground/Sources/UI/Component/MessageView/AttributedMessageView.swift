@@ -199,7 +199,7 @@ struct AttributedMessageView: View {
     var attr_text_100_images: Message {
         var attr = NSAttributedString("Hmm..")
         
-        for i in 0..<50 {
+        for _ in 0..<50 {
             load(from: photoURL, attr: &attr)
             load(from: gifURL, attr: &attr)
         }

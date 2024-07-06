@@ -38,12 +38,7 @@ struct EmoticonStorageDetailView: View {
             TabView(selection: $selectedEmoticonID) {
                 ForEach(emoticons) { emoticon in
                     VStack(alignment: .leading, spacing: 16) {
-                        WebImage(url: emoticon.url)
-                            .resizable()
-                            .onSuccess(perform: { image, data, cacheType in
-                                uiImage = image
-                            })
-                            .aspectRatio(1, contentMode: .fit)
+                        ImageView(url: emoticon.url)
                         
                         Button(action: {
                             tagAlert.toggle()

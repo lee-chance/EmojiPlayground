@@ -45,6 +45,8 @@ private struct EmoticonChangeGroupView: View {
                 
                 EmoticonGroupListView(onTap: update)
             }
+            .navigationTitle("그룹 옮기기")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     let name = newGroupName.trimmingCharacters(in: .whitespaces)
